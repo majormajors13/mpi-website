@@ -18,8 +18,9 @@ import mpiLogo from "../assets/logos/mpi logo.jpg";
       <span class="site-brand__name">Major Problem Industries</span>
     </a>
 
-    <nav aria-label="Primary navigation">
+    <nav class="site-nav" aria-label="Primary navigation">
       <a class="nav-link" href="#identity">What is MPI?</a>
+      <a class="nav-link" href="#luna">LUNA</a>
     </nav>
   </div>
 </header>
@@ -49,6 +50,13 @@ import mpiLogo from "../assets/logos/mpi logo.jpg";
     min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-1);
   }
 
   .site-brand {
