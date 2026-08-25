@@ -47,6 +47,16 @@ a:hover {
   margin-inline: auto;
 }
 
+main section[id] {
+  scroll-margin-top: var(--space-5);
+}
+
+@media (min-width: 64rem) {
+  main section[id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
 .skip-link {
   position: fixed;
   z-index: 100;

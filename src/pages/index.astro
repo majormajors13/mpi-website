@@ -1,19 +1,25 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import AboutSection from "../components/sections/AboutSection.astro";
+import BuildLogSection from "../components/sections/BuildLogSection.astro";
 import HeroSection from "../components/sections/HeroSection.astro";
 import IdentitySection from "../components/sections/IdentitySection.astro";
 import LunaSection from "../components/sections/LunaSection.astro";
+import WorkshopSection from "../components/sections/WorkshopSection.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <div class="site-frame">
+  <div id="top" class="site-frame">
     <SiteHeader />
     <main id="main-content" tabindex="-1">
       <HeroSection />
       <IdentitySection />
       <LunaSection />
+      <WorkshopSection />
+      <AboutSection />
+      <BuildLogSection />
     </main>
     <SiteFooter />
   </div>

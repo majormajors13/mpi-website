@@ -19,15 +19,18 @@ import mpiLogo from "../assets/logos/mpi logo.jpg";
     </a>
 
     <nav class="site-nav" aria-label="Primary navigation">
-      <a class="nav-link" href="#identity">What is MPI?</a>
+      <a class="nav-link" href="#top">Home</a>
+      <a class="nav-link" href="#identity">MPI</a>
       <a class="nav-link" href="#luna">LUNA</a>
+      <a class="nav-link" href="#workshop">Workshop</a>
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#build-log">Build Log</a>
     </nav>
   </div>
 </header>
 
 <style>
   .site-header {
-    position: sticky;
     z-index: 10;
     inset-block-start: 0;
     border-block-end: 1px solid var(--color-border);
@@ -57,6 +60,12 @@ import mpiLogo from "../assets/logos/mpi logo.jpg";
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: var(--space-1);
+  }
+
+  @media (min-width: 64rem) {
+    .site-header {
+      position: sticky;
+    }
   }
 
   .site-brand {

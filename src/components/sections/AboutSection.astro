@@ -1,0 +1,81 @@
+<section id="about" class="about" aria-labelledby="about-title">
+  <div class="about__inner container">
+    <div class="about__heading">
+      <p class="about__label">Operation // One human</p>
+      <h2 id="about-title">About</h2>
+      <p class="about__statement">
+        Major Problem Industries exists to make room for serious technical work
+        without forcing it into one neat category.
+      </p>
+    </div>
+
+    <div class="about__body">
+      <p>
+        MPI is currently a solo operation built by Nathanyel Majors. Before
+        moving deeper into software and AI, he worked in hands-on electrical and
+        trade environments—places where systems have to make sense because the
+        consequences are physical.
+      </p>
+      <p>
+        That background still shapes the work. Alongside his current education
+        at WGU, Nathanyel builds to understand how things work, own the
+        important pieces, and solve problems that exist outside a slide deck.
+        The scope spans software, AI, automation, hardware, and related
+        engineering work because the interesting problems rarely respect
+        category lines.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: clamp(var(--space-8), 10vw, 8rem);
+  }
+
+  .about__inner {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .about__label {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+
+  .about__statement {
+    max-width: 38rem;
+    margin-block-start: var(--space-5);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .about__body {
+    display: grid;
+    max-width: var(--content-width-reading);
+    gap: var(--space-5);
+    align-content: start;
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 52rem) {
+    .about__inner {
+      grid-template-columns: minmax(0, 0.9fr) minmax(24rem, 1.1fr);
+      gap: clamp(var(--space-7), 8vw, 7rem);
+    }
+  }
+</style>

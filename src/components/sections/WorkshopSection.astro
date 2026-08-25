@@ -1,0 +1,155 @@
+---
+const workDirections = [
+  {
+    title: "AI & Software",
+    status: "In development",
+    description:
+      "Systems that retain context, support decisions, and turn research into working tools. LUNA is the current flagship effort.",
+  },
+  {
+    title: "Automation",
+    status: "Exploring",
+    description:
+      "Practical workflows that remove repetition without hiding how the work gets done.",
+  },
+  {
+    title: "Robotics & Electronics",
+    status: "Queued",
+    description:
+      "A path back to hands-on building through sensing, controls, embedded hardware, and machines that interact with the physical world.",
+  },
+  {
+    title: "Fabrication & Experimental Systems",
+    status: "Exploring",
+    description:
+      "Prototypes that cross software, hardware, and whatever else the problem requires.",
+  },
+];
+---
+
+<section id="workshop" class="workshop" aria-labelledby="workshop-title">
+  <div class="container">
+    <div class="workshop__heading">
+      <p class="workshop__label">Workshop // Online</p>
+      <h2 id="workshop-title">In the Workshop</h2>
+      <p>
+        Current directions, not fictional product divisions. More projects will
+        appear here as they move from the bench into something worth showing.
+      </p>
+    </div>
+
+    <ul class="workshop__grid">
+      {
+        workDirections.map((direction, index) => (
+          <li class="workshop-card">
+            <p class="workshop-card__number" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <h3>{direction.title}</h3>
+            <p class="workshop-card__description">{direction.description}</p>
+            <p class="workshop-card__status">Status // {direction.status}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .workshop {
+    padding-block: clamp(var(--space-8), 10vw, 8rem);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .workshop__heading {
+    display: grid;
+    max-width: var(--content-width-reading);
+    gap: var(--space-4);
+  }
+
+  .workshop__label,
+  .workshop-card__number,
+  .workshop-card__status {
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .workshop__label,
+  .workshop-card__number {
+    color: var(--color-accent-highlight);
+  }
+
+  h2 {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    letter-spacing: -0.055em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .workshop__heading > p:last-child {
+    max-width: 39rem;
+    color: var(--color-text-muted);
+  }
+
+  .workshop__grid {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .workshop-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 18rem;
+    flex-direction: column;
+    padding: var(--space-5);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background:
+      linear-gradient(90deg, rgb(115 71 216 / 4%) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 2rem 100%;
+  }
+
+  .workshop-card::after {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: var(--space-5);
+    width: 3rem;
+    height: 1px;
+    background: var(--color-accent);
+    content: "";
+    pointer-events: none;
+  }
+
+  .workshop-card h3 {
+    max-width: 18rem;
+    margin-block-start: var(--space-5);
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    line-height: 1.15;
+  }
+
+  .workshop-card__description {
+    margin-block-start: var(--space-4);
+    color: var(--color-text-muted);
+  }
+
+  .workshop-card__status {
+    margin-block-start: auto;
+    padding-block-start: var(--space-5);
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 42rem) {
+    .workshop__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
