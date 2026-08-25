@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const description =
+  "The requested page could not be found at Major Problem Industries.";
+---
+
+<BaseLayout title="Page not found" description={description}>
+  <main id="main-content" class="not-found" tabindex="-1">
+    <div class="not-found__panel">
+      <p class="not-found__status">ERROR // 404</p>
+      <h1>Major problem detected.</h1>
+      <p>The page you requested was not found.</p>
+      <a href="/">Return to Major Problem Industries</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: var(--content-gutter);
+  }
+
+  .not-found__panel {
+    width: min(100%, 42rem);
+    padding: clamp(var(--space-6), 8vw, var(--space-8));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-surface);
+  }
+
+  .not-found__status {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+  }
+
+  h1 {
+    margin-block: var(--space-3) var(--space-4);
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    line-height: 1;
+    text-wrap: balance;
+  }
+
+  a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    margin-block-start: var(--space-6);
+    color: var(--color-accent-highlight);
+    font-weight: 700;
+  }
+</style>

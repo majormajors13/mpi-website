@@ -92,6 +92,10 @@ main section[id] {
 }
 
 @media (forced-colors: active) {
+  a {
+    text-decoration: underline;
+  }
+
   :focus-visible {
     outline-color: Highlight;
   }

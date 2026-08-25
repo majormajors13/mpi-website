@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#08070b" />
+  <rect x="3" y="3" width="58" height="58" rx="9" fill="none" stroke="#7347d8" stroke-width="3" />
+  <text x="32" y="39" fill="#f3eff7" font-family="Arial, sans-serif" font-size="20" font-weight="700" text-anchor="middle">MPI</text>
+</svg>
