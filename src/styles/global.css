@@ -1,0 +1,88 @@
+@import "./tokens.css";
+@import "./reset.css";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  background: var(--color-canvas);
+}
+
+body {
+  background:
+    linear-gradient(rgb(115 71 216 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(115 71 216 / 3%) 1px, transparent 1px),
+    var(--color-canvas);
+  background-size: 3rem 3rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--color-accent-highlight);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-accent-highlight);
+}
+
+:focus-visible {
+  outline: 0.1875rem solid var(--color-focus);
+  outline-offset: 0.1875rem;
+}
+
+.container {
+  width: min(calc(100% - (2 * var(--content-gutter))), var(--content-width));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  inset-block-start: var(--space-3);
+  inset-inline-start: var(--content-gutter);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-small);
+  background: var(--color-text-primary);
+  color: var(--color-canvas);
+  font-weight: 700;
+  transform: translateY(calc(-100% - var(--space-5)));
+  transition: transform var(--motion-fast) ease-out;
+}
+
+.skip-link:focus {
+  color: var(--color-canvas);
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
