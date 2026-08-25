@@ -1,0 +1,82 @@
+<section id="identity" class="identity" aria-labelledby="identity-title">
+  <div class="identity__inner container">
+    <div class="identity__heading">
+      <p class="identity__label">MPI // Independent workshop</p>
+      <h2 id="identity-title">
+        This is where the projects live—not where they get inflated into a pitch
+        deck.
+      </h2>
+    </div>
+
+    <div class="identity__body">
+      <p>
+        Major Problem Industries is Nathanyel Majors&rsquo; personal umbrella
+        for building software, AI, automation, and technical systems, with room
+        for hardware, robotics, fabrication, and whatever comes next.
+      </p>
+      <p>
+        It is currently a solo operation: intentionally experimental, practical
+        about engineering, and serious about making real things. The scope is
+        broad by design. The claims are not.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .identity {
+    scroll-margin-top: 6rem;
+  }
+
+  .identity__inner {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: clamp(var(--space-8), 10vw, 8rem);
+  }
+
+  .identity__label {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    max-width: 38rem;
+    margin-block-start: var(--space-3);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  .identity__body {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+
+  .identity__body::before {
+    position: absolute;
+    inset-block-start: -1px;
+    inset-inline-start: 0;
+    width: 5rem;
+    height: 1px;
+    background: var(--color-accent-secondary);
+    content: "";
+    pointer-events: none;
+  }
+
+  @media (min-width: 52rem) {
+    .identity__inner {
+      grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+      gap: clamp(var(--space-7), 8vw, 7rem);
+    }
+  }
+</style>

@@ -1,11 +1,25 @@
+---
+import { Image } from "astro:assets";
+import mpiLogo from "../assets/logos/mpi logo.jpg";
+---
+
 <header class="site-header">
   <div class="site-header__inner container">
     <a class="site-brand" href="/" aria-label="Major Problem Industries, home">
+      <Image
+        class="site-brand__logo"
+        src={mpiLogo}
+        alt=""
+        width={52}
+        height={52}
+        format="webp"
+        quality={80}
+      />
       <span class="site-brand__name">Major Problem Industries</span>
     </a>
 
     <nav aria-label="Primary navigation">
-      <a class="nav-link" href="/" aria-current="page">Home</a>
+      <a class="nav-link" href="#identity">What is MPI?</a>
     </nav>
   </div>
 </header>
@@ -44,6 +58,14 @@
     text-decoration: none;
   }
 
+  .site-brand__logo {
+    width: 3.25rem;
+    height: 3.25rem;
+    flex: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+  }
+
   .site-brand__name {
     font-size: clamp(0.875rem, 2vw, 1rem);
     font-weight: 700;
@@ -67,7 +89,19 @@
 
   @media (max-width: 27rem) {
     .site-brand__name {
-      max-width: 10rem;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .site-brand__logo {
+      width: 2.75rem;
+      height: 2.75rem;
     }
   }
 </style>
