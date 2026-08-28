@@ -22,3 +22,8 @@ npm-debug.log*
 # Browser test artifacts
 playwright-report/
 test-results/
+
+# Cloudflare Wrangler local state
+.wrangler/
+.dev.vars*
+!.dev.vars.example
