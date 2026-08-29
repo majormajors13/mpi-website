@@ -2,58 +2,237 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const description =
-  "A custom Astro and TypeScript website built for Major Problem Industries.";
+  "A production Astro and TypeScript website built around performance, accessibility, security, and a deliberately lightweight static architecture.";
+const priorities = [
+  [
+    "Architecture // Static first",
+    "Built to stay lightweight",
+    "Astro produces static pages, so the browser receives the finished site instead of booting a large application just to display content. Client-side code is reserved for the few interactions that genuinely benefit from it, and images are delivered in optimized formats.",
+  ],
+  [
+    "Interface // Responsive",
+    "Built to work everywhere",
+    "Layouts adapt from narrow phones to wide desktops, text remains usable when enlarged, and every important path works with a keyboard. The site does not depend on a particular screen or input method.",
+  ],
+  [
+    "Access // Built in",
+    "Built to be accessible",
+    "Semantic landmarks and headings establish structure before styling is applied. Visible focus, deliberate contrast, practical touch targets, and automated axe checks keep accessibility part of the build rather than a final patch.",
+  ],
+  [
+    "Operations // Production",
+    "Built to survive production",
+    "The production path includes explicit Cloudflare static-asset deployment, real 404 handling, canonical metadata, social previews, and browser regression coverage. The deployed behavior matters as much as the local build.",
+  ],
+  [
+    "Delivery // Defensive defaults",
+    "Built with security in mind",
+    "Production responses use a content security policy, HTTPS enforcement, MIME-type protection, a restrained referrer policy, and permissions limits. The static build also avoids shipping repository and development files as public application content.",
+  ],
+];
+const stack = [
+  "Astro",
+  "TypeScript",
+  "CSS",
+  "Playwright",
+  "axe",
+  "Cloudflare Workers Static Assets",
+];
+const lessons = [
+  "Production behavior matters more than local assumptions.",
+  "Accessibility is easier when it shapes the structure from the beginning.",
+  "Simple architecture is easier to secure, test, and debug.",
+  "Hosting automation still needs to be verified.",
+  "Restraint is an engineering decision, not a missing feature.",
+];
 ---
 
 <BaseLayout title="Major Problem Industries Website" description={description}>
-  <main id="main-content" class="case-study" tabindex="-1">
-    <div class="case-study__inner container">
-      <a class="back-link" href="/projects/software">← AI & Software Projects</a
-      >
-      <div class="case-study__heading">
-        <p class="technical-label">Project // Production website</p>
-        <h1>Major Problem Industries</h1>
-        <p>{description}</p>
-        <p class="status">Status // Live</p>
-      </div>
-      <section aria-labelledby="case-study-title">
-        <p class="technical-label">Case study // In progress</p>
-        <h2 id="case-study-title">
-          The complete build story is being prepared.
-        </h2>
-        <p>
-          Future updates will document why the site was built, its goals, major
-          decisions, challenges, screenshots, lessons, and current production
-          status.
-        </p>
-        <div
-          class="capture"
-          role="img"
-          aria-label="Screenshot placeholder for the Major Problem Industries website"
+  <main id="main-content" class="site-project" tabindex="-1">
+    <header class="project-hero">
+      <div class="container">
+        <a class="back-link" href="/projects/software"
+          >← AI & Software Projects</a
         >
-          <span>Capture slot</span><strong>Production website</strong><span
-            >Screenshot coming soon</span
-          >
+        <div class="project-hero__content">
+          <p class="technical-label">Project // Major Problem Industries</p>
+          <h1>Major Problem Industries Website</h1>
+          <p class="project-hero__lead">
+            No mockup needed. You’re standing in the finished build.
+          </p>
+          <ul class="status-list" aria-label="Project status">
+            <li>Status // Live</li><li>Type // Production website</li><li>
+              Build // Astro + TypeScript
+            </li>
+          </ul>
         </div>
-      </section>
-    </div>
+      </div>
+    </header>
+
+    <section class="proof container" aria-labelledby="proof-title">
+      <p class="technical-label">Proof // Live environment</p>
+      <h2 id="proof-title">The proof is the thing you’re using.</h2>
+      <p>
+        This case study does not need a gallery of screenshots. The website is
+        the deliverable: resize it, move through it with a keyboard, inspect the
+        mobile layout, and follow the real project routes.
+      </p>
+      <div class="proof__actions">
+        <a href="/#top">Navigate the homepage</a><a href="/luna"
+          >View the LUNA showcase</a
+        ><a href="/404.html">Test the 404 page</a>
+      </div>
+    </section>
+
+    <section class="purpose" aria-labelledby="purpose-title">
+      <div class="container split-grid">
+        <div>
+          <p class="technical-label">Purpose // A real home for the work</p><h2
+            id="purpose-title"
+          >
+            Why it was built
+          </h2>
+        </div>
+        <p>
+          MPI needed more than a portfolio page. It needed a durable home for
+          LUNA, software and AI work, future hardware and fabrication projects,
+          engineering build logs, and project showcases that can grow without
+          turning the site into a complicated publishing system.
+        </p>
+      </div>
+    </section>
+
+    <section class="priorities container" aria-labelledby="priorities-title">
+      <div class="section-heading">
+        <p class="technical-label">Build priorities // What mattered</p><h2
+          id="priorities-title"
+        >
+          The engineering underneath the page
+        </h2>
+      </div>
+      <div class="priorities__grid">
+        {
+          priorities.map(([label, title, body]) => (
+            <article>
+              <>
+                <p class="technical-label">{label}</p>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="deployment" aria-labelledby="deployment-title">
+      <div class="container split-grid">
+        <div>
+          <p class="technical-label">Challenge // Deployment assumptions</p><h2
+            id="deployment-title"
+          >
+            When the hosting platform tried to be helpful
+          </h2>
+        </div>
+        <div>
+          <p>
+            The local static build was correct. Then Cloudflare’s automatic
+            Astro setup changed the deployment assumptions and introduced
+            runtime image URLs that failed after deployment.
+          </p><p>
+            The fix was not another layer of application code. Explicit Wrangler
+            static-assets configuration restored the architecture the project
+            was designed around and made the deployed output match the tested
+            build.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="validation container" aria-labelledby="validation-title">
+      <div class="section-heading">
+        <p class="technical-label">Validation // More than appearance</p><h2
+          id="validation-title"
+        >
+          Made to hold up, not just look right
+        </h2><p>
+          Production readiness is checked through behavior, structure, and
+          delivery—not a screenshot comparison.
+        </p>
+      </div>
+      <ul>
+        <li>Automated browser regression coverage</li><li>
+          Automated accessibility checks
+        </li><li>Production security headers</li><li>
+          Zero known npm vulnerabilities at latest validation
+        </li><li>Real production 404 behavior</li><li>
+          Static-first delivery with narrowly scoped enhancement
+        </li>
+      </ul>
+    </section>
+
+    <section class="stack" aria-labelledby="stack-title">
+      <div class="container split-grid">
+        <div>
+          <p class="technical-label">Stack // Deliberately compact</p><h2
+            id="stack-title"
+          >
+            Technologies
+          </h2>
+        </div>
+        <ul>{stack.map((technology) => <li>{technology}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="lessons container" aria-labelledby="lessons-title">
+      <div class="section-heading">
+        <p class="technical-label">Retrospective // What stayed useful</p><h2
+          id="lessons-title"
+        >
+          What I learned
+        </h2>
+      </div>
+      <ol>{lessons.map((lesson) => <li>{lesson}</li>)}</ol>
+    </section>
+
+    <footer class="project-footer">
+      <div class="container">
+        <p class="technical-label">You’re already on the project.</p><h2>
+          Keep looking around.
+        </h2>
+        <nav aria-label="Explore the MPI website project">
+          <a href="/luna">Explore LUNA</a><a href="/#build-log"
+            >Read the Build Log</a
+          ><a href="/projects/software">Back to AI & Software</a>
+        </nav>
+      </div>
+    </footer>
   </main>
 </BaseLayout>
 
 <style>
-  .case-study {
-    min-height: 100vh;
+  .site-project {
     overflow: hidden;
     background:
       radial-gradient(
-        circle at 78% 12%,
+        circle at 82% 6%,
         rgb(115 71 216 / 13%),
-        transparent 30rem
+        transparent 32rem
       ),
       var(--color-canvas);
   }
-  .case-study__inner {
+  .technical-label {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .project-hero {
+    min-height: min(52rem, 100vh);
     padding-block: var(--space-5) clamp(var(--space-8), 10vw, 8rem);
+    border-block-end: 1px solid var(--color-border);
   }
   .back-link {
     display: inline-flex;
@@ -64,71 +243,172 @@ const description =
     font-size: 0.75rem;
     text-decoration: none;
   }
-  .technical-label,
-  .status {
-    color: var(--color-accent-highlight);
-    font-family: var(--font-technical);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-  .case-study__heading {
-    max-width: 52rem;
-    padding-block: clamp(var(--space-7), 9vw, 7rem);
+  .project-hero__content {
+    max-width: 64rem;
+    padding-block-start: clamp(var(--space-7), 9vw, 7rem);
   }
   h1 {
     margin-block-start: var(--space-3);
-    font-size: clamp(3rem, 10vw, 7rem);
-    letter-spacing: -0.06em;
-    line-height: 0.92;
+    font-size: clamp(3.5rem, 11vw, 8rem);
+    letter-spacing: -0.065em;
+    line-height: 0.88;
   }
-  .case-study__heading > p:not(.technical-label, .status),
-  section > p:not(.technical-label) {
+  .project-hero__lead {
+    max-width: 42rem;
+    margin-block-start: var(--space-6);
+    font-size: clamp(1.375rem, 4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .status-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .status-list li,
+  .validation li,
+  .stack li {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .proof,
+  .priorities,
+  .validation,
+  .lessons {
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+  }
+  h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2.25rem, 7vw, 5rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .proof > p:not(.technical-label),
+  .section-heading > p:not(.technical-label),
+  .purpose p,
+  .deployment p {
+    max-width: 46rem;
     margin-block-start: var(--space-5);
     color: var(--color-text-muted);
     font-size: 1.0625rem;
   }
-  .status {
-    margin-block-start: var(--space-6);
-  }
-  section {
-    padding-block-start: var(--space-7);
-    border-block-start: 1px solid var(--color-border);
-  }
-  h2 {
-    max-width: 48rem;
-    margin-block-start: var(--space-3);
-    font-size: clamp(2rem, 6vw, 4rem);
-    letter-spacing: -0.045em;
-    line-height: 1;
-  }
-  section > p:not(.technical-label) {
-    max-width: 44rem;
-  }
-  .capture {
-    display: grid;
-    min-height: 18rem;
-    aspect-ratio: 16 / 9;
-    align-content: space-between;
+  .proof__actions,
+  .project-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
     margin-block-start: var(--space-7);
-    padding: clamp(var(--space-4), 4vw, var(--space-6));
-    border: 1px solid rgb(172 124 255 / 24%);
-    border-radius: var(--radius-large);
-    background:
-      linear-gradient(rgb(172 124 255 / 5%) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(172 124 255 / 5%) 1px, transparent 1px),
-      var(--color-surface);
-    background-size: 2rem 2rem;
   }
-  .capture span {
-    color: var(--color-text-muted);
+  .proof__actions a,
+  .project-footer a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-primary);
     font-family: var(--font-technical);
-    font-size: 0.6875rem;
-    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
     text-transform: uppercase;
   }
-  .capture strong {
-    font-size: clamp(1.5rem, 5vw, 3rem);
+  .purpose,
+  .deployment,
+  .stack {
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+    border-block: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .split-grid {
+    display: grid;
+    gap: clamp(var(--space-6), 8vw, 7rem);
+  }
+  .priorities__grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-7);
+  }
+  .priorities article {
+    padding: clamp(var(--space-5), 5vw, var(--space-7));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+  }
+  h3 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: 1.1;
+  }
+  .priorities article > p:last-child {
+    margin-block-start: var(--space-4);
+    color: var(--color-text-muted);
+  }
+  .deployment p + p {
+    margin-block-start: var(--space-4);
+  }
+  .validation ul,
+  .stack ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lessons ol {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: lesson;
+  }
+  .lessons li {
+    padding: var(--space-5);
+    border-inline-start: 2px solid var(--color-accent-highlight);
+    background: var(--color-surface);
+    counter-increment: lesson;
+  }
+  .lessons li::before {
+    display: block;
+    margin-block-end: var(--space-2);
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    content: "0" counter(lesson);
+  }
+  .project-footer {
+    padding-block: clamp(var(--space-8), 11vw, 8rem);
+    border-block-start: 1px solid var(--color-border);
+    text-align: center;
+  }
+  .project-footer nav {
+    justify-content: center;
+  }
+  @media (min-width: 48rem) {
+    .split-grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+    }
+    .priorities__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .priorities article:first-child {
+      grid-column: 1 / -1;
+    }
+    .lessons ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 </style>

@@ -8,7 +8,7 @@ const projectPages = [
   },
   {
     path: "/projects/mpi-website",
-    heading: "Major Problem Industries",
+    heading: "Major Problem Industries Website",
   },
   {
     path: "/projects/motionless-moments",
@@ -67,7 +67,6 @@ for (const project of projectPages.slice(1)) {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
       project.heading,
     );
-    await expect(page.locator(".capture")).toBeVisible();
 
     const backLink = page.getByRole("link", { name: "AI & Software Projects" });
     await expect(backLink).toHaveAttribute("href", "/projects/software");
@@ -75,6 +74,41 @@ for (const project of projectPages.slice(1)) {
     await expect(page).toHaveURL("/projects/software");
   });
 }
+
+test("MPI website case study presents live proof without screenshots", async ({
+  page,
+}) => {
+  await page.goto("/projects/mpi-website");
+
+  await expect(page.locator("h1")).toHaveCount(1);
+  await expect(page.getByText("Status // Live", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Type // Production website", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Build // Astro + TypeScript", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".capture")).toHaveCount(0);
+  await expect(page.getByRole("img")).toHaveCount(0);
+
+  for (const link of [
+    { name: "Explore LUNA", href: "/luna" },
+    { name: "Read the Build Log", href: "/#build-log" },
+    { name: "Back to AI & Software", href: "/projects/software" },
+  ]) {
+    await expect(page.getByRole("link", { name: link.name })).toHaveAttribute(
+      "href",
+      link.href,
+    );
+  }
+});
+
+test("Motionless Moments placeholder retains reserved screenshot space", async ({
+  page,
+}) => {
+  await page.goto("/projects/motionless-moments");
+  await expect(page.locator(".capture")).toBeVisible();
+});
 
 for (const viewport of [
   { name: "phone", width: 320, height: 720 },
