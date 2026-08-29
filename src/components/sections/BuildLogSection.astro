@@ -4,113 +4,181 @@ import StatusLabel from "../StatusLabel.astro";
 const entries = [
   {
     label: "LOG // 001",
+    category: "MPI / SITE",
     title: "Building Major Problem Industries",
     body: "Started turning MPI from an idea into an actual home for the work. Built the site from scratch with Astro, kept it static and lightweight, and focused on making it feel like something I’d actually want my name attached to instead of another generic portfolio.",
   },
   {
     label: "LOG // 002",
+    category: "MPI / PRODUCTION",
     title: "Getting the Site Production-Ready",
     body: "Spent a lot of time on the boring-but-important stuff: responsive layouts, accessibility, browser testing, metadata, 404 handling, security headers, HTTPS, caching, and making sure nothing private or stupid was leaking into production.",
   },
   {
     label: "LOG // 003",
+    category: "MPI / DEPLOYMENT",
     title: "Cloudflare Fought Back",
     body: "Deployment looked simple until Cloudflare automatically tried to reconfigure the Astro build and broke the image pipeline. Traced the issue down to runtime image URLs, locked the project back into a true static deployment, and got the live site serving the actual build correctly.",
   },
   {
     label: "LOG // 004",
+    category: "LUNA / SHOWCASE",
     title: "Giving LUNA Its Own Space",
     body: "The MPI homepage was starting to carry too much LUNA information, so I split it out into its own project page. The homepage now gives a short introduction while the LUNA page is being built into a proper showcase with capabilities, screenshots, demos, and real workflows.",
   },
   {
     label: "LOG // 005",
+    category: "LUNA / PRODUCT",
     title: "Making LUNA Easier to Explain",
     body: "One of the harder parts of building LUNA has been explaining what it is without drowning people in architecture. The current focus is turning features like persistent knowledge, planning, research, decision history, and controlled actions into language that makes sense even if you don’t work in AI.",
   },
   {
     label: "LOG // 006",
+    category: "LUNA / AUTH",
     title: "Untangling Authentication Failures",
     body: "What looked like a simple login problem turned into several different failures: stale browser tokens causing 401s, missing trusted authentication context causing 403s, and invalid configuration producing 500s. Fixing it meant separating browser authentication from CLI and automation access instead of trying to make one mechanism handle everything.",
   },
   {
     label: "LOG // 007",
+    category: "LUNA / DATA",
     title: "Making Migrations the Only Path",
     body: "LUNA accumulated enough persistence that database setup could no longer rely on convenient shortcuts. Moving fully to Alembic meant removing old create_all behavior, reconciling legacy databases, testing fresh installs and upgrades separately, and making one system responsible for schema evolution. Boring was the goal.",
   },
   {
     label: "LOG // 008",
+    category: "LUNA / CONSISTENCY",
     title: "Protecting Multi-Step State",
     body: "Planning, memory, imports, decisions, and audit history often touch multiple pieces of durable state. That raised a less-visible problem: what happens when the third write succeeds and the fourth fails? A lot of time went into classifying workflows as atomic, recoverable, or idempotent so a crash doesn’t quietly leave LUNA believing two different versions of reality.",
   },
   {
     label: "LOG // 009",
+    category: "LUNA / APPROVAL",
     title: "Putting Approval in the Execution Path",
     body: "“Ask before doing something” sounds simple until actions can come from planners, tools, queues, and automated workflows. Approval had to become part of the execution path itself instead of a decorative confirmation screen. If LUNA says an action requires permission, there shouldn’t be a second path around it.",
   },
   {
     label: "LOG // 010",
+    category: "LUNA / KNOWLEDGE",
     title: "Finding the Knowledge Vault in Pieces",
     body: "One of the stranger parts of a large solo project is discovering that a feature you’re planning already exists in pieces across the codebase. The Knowledge Vault and graph work became less about building something new and more about tracing persistence, APIs, provenance, projects, memory, and UI to figure out what was actually missing.",
   },
   {
     label: "LOG // 011",
+    category: "LUNA / DESKTOP",
     title: "Making LUNA Launch Like Software",
     body: "A program that works after opening a terminal, activating an environment, starting services, and remembering the right command is not a desktop application. Turning LUNA into something that can launch like normal software meant dealing with per-user storage, process locking, readiness checks, duplicate launches, clean shutdowns, optional services, and eventually an installer.",
   },
   {
     label: "LOG // 012",
+    category: "LUNA / PLATFORM",
     title: "Exposing Cross-Platform Assumptions",
     body: "Windows is the primary development environment, but LUNA isn’t supposed to be trapped there. Even something as basic as ensuring only one instance is running required different locking implementations on Windows and Unix-like systems. Cross-platform support has repeatedly meant finding assumptions that were invisible until another operating system was considered.",
   },
   {
     label: "LOG // 013",
+    category: "LUNA / TESTING",
     title: "Keeping a Large Test Suite Useful",
     body: "A large test suite is useful until every small implementation spends most of its time running tests that have nothing to do with the change. LUNA eventually crossed well over a thousand tests, which forced a better strategy: focused tests while developing, neighboring regression tests where risk exists, and the full suite when the implementation needs final validation.",
   },
   {
     label: "LOG // 014",
+    category: "LUNA / UX",
     title: "Explaining Features in Human Terms",
     body: "LUNA has persistent memory, planning, research, provenance, controlled actions, a Decision Journal, knowledge systems, and more. Listing those features is easy. Explaining why they matter to someone who doesn’t care about AI architecture has been surprisingly difficult. A lot of the current work is learning how to describe the system in terms of what it actually changes for the person using it.",
   },
   {
     label: "LOG // 015",
+    category: "LUNA / RELEASE",
     title: "Treating Restraint as Engineering",
     body: "Possibly the hardest recurring problem has been deciding when something belongs in the current release and when it belongs later. LUNA can always support one more feature, one more integration, or one more improvement. Getting toward a real release has required treating restraint as part of the engineering work instead of assuming more code always means more progress.",
   },
 ];
 ---
 
-<section id="build-log" class="build-log" aria-labelledby="build-log-title">
+<section
+  id="build-log"
+  class="build-log"
+  aria-labelledby="build-log-title"
+  data-build-log
+>
   <div class="build-log__inner container">
-    <div class="build-log__readout" aria-hidden="true">
-      <span>LOG INDEX // 015</span>
-      <span>ENTRIES // ACTIVE</span>
+    <div class="build-log__heading">
+      <StatusLabel label="Build log // 15 entries" />
+      <h2 id="build-log-title">Build Log</h2>
+      <p>Notes from what worked, what broke, and what it took to build it.</p>
     </div>
 
-    <div class="build-log__content">
-      <StatusLabel label="Build log // Field notes" />
-      <h2 id="build-log-title">The decisions behind the work.</h2>
-      <p>
-        Short records from building MPI and LUNA—the work, the friction, and
-        what changed.
-      </p>
-    </div>
-
-    <ol class="build-log__entries">
-      {
-        entries.map((entry) => (
-          <li>
-            <article>
-              <p class="build-log__entry-label">{entry.label}</p>
+    <div class="build-log__workspace">
+      <div class="build-log__reader" aria-live="polite" aria-atomic="true">
+        {
+          entries.map((entry, index) => (
+            <article
+              class="build-log__entry"
+              id={`build-log-entry-${index + 1}`}
+              data-log-panel={index}
+              hidden={index !== entries.length - 1}
+            >
+              <div class="build-log__entry-readout">
+                <p>{entry.label}</p>
+                <p>{entry.category}</p>
+              </div>
               <h3>{entry.title}</h3>
-              <p>{entry.body}</p>
+              <p class="build-log__entry-body">{entry.body}</p>
             </article>
-          </li>
-        ))
-      }
-    </ol>
+          ))
+        }
+
+        <div class="build-log__controls" aria-label="Build log navigation">
+          <button type="button" data-log-previous>← Previous</button>
+          <p data-log-position>15 / 15</p>
+          <button type="button" data-log-next disabled>Next →</button>
+        </div>
+      </div>
+
+      <nav class="build-log__index" aria-label="Build log index">
+        <p class="build-log__index-label">Log index // 15 entries</p>
+        <ol reversed>
+          {
+            [...entries].reverse().map((entry, reverseIndex) => {
+              const index = entries.length - reverseIndex - 1;
+              const number = String(index + 1).padStart(3, "0");
+              const selected = index === entries.length - 1;
+              return (
+                <li>
+                  <button
+                    type="button"
+                    data-log-select={index}
+                    aria-pressed={selected ? "true" : "false"}
+                    aria-controls={`build-log-entry-${index + 1}`}
+                  >
+                    <span class="build-log__index-number">{number}</span>
+                    <span class="build-log__index-title">{entry.title}</span>
+                    <span class="build-log__index-category">
+                      {entry.category}
+                    </span>
+                  </button>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </nav>
+    </div>
   </div>
 </section>
+
+<noscript>
+  <style>
+    [data-build-log] [data-log-panel][hidden] {
+      display: block;
+    }
+
+    [data-build-log] .build-log__controls,
+    [data-build-log] .build-log__index {
+      display: none;
+    }
+  </style>
+</noscript>
 
 <style>
   .build-log {
@@ -118,11 +186,8 @@ const entries = [
     border-block: 1px solid var(--color-border);
     background: var(--color-surface);
   }
-
   .build-log__inner {
     position: relative;
-    display: grid;
-    gap: var(--space-6);
     padding-block: clamp(var(--space-5), 5vw, var(--space-7));
     overflow: hidden;
     border: 1px solid var(--color-border);
@@ -130,7 +195,6 @@ const entries = [
     background: var(--color-canvas);
     box-shadow: var(--shadow-surface);
   }
-
   .build-log__inner::before {
     position: absolute;
     inset-block-start: 0;
@@ -142,57 +206,41 @@ const entries = [
     content: "";
     pointer-events: none;
   }
-
-  .build-log__readout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3) var(--space-5);
-    align-content: start;
-    color: var(--color-text-muted);
-    font-family: var(--font-technical);
-    font-size: 0.6875rem;
-    letter-spacing: 0.07em;
-  }
-
-  .build-log__content {
+  .build-log__heading {
     max-width: 46rem;
   }
-
   h2 {
     margin-block-start: var(--space-5);
     font-size: clamp(2.25rem, 6vw, 4.5rem);
     letter-spacing: -0.05em;
     line-height: 1;
   }
-
-  .build-log__content > p {
+  .build-log__heading > p {
     max-width: 40rem;
     margin-block-start: var(--space-5);
     color: var(--color-text-muted);
   }
-
-  .build-log__entries {
+  .build-log__workspace {
     display: grid;
-    grid-column: 1 / -1;
-    gap: var(--space-4);
-    margin: var(--space-3) 0 0;
-    padding: 0;
-    list-style: none;
+    gap: var(--space-6);
+    margin-block-start: var(--space-7);
   }
-
-  .build-log__entries li {
+  .build-log__reader,
+  .build-log__index {
     min-width: 0;
-  }
-
-  .build-log__entries article {
-    height: 100%;
-    padding: clamp(var(--space-4), 4vw, var(--space-5));
     border: 1px solid var(--color-border);
     border-radius: var(--radius-medium);
     background: var(--color-surface);
   }
-
-  .build-log__entry-label {
+  .build-log__reader {
+    align-self: start;
+    padding: clamp(var(--space-5), 5vw, var(--space-7));
+  }
+  .build-log__entry-readout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
     color: var(--color-accent-highlight);
     font-family: var(--font-technical);
     font-size: 0.6875rem;
@@ -200,34 +248,160 @@ const entries = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-
   h3 {
-    margin-block-start: var(--space-3);
-    font-size: clamp(1.25rem, 3vw, 1.625rem);
-    line-height: 1.2;
+    margin-block-start: var(--space-5);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    letter-spacing: -0.035em;
+    line-height: 1.05;
   }
-
-  article > p:last-child {
-    margin-block-start: var(--space-4);
+  .build-log__entry-body {
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+  .build-log__controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+    margin-block-start: var(--space-7);
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--color-border);
+  }
+  .build-log__controls button,
+  .build-log__index button {
+    min-height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    font: inherit;
+    cursor: pointer;
+  }
+  .build-log__controls button {
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .build-log__controls button:first-child {
+    justify-self: start;
+  }
+  .build-log__controls button:last-child {
+    justify-self: end;
+  }
+  .build-log__controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+  .build-log__controls p,
+  .build-log__index-label {
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .build-log__index {
+    align-self: start;
+    padding: var(--space-4);
+  }
+  .build-log__index-label {
+    padding: var(--space-2) var(--space-2) var(--space-4);
+  }
+  .build-log__index ol {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .build-log__index button {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-3);
+    text-align: start;
+  }
+  .build-log__index button:hover,
+  .build-log__index button[aria-pressed="true"] {
+    border-color: var(--color-accent-highlight);
+    background: rgb(115 71 216 / 12%);
+  }
+  .build-log__index-number,
+  .build-log__index-category {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .build-log__index-number {
+    grid-row: 1 / 3;
+  }
+  .build-log__index-title {
+    min-width: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .build-log__index-category {
     color: var(--color-text-muted);
   }
-
   @media (min-width: 52rem) {
-    .build-log__inner {
-      grid-template-columns: minmax(10rem, 0.35fr) minmax(0, 1fr);
+    .build-log__workspace {
+      grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
       gap: var(--space-7);
     }
-
-    .build-log__readout {
-      flex-direction: column;
-    }
-
-    .build-log__entries {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .build-log__entries li:first-child {
-      grid-column: 1 / -1;
+    .build-log__index {
+      max-height: 42rem;
+      overflow-y: auto;
     }
   }
 </style>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-build-log]");
+
+  if (root) {
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-log-panel]")];
+    const selectors = [
+      ...root.querySelectorAll<HTMLButtonElement>("[data-log-select]"),
+    ];
+    const previous = root.querySelector<HTMLButtonElement>(
+      "[data-log-previous]",
+    );
+    const next = root.querySelector<HTMLButtonElement>("[data-log-next]");
+    const position = root.querySelector<HTMLElement>("[data-log-position]");
+    let selectedIndex = panels.length - 1;
+
+    const selectLog = (index: number) => {
+      if (index < 0 || index >= panels.length) return;
+
+      selectedIndex = index;
+      panels.forEach((panel, panelIndex) => {
+        panel.hidden = panelIndex !== selectedIndex;
+      });
+      selectors.forEach((selector) => {
+        selector.setAttribute(
+          "aria-pressed",
+          String(Number(selector.dataset.logSelect) === selectedIndex),
+        );
+      });
+
+      if (previous) previous.disabled = selectedIndex === 0;
+      if (next) next.disabled = selectedIndex === panels.length - 1;
+      if (position)
+        position.textContent = `${selectedIndex + 1} / ${panels.length}`;
+    };
+
+    selectors.forEach((selector) => {
+      selector.addEventListener("click", () => {
+        selectLog(Number(selector.dataset.logSelect));
+      });
+    });
+    previous?.addEventListener("click", () => selectLog(selectedIndex - 1));
+    next?.addEventListener("click", () => selectLog(selectedIndex + 1));
+  }
+</script>

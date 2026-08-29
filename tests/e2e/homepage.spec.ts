@@ -60,7 +60,7 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("header")).toHaveCount(1);
-  await expect(page.locator("nav")).toHaveCount(1);
+  await expect(page.locator("header nav")).toHaveCount(1);
   await expect(page.locator("main")).toHaveCount(1);
   await expect(page.locator("footer")).toHaveCount(1);
   await expect(page.locator("h1")).toHaveCount(1);
@@ -92,29 +92,16 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   }
 });
 
-test("renders fifteen build log entries in sequence", async ({ page }) => {
+test("build log reader preserves and navigates fifteen entries", async ({
+  page,
+}) => {
   await page.goto("/");
 
   const buildLog = page.locator("#build-log");
   await expect(buildLog).toBeVisible();
   await expect(buildLog.locator("article")).toHaveCount(15);
-  await expect(buildLog.locator(".build-log__entry-label")).toHaveText([
-    "LOG // 001",
-    "LOG // 002",
-    "LOG // 003",
-    "LOG // 004",
-    "LOG // 005",
-    "LOG // 006",
-    "LOG // 007",
-    "LOG // 008",
-    "LOG // 009",
-    "LOG // 010",
-    "LOG // 011",
-    "LOG // 012",
-    "LOG // 013",
-    "LOG // 014",
-    "LOG // 015",
-  ]);
+  const indexButtons = buildLog.locator("[data-log-select]");
+  await expect(indexButtons).toHaveCount(15);
   await expect(buildLog.locator("h3")).toHaveText([
     "Building Major Problem Industries",
     "Getting the Site Production-Ready",
@@ -132,6 +119,42 @@ test("renders fifteen build log entries in sequence", async ({ page }) => {
     "Explaining Features in Human Terms",
     "Treating Restraint as Engineering",
   ]);
+
+  const newest = buildLog.locator('[data-log-select="14"]');
+  await expect(newest).toHaveAttribute("aria-pressed", "true");
+  await expect(buildLog.locator('[data-log-panel="14"]')).toBeVisible();
+  await expect(buildLog.locator('[data-log-panel="14"] h3')).toHaveText(
+    "Treating Restraint as Engineering",
+  );
+
+  const initialBody = await buildLog
+    .locator('[data-log-panel="14"] .build-log__entry-body')
+    .textContent();
+  const oldest = buildLog.locator('[data-log-select="0"]');
+  await oldest.click();
+  await expect(oldest).toHaveAttribute("aria-pressed", "true");
+  await expect(buildLog.locator('[data-log-panel="0"] h3')).toHaveText(
+    "Building Major Problem Industries",
+  );
+  expect(
+    await buildLog
+      .locator('[data-log-panel="0"] .build-log__entry-body')
+      .textContent(),
+  ).not.toBe(initialBody);
+
+  const previous = buildLog.getByRole("button", { name: "Previous" });
+  const next = buildLog.getByRole("button", { name: "Next" });
+  await expect(previous).toBeDisabled();
+  await expect(next).toBeEnabled();
+  await next.click();
+  await expect(buildLog.locator('[data-log-panel="1"]')).toBeVisible();
+
+  await newest.focus();
+  await page.keyboard.press("Enter");
+  await expect(newest).toHaveAttribute("aria-pressed", "true");
+  await expect(next).toBeDisabled();
+  await previous.click();
+  await expect(buildLog.locator('[data-log-panel="13"]')).toBeVisible();
 });
 
 test("navigation links resolve to real targets in document order", async ({
