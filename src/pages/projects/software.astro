@@ -1,0 +1,215 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const description =
+  "Software, AI, websites, and technical systems built under Major Problem Industries.";
+
+const projects = [
+  {
+    number: "01",
+    title: "LUNA",
+    type: "Flagship AI System",
+    description:
+      "LUNA is a persistent AI system being built around continuity, knowledge, planning, research, decision history, and controlled action.",
+    status: "Active development",
+    href: "/luna",
+  },
+  {
+    number: "02",
+    title: "Major Problem Industries",
+    type: "Production Website",
+    description:
+      "A custom Astro and TypeScript site built from scratch around performance, accessibility, security, responsive design, and production deployment through Cloudflare.",
+    status: "Live",
+    href: "/projects/mpi-website",
+  },
+  {
+    number: "03",
+    title: "Motionless Moments Photography",
+    type: "Photography Website",
+    description:
+      "A dark, visual-first photography site built around portfolio browsing, weddings, couples, and a brand identity that deliberately avoids the typical bright wedding-photography look.",
+    status: "In development",
+    href: "/projects/motionless-moments",
+  },
+];
+---
+
+<BaseLayout title="AI & Software" description={description}>
+  <main id="main-content" class="projects-page" tabindex="-1">
+    <header class="projects-hero">
+      <div class="container">
+        <a class="back-link" href="/">← Major Problem Industries</a>
+        <p class="technical-label">Projects // AI & Software</p>
+        <h1>AI & Software</h1>
+        <p>{description}</p>
+      </div>
+    </header>
+
+    <section
+      class="project-index container"
+      aria-labelledby="project-index-title"
+    >
+      <div class="project-index__heading">
+        <p class="technical-label">Index // 03 projects</p>
+        <h2 id="project-index-title">Built and in progress</h2>
+      </div>
+      <ol>
+        {
+          projects.map((project) => (
+            <li>
+              <article class="project-card">
+                <div class="project-card__readout">
+                  <p>{project.number}</p>
+                  <p>Status // {project.status}</p>
+                </div>
+                <p class="project-card__type">{project.type}</p>
+                <h3>{project.title}</h3>
+                <p class="project-card__description">{project.description}</p>
+                <a href={project.href}>View Project →</a>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .projects-page {
+    overflow: hidden;
+    background:
+      radial-gradient(
+        circle at 82% 8%,
+        rgb(115 71 216 / 12%),
+        transparent 28rem
+      ),
+      var(--color-canvas);
+  }
+  .projects-hero {
+    padding-block: var(--space-5) clamp(var(--space-8), 10vw, 8rem);
+    border-block-end: 1px solid var(--color-border);
+  }
+  .back-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+  .technical-label,
+  .project-card__readout,
+  .project-card__type {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .projects-hero .technical-label {
+    margin-block-start: clamp(var(--space-7), 8vw, 7rem);
+  }
+  h1 {
+    max-width: 60rem;
+    margin-block-start: var(--space-3);
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    letter-spacing: -0.065em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+  .projects-hero p:last-child {
+    max-width: 42rem;
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  }
+  .project-index {
+    padding-block: clamp(var(--space-8), 10vw, 8rem);
+  }
+  .project-index__heading {
+    max-width: 42rem;
+  }
+  h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .project-index ol {
+    display: grid;
+    gap: var(--space-5);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .project-card {
+    position: relative;
+    display: flex;
+    min-height: 27rem;
+    flex-direction: column;
+    padding: clamp(var(--space-5), 5vw, var(--space-7));
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background:
+      linear-gradient(90deg, rgb(115 71 216 / 4%) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 2rem 100%;
+    box-shadow: var(--shadow-surface);
+  }
+  .project-card::before {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: var(--space-6);
+    width: 4rem;
+    height: 1px;
+    background: var(--color-accent-highlight);
+    content: "";
+  }
+  .project-card__readout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+  }
+  .project-card__type {
+    margin-block-start: var(--space-7);
+    color: var(--color-text-muted);
+  }
+  h3 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+  .project-card__description {
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+  }
+  .project-card a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    align-self: flex-start;
+    margin-block-start: auto;
+    padding-block-start: var(--space-6);
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  @media (min-width: 48rem) {
+    .project-index ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .project-index li:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

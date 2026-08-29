@@ -1,0 +1,131 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const description =
+  "A dark, visual-first photography website for Motionless Moments Photography.";
+---
+
+<BaseLayout title="Motionless Moments Photography" description={description}>
+  <main id="main-content" class="case-study" tabindex="-1">
+    <div class="case-study__inner container">
+      <a class="back-link" href="/projects/software">← AI & Software Projects</a
+      >
+      <div class="case-study__heading">
+        <p class="technical-label">Project // Photography website</p>
+        <h1>Motionless Moments Photography</h1>
+        <p>{description}</p>
+        <p class="status">Status // In development</p>
+      </div>
+      <section aria-labelledby="case-study-title">
+        <p class="technical-label">Case study // In progress</p>
+        <h2 id="case-study-title">The visual case study is being prepared.</h2>
+        <p>
+          Future updates will document the project’s purpose, goals, design
+          decisions, major challenges, screenshots, lessons, and current status.
+        </p>
+        <div
+          class="capture"
+          role="img"
+          aria-label="Screenshot placeholder for Motionless Moments Photography"
+        >
+          <span>Capture slot</span><strong>Photography website</strong><span
+            >Screenshot coming soon</span
+          >
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .case-study {
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+      radial-gradient(
+        circle at 78% 12%,
+        rgb(118 45 66 / 18%),
+        transparent 30rem
+      ),
+      var(--color-canvas);
+  }
+  .case-study__inner {
+    padding-block: var(--space-5) clamp(var(--space-8), 10vw, 8rem);
+  }
+  .back-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+  .technical-label,
+  .status {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .case-study__heading {
+    max-width: 58rem;
+    padding-block: clamp(var(--space-7), 9vw, 7rem);
+  }
+  h1 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(3rem, 10vw, 7rem);
+    letter-spacing: -0.06em;
+    line-height: 0.92;
+  }
+  .case-study__heading > p:not(.technical-label, .status),
+  section > p:not(.technical-label) {
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+  }
+  .status {
+    margin-block-start: var(--space-6);
+  }
+  section {
+    padding-block-start: var(--space-7);
+    border-block-start: 1px solid var(--color-border);
+  }
+  h2 {
+    max-width: 48rem;
+    margin-block-start: var(--space-3);
+    font-size: clamp(2rem, 6vw, 4rem);
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+  section > p:not(.technical-label) {
+    max-width: 44rem;
+  }
+  .capture {
+    display: grid;
+    min-height: 18rem;
+    aspect-ratio: 16 / 9;
+    align-content: space-between;
+    margin-block-start: var(--space-7);
+    padding: clamp(var(--space-4), 4vw, var(--space-6));
+    border: 1px solid rgb(172 124 255 / 24%);
+    border-radius: var(--radius-large);
+    background:
+      linear-gradient(rgb(172 124 255 / 5%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(172 124 255 / 5%) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 2rem 2rem;
+  }
+  .capture span {
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .capture strong {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+  }
+</style>

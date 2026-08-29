@@ -4,7 +4,8 @@ const workDirections = [
     title: "AI & Software",
     status: "In development",
     description:
-      "Systems that retain context, support decisions, and turn research into working tools. LUNA is the current flagship effort.",
+      "Software, AI systems, websites, and the tools built to solve real problems.",
+    href: "/projects/software",
   },
   {
     title: "Automation",
@@ -48,6 +49,11 @@ const workDirections = [
             <h3>{direction.title}</h3>
             <p class="workshop-card__description">{direction.description}</p>
             <p class="workshop-card__status">Status // {direction.status}</p>
+            {direction.href && (
+              <a class="workshop-card__link" href={direction.href}>
+                View Projects →
+              </a>
+            )}
           </li>
         ))
       }
@@ -145,6 +151,21 @@ const workDirections = [
     margin-block-start: auto;
     padding-block-start: var(--space-5);
     color: var(--color-text-muted);
+  }
+
+  .workshop-card__link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    align-self: flex-start;
+    margin-block-start: var(--space-3);
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
   @media (min-width: 42rem) {
