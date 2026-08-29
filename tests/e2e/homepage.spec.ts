@@ -92,6 +92,48 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   }
 });
 
+test("renders fifteen build log entries in sequence", async ({ page }) => {
+  await page.goto("/");
+
+  const buildLog = page.locator("#build-log");
+  await expect(buildLog).toBeVisible();
+  await expect(buildLog.locator("article")).toHaveCount(15);
+  await expect(buildLog.locator(".build-log__entry-label")).toHaveText([
+    "LOG // 001",
+    "LOG // 002",
+    "LOG // 003",
+    "LOG // 004",
+    "LOG // 005",
+    "LOG // 006",
+    "LOG // 007",
+    "LOG // 008",
+    "LOG // 009",
+    "LOG // 010",
+    "LOG // 011",
+    "LOG // 012",
+    "LOG // 013",
+    "LOG // 014",
+    "LOG // 015",
+  ]);
+  await expect(buildLog.locator("h3")).toHaveText([
+    "Building Major Problem Industries",
+    "Getting the Site Production-Ready",
+    "Cloudflare Fought Back",
+    "Giving LUNA Its Own Space",
+    "Making LUNA Easier to Explain",
+    "Untangling Authentication Failures",
+    "Making Migrations the Only Path",
+    "Protecting Multi-Step State",
+    "Putting Approval in the Execution Path",
+    "Finding the Knowledge Vault in Pieces",
+    "Making LUNA Launch Like Software",
+    "Exposing Cross-Platform Assumptions",
+    "Keeping a Large Test Suite Useful",
+    "Explaining Features in Human Terms",
+    "Treating Restraint as Engineering",
+  ]);
+});
+
 test("navigation links resolve to real targets in document order", async ({
   page,
 }) => {
