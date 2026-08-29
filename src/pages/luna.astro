@@ -159,20 +159,16 @@ const showcase = [
     <section class="problem container" aria-labelledby="problem-title">
       <p class="technical-label">The problem // Fragmented context</p>
       <h2 id="problem-title">
-        Useful work should not vanish between conversations.
+        Useful work shouldn’t disappear when the conversation ends.
       </h2>
-      <div
-        class="problem__steps"
-        aria-label="A common fragmented AI experience"
-      >
-        <span>You ask something.</span><span>You get an answer.</span><span
-          >You reconstruct the context later.</span
-        >
-      </div>
       <p>
-        AI can be useful while the surrounding experience remains fragmented.
-        LUNA is being built around continuity: keeping knowledge, research,
-        plans, and decisions connected as work develops.
+        LUNA is being built to keep the important parts of the work
+        together—what you’ve learned, what you’ve decided, what you’re planning,
+        and what still needs to happen next.
+      </p>
+      <p>
+        Instead of treating every interaction like a fresh start, LUNA is
+        designed around continuity so the work can keep moving forward.
       </p>
     </section>
 
@@ -421,23 +417,12 @@ const showcase = [
     letter-spacing: -0.05em;
     line-height: 1;
   }
-  .problem > p:last-child,
+  .problem > p:not(.technical-label),
   .ownership p,
   .project-status p {
     margin-block-start: var(--space-5);
     color: var(--color-text-muted);
     font-size: 1.0625rem;
-  }
-  .problem__steps {
-    display: grid;
-    gap: var(--space-3);
-    margin-block-start: var(--space-7);
-  }
-  .problem__steps span {
-    padding: var(--space-4);
-    border-inline-start: 2px solid var(--color-accent-highlight);
-    background: rgb(16 14 21 / 70%);
-    font-weight: 700;
   }
   .system-flow,
   .demos {
@@ -509,7 +494,6 @@ const showcase = [
     text-transform: uppercase;
   }
   @media (min-width: 38rem) {
-    .problem__steps,
     .showcase__grid,
     .demos__grid,
     .flow-list {
@@ -522,7 +506,6 @@ const showcase = [
     .project-status {
       grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
     }
-    .problem__steps,
     .showcase__grid,
     .demos__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
