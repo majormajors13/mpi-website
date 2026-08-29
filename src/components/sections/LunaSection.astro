@@ -8,24 +8,29 @@ import StatusLabel from "../StatusLabel.astro";
   <div class="luna__inner container">
     <div class="luna__introduction">
       <StatusLabel label="Project // LUNA" />
+
       <p class="luna__name">Luminary Unit of Nuisance Abatement</p>
+
       <h2 id="luna-title">LUNA</h2>
+
       <p class="luna__lead">
-        An AI system being built to become a long-term working partner—not
-        another disposable chat window.
+        LUNA is an AI system designed to stay with the work, not just answer one
+        question and forget the rest.
       </p>
+
       <p class="luna__description">
-        LUNA is designed to remember and organize useful context, carry work
-        across projects, and help with planning, research, and reasoning while
-        preserving a clear history of decisions and actions. Over time,
-        specialized capabilities can work together under deliberate user
-        control.
+        It remembers useful context, keeps track of ongoing work, and helps with
+        planning, research, reasoning, and the decisions that come with it. This
+        is only the surface.
       </p>
 
       <ul class="luna__statuses" aria-label="LUNA project status">
         <li>Status // Active development</li>
         <li>Source // Proprietary</li>
+        <li>Built // Independently</li>
       </ul>
+
+      <a class="luna__cta" href="/luna"> Explore LUNA </a>
     </div>
 
     <div class="luna__visual">
@@ -40,38 +45,6 @@ import StatusLabel from "../StatusLabel.astro";
           quality={85}
           loading="lazy"
         />
-      </div>
-
-      <div class="luna__details">
-        <p class="luna__details-label">System direction</p>
-        <dl class="luna__features">
-          <div>
-            <dt>Continuity</dt>
-            <dd>
-              Useful knowledge and project context designed to persist over
-              time.
-            </dd>
-          </div>
-          <div>
-            <dt>Clear history</dt>
-            <dd>
-              Decisions and controlled actions kept understandable and
-              traceable.
-            </dd>
-          </div>
-          <div>
-            <dt>Specialized help</dt>
-            <dd>
-              Planning, research, and reasoning that can grow into coordinated
-              capabilities.
-            </dd>
-          </div>
-        </dl>
-        <p class="luna__solo-note">
-          Built independently as the flagship project of Major Problem
-          Industries.
-        </p>
-        <p class="luna__next">More on LUNA soon</p>
       </div>
     </div>
   </div>
@@ -198,65 +171,35 @@ import StatusLabel from "../StatusLabel.astro";
   .luna__logo-wrap {
     width: min(78vw, 24rem);
     margin-inline: auto;
+    overflow: hidden;
+    border-radius: 1.5rem;
+  }
+
+  .luna__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    margin-block-start: var(--space-6);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-accent-highlight);
+    border-radius: 999px;
+    color: var(--color-text-primary);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .luna__cta:hover {
+    background: rgb(172 124 255 / 10%);
   }
 
   .luna__logo {
     width: 100%;
     height: auto;
-  }
-
-  .luna__details::before {
-    position: absolute;
-    inset-block-start: -1px;
-    inset-inline-start: var(--space-6);
-    width: 5rem;
-    height: 1px;
-    background: var(--color-accent-highlight);
-    box-shadow: var(--shadow-accent);
-    content: "";
-    pointer-events: none;
-  }
-
-  .luna__details-label,
-  .luna__next {
-    color: var(--color-accent-highlight);
-    font-family: var(--font-technical);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-
-  .luna__features {
-    display: grid;
-    gap: var(--space-5);
-    margin: var(--space-5) 0 0;
-  }
-
-  .luna__features div {
-    padding-block-start: var(--space-4);
-    border-block-start: 1px solid var(--color-border);
-  }
-
-  .luna__features dt {
-    font-weight: 700;
-  }
-
-  .luna__features dd {
-    margin: var(--space-2) 0 0;
-    color: var(--color-text-muted);
-  }
-
-  .luna__solo-note {
-    margin-block-start: var(--space-6);
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-  }
-
-  .luna__next {
-    margin-block-start: var(--space-6);
-    padding-block-start: var(--space-4);
-    border-block-start: 1px solid var(--color-border);
   }
 
   @media (min-width: 58rem) {
