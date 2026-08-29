@@ -324,13 +324,13 @@ test("publishes production metadata and crawler assets", async ({
     "content",
     "https://majorproblemindustries.com/social-preview.png",
   );
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute(
-    "href",
-    "/favicon.svg",
-  );
+  const faviconHref = await page
+    .locator('link[rel="icon"]')
+    .getAttribute("href");
+  expect(faviconHref).toMatch(/\/_astro\/favicon\.[\w-]+\.png$/);
 
   expect((await request.get("/social-preview.png")).ok()).toBe(true);
-  expect((await request.get("/favicon.svg")).ok()).toBe(true);
+  expect((await request.get(faviconHref!)).ok()).toBe(true);
   const robots = await request.get("/robots.txt");
   expect(robots.ok()).toBe(true);
   expect(await robots.text()).toContain("Allow: /");
