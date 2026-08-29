@@ -1,0 +1,96 @@
+---
+import CapturePlaceholder from "./CapturePlaceholder.astro";
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  points: string[];
+  captureTitle: string;
+  captureCaption: string;
+  reverse?: boolean;
+}
+const {
+  id,
+  label,
+  title,
+  description,
+  points,
+  captureTitle,
+  captureCaption,
+  reverse = false,
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={["luna-feature", { "luna-feature--reverse": reverse }]}
+  aria-labelledby={`${id}-title`}
+>
+  <div class="luna-feature__copy">
+    <p class="luna-feature__label">{label}</p>
+    <h2 id={`${id}-title`}>{title}</h2>
+    <p class="luna-feature__description">{description}</p>
+    <ul>{points.map((point) => <li>{point}</li>)}</ul>
+  </div>
+  <CapturePlaceholder title={captureTitle} caption={captureCaption} />
+</section>
+
+<style>
+  .luna-feature {
+    display: grid;
+    align-items: center;
+    gap: clamp(var(--space-6), 7vw, var(--space-8));
+    padding-block: clamp(var(--space-7), 9vw, 7rem);
+    border-block-start: 1px solid var(--color-border);
+  }
+  .luna-feature__copy {
+    max-width: 34rem;
+  }
+  .luna-feature__label {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2rem, 6vw, 4rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .luna-feature__description {
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+  }
+  @media (min-width: 52rem) {
+    .luna-feature {
+      grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.2fr);
+    }
+    .luna-feature--reverse > :first-child {
+      order: 2;
+    }
+    .luna-feature--reverse {
+      grid-template-columns: minmax(22rem, 1.2fr) minmax(0, 0.8fr);
+    }
+  }
+</style>

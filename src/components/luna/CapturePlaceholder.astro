@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+  caption?: string;
+  kind?: "capture" | "video" | "walkthrough";
+  compact?: boolean;
+}
+
+const { title, caption, kind = "capture", compact = false } = Astro.props;
+const labels = {
+  capture: "Capture slot",
+  video: "Video slot",
+  walkthrough: "Walkthrough slot",
+};
+---
+
+<figure class:list={["capture", { "capture--compact": compact }]}>
+  <div class="capture__frame" aria-hidden="true">
+    <span class="capture__label">{labels[kind]}</span>
+    <span class="capture__name">{title}</span>
+    <span class="capture__pending">Coming soon</span>
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .capture {
+    min-width: 0;
+    margin: 0;
+  }
+  .capture__frame {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: 15rem;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    align-content: space-between;
+    padding: clamp(var(--space-4), 4vw, var(--space-6));
+    border: 1px solid rgb(172 124 255 / 24%);
+    border-radius: var(--radius-large);
+    background:
+      linear-gradient(rgb(172 124 255 / 5%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(172 124 255 / 5%) 1px, transparent 1px),
+      radial-gradient(
+        circle at 78% 24%,
+        rgb(115 71 216 / 18%),
+        transparent 42%
+      ),
+      rgb(11 9 15 / 92%);
+    background-size:
+      2rem 2rem,
+      2rem 2rem,
+      auto,
+      auto;
+    box-shadow: var(--shadow-surface);
+  }
+  .capture__frame::after {
+    position: absolute;
+    z-index: -1;
+    inset: 12% 9%;
+    border: 1px solid rgb(83 216 139 / 12%);
+    border-radius: var(--radius-medium);
+    content: "";
+  }
+  .capture__label,
+  .capture__pending {
+    width: max-content;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .capture__name {
+    align-self: center;
+    color: var(--color-text-primary);
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .capture__pending {
+    color: var(--color-accent-highlight);
+  }
+  figcaption {
+    margin-block-start: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  .capture--compact .capture__frame {
+    min-height: 12rem;
+    aspect-ratio: 4 / 3;
+  }
+</style>

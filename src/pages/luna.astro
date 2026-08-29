@@ -1,120 +1,499 @@
 ---
 import { Image } from "astro:assets";
 import lunaLogo from "../assets/logos/luna-logo.png";
+import CapturePlaceholder from "../components/luna/CapturePlaceholder.astro";
+import LunaFeatureSection from "../components/luna/LunaFeatureSection.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const description =
-  "A placeholder for the upcoming LUNA project showcase from Major Problem Industries.";
+  "LUNA is a persistent AI and knowledge project designed to retain context and connect research, planning, decisions, and controlled action.";
+
+const features = [
+  {
+    id: "continuity",
+    label: "Continuity // Persistent context",
+    title: "Keep the useful context",
+    description:
+      "LUNA is designed to keep relevant knowledge, conversations, research, and project context available over time, so ongoing work does not have to restart from zero.",
+    points: [
+      "Useful context",
+      "Knowledge organization",
+      "Imported information",
+    ],
+    captureTitle: "Knowledge Vault",
+    captureCaption:
+      "A future capture will show how retained information supports continuing work.",
+  },
+  {
+    id: "connections",
+    label: "Knowledge // Relationships",
+    title: "See how information connects",
+    description:
+      "Information rarely belongs in only one folder. LUNA is designed to relate knowledge across projects, topics, people, and decisions without requiring copies everywhere.",
+    points: ["Related knowledge", "Project context", "Multiple viewpoints"],
+    captureTitle: "Knowledge Graph",
+    captureCaption:
+      "A future capture will demonstrate connected knowledge in a consumer-facing view.",
+    reverse: true,
+  },
+  {
+    id: "planning",
+    label: "Work // Goals and planning",
+    title: "Turn a goal into next steps",
+    description:
+      "LUNA can help break larger goals into manageable work, keep track of what comes next, and preserve the reasoning and context behind a plan.",
+    points: ["Goals", "Tasks", "Plans", "Next steps"],
+    captureTitle: "Planner",
+    captureCaption:
+      "A future capture will show a real goal moving into an organized plan.",
+  },
+  {
+    id: "research",
+    label: "Research // Sources retained",
+    title: "Keep the source with the finding",
+    description:
+      "Research is more useful when its origin remains clear. LUNA is designed to preserve citations and provenance so findings can become part of ongoing work instead of disappearing into a one-off answer.",
+    points: [
+      "Research assistance",
+      "Citations",
+      "Provenance",
+      "Retained findings",
+    ],
+    captureTitle: "Research + citations",
+    captureCaption:
+      "A future capture will follow a finding from its source into project context.",
+    reverse: true,
+  },
+  {
+    id: "decisions",
+    label: "History // Decision Journal",
+    title: "Make important decisions understandable",
+    description:
+      "LUNA is designed so important decisions do not simply disappear behind the interface. Its history can preserve what happened, what information mattered, and the context behind the choice.",
+    points: ["Decision history", "Relevant context", "Traceability"],
+    captureTitle: "Decision Journal",
+    captureCaption:
+      "A future capture will show how a decision remains reviewable after the work moves on.",
+  },
+  {
+    id: "approval",
+    label: "Control // Approval required",
+    title: "Review before anything happens",
+    description:
+      "LUNA can prepare work and propose controlled actions, while important real-world steps can require explicit approval before they proceed.",
+    points: ["Action previews", "Explicit approval", "Visible execution"],
+    captureTitle: "Action approval",
+    captureCaption:
+      "A future capture will show a proposed action moving through review and approval.",
+    reverse: true,
+  },
+  {
+    id: "coordination",
+    label: "System // Coordinated capabilities",
+    title: "One experience for different kinds of work",
+    description:
+      "Different jobs need different kinds of help. LUNA is being built so research, planning, knowledge, and controlled actions can work together without making the user manage disconnected tools.",
+    points: ["Shared context", "Specialized help", "Connected workflows"],
+    captureTitle: "Coordinated workflow",
+    captureCaption:
+      "A future walkthrough will demonstrate several capabilities supporting one piece of work.",
+  },
+];
+
+const flow = [
+  "Knowledge",
+  "Research",
+  "Planning",
+  "Decisions",
+  "Approval",
+  "Action",
+  "History",
+];
+const showcase = [
+  ["Main workspace", "The central place where a user works with LUNA."],
+  ["Knowledge Vault", "Useful information retained for continuing work."],
+  ["Knowledge Graph", "Relationships across projects, topics, and decisions."],
+  ["Planner", "Goals, tasks, and the context behind next steps."],
+  ["Decision Journal", "A reviewable history of important choices."],
+  ["Approval workflow", "A controlled action prepared for explicit review."],
+];
 ---
 
 <BaseLayout title="LUNA" description={description}>
   <main id="main-content" class="luna-page" tabindex="-1">
-    <div class="luna-page__glow" aria-hidden="true"></div>
-    <div class="luna-page__content">
-      <div class="luna-page__logo-wrap">
-        <Image
-          class="luna-page__logo"
-          src={lunaLogo}
-          alt=""
-          widths={[280, 420, 640, 800]}
-          sizes="min(76vw, 22rem)"
-          format="webp"
-          quality={85}
-        />
+    <header class="luna-hero" aria-labelledby="luna-title">
+      <a class="luna-hero__back" href="/">← Major Problem Industries</a>
+      <div class="luna-hero__inner container">
+        <div class="luna-hero__copy">
+          <p class="technical-label">Project // LUNA</p>
+          <p class="luna-hero__name">Luminary Unit of Nuisance Abatement</p>
+          <h1 id="luna-title">LUNA</h1>
+          <p class="luna-hero__lead">
+            An AI system designed to stay with the work.
+          </p>
+          <p class="luna-hero__description">
+            LUNA retains useful context, follows ongoing work, and helps turn
+            information into decisions and controlled action instead of starting
+            over with every conversation.
+          </p>
+          <ul class="status-list" aria-label="LUNA project status">
+            <li>Active development</li><li>Proprietary</li><li>
+              Independently built
+            </li>
+          </ul>
+        </div>
+        <div class="luna-hero__logo-wrap">
+          <Image
+            class="luna-hero__logo"
+            src={lunaLogo}
+            alt=""
+            widths={[280, 420, 640, 800]}
+            sizes="(max-width: 52rem) min(76vw, 22rem), min(34vw, 25rem)"
+            format="webp"
+            quality={85}
+          />
+        </div>
       </div>
+    </header>
 
-      <div class="luna-page__copy">
-        <p class="luna-page__status">Project // LUNA</p>
-        <h1>LUNA</h1>
-        <p class="luna-page__name">Luminary Unit of Nuisance Abatement</p>
-        <p class="luna-page__message">
-          The full LUNA project showcase is being prepared.
-        </p>
-        <a class="luna-page__home" href="/">
-          Return to Major Problem Industries
-        </a>
+    <section class="problem container" aria-labelledby="problem-title">
+      <p class="technical-label">The problem // Fragmented context</p>
+      <h2 id="problem-title">
+        Useful work should not vanish between conversations.
+      </h2>
+      <div
+        class="problem__steps"
+        aria-label="A common fragmented AI experience"
+      >
+        <span>You ask something.</span><span>You get an answer.</span><span
+          >You reconstruct the context later.</span
+        >
       </div>
+      <p>
+        AI can be useful while the surrounding experience remains fragmented.
+        LUNA is being built around continuity: keeping knowledge, research,
+        plans, and decisions connected as work develops.
+      </p>
+    </section>
+
+    <div class="features container" aria-label="LUNA capabilities">
+      {features.map((feature) => <LunaFeatureSection {...feature} />)}
     </div>
+
+    <section class="system-flow" aria-labelledby="flow-title">
+      <div class="container">
+        <p class="technical-label">One connected system // Conceptual flow</p>
+        <h2 id="flow-title">
+          The work stays connected from context to history.
+        </h2>
+        <p class="section-intro">
+          These are not intended to be isolated features. Each part can support
+          the next while the useful history remains available.
+        </p>
+        <ol class="flow-list">{flow.map((step) => <li>{step}</li>)}</ol>
+      </div>
+    </section>
+
+    <section class="ownership container" aria-labelledby="ownership-title">
+      <div>
+        <p class="technical-label">Direction // Ownership and control</p><h2
+          id="ownership-title"
+        >
+          Built with personal ownership in mind.
+        </h2><p>
+          LUNA is following a local-first direction designed around
+          user-controlled data, rather than requiring every important part of
+          the experience to live entirely inside someone else’s black box. It
+          remains a proprietary project under active development.
+        </p>
+      </div>
+      <CapturePlaceholder
+        title="Local system"
+        caption="A public-safe diagram will be added when it can accurately represent the working system."
+      />
+    </section>
+
+    <section class="showcase container" aria-labelledby="showcase-title">
+      <p class="technical-label">Showcase // Real media in preparation</p>
+      <h2 id="showcase-title">A closer look at LUNA</h2>
+      <p class="section-intro">
+        These reserved spaces will hold real product captures. Each will show a
+        specific working surface without exposing the private codebase behind
+        it.
+      </p>
+      <div class="showcase__grid">
+        {
+          showcase.map(([title, caption]) => (
+            <CapturePlaceholder title={title} caption={caption} compact />
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="demos" aria-labelledby="demos-title">
+      <div class="container">
+        <p class="technical-label">Demonstrations // In preparation</p><h2
+          id="demos-title"
+        >
+          See LUNA work
+        </h2>
+        <p class="section-intro">
+          Short demonstrations are being prepared to show real workflows from
+          start to finish.
+        </p>
+        <div class="demos__grid">
+          <CapturePlaceholder
+            title="Workflow video"
+            kind="video"
+            compact
+          /><CapturePlaceholder
+            title="Animated product capture"
+            kind="video"
+            compact
+          /><CapturePlaceholder
+            title="Start-to-finish walkthrough"
+            kind="walkthrough"
+            compact
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="project-status container" aria-labelledby="status-title">
+      <div>
+        <p class="technical-label">Project status // Work continues</p><h2
+          id="status-title"
+        >
+          Independent, proprietary, and actively developed.
+        </h2>
+      </div>
+      <div>
+        <p>
+          LUNA is the flagship project built inside Major Problem Industries.
+          Public screenshots and demonstrations will document real capabilities
+          while the underlying source remains private.
+        </p><p>
+          This showcase will grow as those materials are prepared. No
+          speculative release date or public availability is being announced
+          here.
+        </p>
+      </div>
+    </section>
+
+    <footer class="luna-footer">
+      <div class="container">
+        <p class="technical-label">
+          MPI is the workshop. LUNA is the machine.
+        </p><h2>The work continues.</h2><a href="/"
+          >Return to Major Problem Industries</a
+        >
+      </div>
+    </footer>
   </main>
 </BaseLayout>
 
 <style>
   .luna-page {
-    position: relative;
-    isolation: isolate;
-    display: grid;
-    min-height: 100vh;
     overflow: hidden;
-    place-items: center;
-    padding: clamp(var(--space-7), 10vw, 8rem) var(--content-gutter);
     background:
       radial-gradient(
-        circle at 50% 28%,
-        rgb(172 124 255 / 12%),
-        transparent 28rem
+        circle at 80% 5%,
+        rgb(115 71 216 / 12%),
+        transparent 32rem
       ),
       var(--color-canvas);
   }
-
-  .luna-page__glow {
-    position: absolute;
-    z-index: -1;
-    width: min(75vw, 42rem);
-    aspect-ratio: 1;
-    border: 1px solid rgb(172 124 255 / 10%);
-    border-radius: 50%;
-    box-shadow: 0 0 8rem rgb(115 71 216 / 10%);
-  }
-
-  .luna-page__content {
-    display: grid;
-    width: min(100%, 58rem);
-    align-items: center;
-    gap: clamp(var(--space-6), 7vw, var(--space-8));
-    text-align: center;
-  }
-
-  .luna-page__logo-wrap {
-    width: min(76vw, 22rem);
-    margin-inline: auto;
-    overflow: hidden;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-surface), var(--shadow-accent);
-  }
-
-  .luna-page__logo {
-    width: 100%;
-    height: auto;
-  }
-
-  .luna-page__status,
-  .luna-page__name {
+  :global(.technical-label),
+  .luna-hero__name {
     color: var(--color-accent-highlight);
     font-family: var(--font-technical);
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-
-  h1 {
-    margin-block-start: var(--space-3);
-    font-size: clamp(4rem, 18vw, 8rem);
-    letter-spacing: -0.065em;
-    line-height: 0.9;
+  .luna-hero {
+    position: relative;
+    isolation: isolate;
+    min-height: min(58rem, 100vh);
+    padding-block: var(--space-5) clamp(var(--space-8), 10vw, 8rem);
+    border-block-end: 1px solid var(--color-border);
   }
-
-  .luna-page__name {
+  .luna-hero::before {
+    position: absolute;
+    z-index: -1;
+    inset: 8% -12rem auto auto;
+    width: 38rem;
+    height: 38rem;
+    border: 1px solid rgb(172 124 255 / 10%);
+    border-radius: 50%;
+    box-shadow: inset 0 0 6rem rgb(115 71 216 / 7%);
+    content: "";
+  }
+  .luna-hero__back {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    margin-inline-start: var(--content-gutter);
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+  .luna-hero__inner {
+    display: grid;
+    align-items: center;
+    gap: clamp(var(--space-7), 8vw, 7rem);
+    padding-block-start: clamp(var(--space-7), 8vw, 7rem);
+  }
+  .luna-hero__copy {
+    max-width: 42rem;
+  }
+  .luna-hero__name {
     margin-block-start: var(--space-4);
   }
-
-  .luna-page__message {
+  h1 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(4.5rem, 18vw, 10rem);
+    letter-spacing: -0.07em;
+    line-height: 0.84;
+  }
+  .luna-hero__lead {
+    max-width: 36rem;
+    margin-block-start: var(--space-6);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .luna-hero__description,
+  .section-intro {
+    max-width: 44rem;
     margin-block-start: var(--space-5);
     color: var(--color-text-muted);
-    font-size: clamp(1.125rem, 3vw, 1.375rem);
+    font-size: 1.0625rem;
   }
-
-  .luna-page__home {
+  .status-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .status-list li {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+  }
+  .luna-hero__logo-wrap {
+    width: min(76vw, 25rem);
+    margin-inline: auto;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    box-shadow:
+      var(--shadow-surface),
+      0 0 5rem rgb(115 71 216 / 20%);
+  }
+  .luna-hero__logo {
+    width: 100%;
+    height: auto;
+  }
+  .problem,
+  .showcase,
+  .project-status {
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+  }
+  .problem {
+    max-width: var(--content-width-reading);
+  }
+  .problem h2,
+  .system-flow h2,
+  .ownership h2,
+  .showcase h2,
+  .demos h2,
+  .project-status h2,
+  .luna-footer h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2.25rem, 7vw, 5rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .problem > p:last-child,
+  .ownership p,
+  .project-status p {
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+  }
+  .problem__steps {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-7);
+  }
+  .problem__steps span {
+    padding: var(--space-4);
+    border-inline-start: 2px solid var(--color-accent-highlight);
+    background: rgb(16 14 21 / 70%);
+    font-weight: 700;
+  }
+  .system-flow,
+  .demos {
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+    border-block: 1px solid var(--color-border);
+    background: rgb(16 14 21 / 70%);
+  }
+  .flow-list {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    counter-reset: flow;
+    list-style: none;
+  }
+  .flow-list li {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-canvas);
+    font-weight: 700;
+    counter-increment: flow;
+  }
+  .flow-list li::before {
+    display: block;
+    margin-block-end: var(--space-2);
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    content: "0" counter(flow);
+  }
+  .ownership,
+  .project-status {
+    display: grid;
+    align-items: center;
+    gap: clamp(var(--space-7), 8vw, 7rem);
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+  }
+  .showcase__grid,
+  .demos__grid {
+    display: grid;
+    gap: var(--space-6);
+    margin-block-start: var(--space-7);
+  }
+  .project-status {
+    border-block-start: 1px solid var(--color-border);
+  }
+  .project-status p + p {
+    margin-block-start: var(--space-4);
+  }
+  .luna-footer {
+    padding-block: clamp(var(--space-8), 11vw, 8rem);
+    border-block-start: 1px solid var(--color-border);
+    text-align: center;
+  }
+  .luna-footer a {
     display: inline-flex;
     min-height: 2.75rem;
     align-items: center;
@@ -126,19 +505,32 @@ const description =
     font-family: var(--font-technical);
     font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.07em;
     text-decoration: none;
     text-transform: uppercase;
   }
-
-  .luna-page__home:hover {
-    background: rgb(172 124 255 / 10%);
+  @media (min-width: 38rem) {
+    .problem__steps,
+    .showcase__grid,
+    .demos__grid,
+    .flow-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
-
-  @media (min-width: 48rem) {
-    .luna-page__content {
-      grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1fr);
-      text-align: start;
+  @media (min-width: 52rem) {
+    .luna-hero__inner,
+    .ownership,
+    .project-status {
+      grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
+    }
+    .problem__steps,
+    .showcase__grid,
+    .demos__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .flow-list {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
     }
   }
 </style>
