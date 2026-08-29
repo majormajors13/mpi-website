@@ -39,11 +39,18 @@ const stack = [
   "Cloudflare Workers Static Assets",
 ];
 const lessons = [
-  "Production behavior matters more than local assumptions.",
-  "Accessibility is easier when it shapes the structure from the beginning.",
-  "Simple architecture is easier to secure, test, and debug.",
-  "Hosting automation still needs to be verified.",
-  "Restraint is an engineering decision, not a missing feature.",
+  {
+    title: "The deployment environment is part of the architecture",
+    body: "The static build was correct locally, but Cloudflare changed its assumptions. Production configuration had to be treated as part of the software—not an afterthought.",
+  },
+  {
+    title: "Accessibility works best as a constraint, not a cleanup task",
+    body: "Semantic structure, keyboard behavior, focus visibility, contrast, and reflow shaped the components from the beginning and made later validation much less painful.",
+  },
+  {
+    title: "Simple systems still require deliberate boundaries",
+    body: "Keeping the site static reduced the security and runtime surface, but selective JavaScript was still worthwhile where it materially improved usability, such as the Build Log reader.",
+  },
 ];
 ---
 
@@ -192,7 +199,16 @@ const lessons = [
           What I learned
         </h2>
       </div>
-      <ol>{lessons.map((lesson) => <li>{lesson}</li>)}</ol>
+      <ol>
+        {
+          lessons.map((lesson) => (
+            <li>
+              <h3>{lesson.title}</h3>
+              <p>{lesson.body}</p>
+            </li>
+          ))
+        }
+      </ol>
     </section>
 
     <footer class="project-footer">
@@ -388,6 +404,15 @@ const lessons = [
     font-size: 0.6875rem;
     content: "0" counter(lesson);
   }
+  .lessons h3 {
+    margin: 0;
+    font-size: var(--step-1);
+    line-height: 1.2;
+  }
+  .lessons li > p {
+    margin: var(--space-3) 0 0;
+    color: var(--color-text-muted);
+  }
   .project-footer {
     padding-block: clamp(var(--space-8), 11vw, 8rem);
     border-block-start: 1px solid var(--color-border);
@@ -409,6 +434,11 @@ const lessons = [
     }
     .lessons ol {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .lessons ol {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>
