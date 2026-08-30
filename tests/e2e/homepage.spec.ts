@@ -162,7 +162,7 @@ test("navigation links resolve to real targets in document order", async ({
 }) => {
   await page.goto("/");
 
-  const targets = ["top", "identity", "luna", "workshop", "about", "build-log"];
+  const targets = ["top", "luna", "workshop", "about", "build-log"];
   const hrefs = await page
     .locator("nav a")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -177,7 +177,7 @@ test("sticky navigation leaves section targets visible", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  for (const target of ["identity", "luna", "workshop", "about", "build-log"]) {
+  for (const target of ["luna", "workshop", "about", "build-log"]) {
     await page.locator(`nav a[href="#${target}"]`).click();
     const headerBox = await page.locator("header").boundingBox();
     const targetBox = await page.locator(`#${target}`).boundingBox();
@@ -202,7 +202,6 @@ test("keyboard focus follows the visual navigation order", async ({ page }) => {
     ".skip-link",
     ".site-brand",
     'nav a[href="#top"]',
-    'nav a[href="#identity"]',
     'nav a[href="#luna"]',
     'nav a[href="#workshop"]',
     'nav a[href="#about"]',
