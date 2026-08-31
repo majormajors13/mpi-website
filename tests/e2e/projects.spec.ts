@@ -53,7 +53,7 @@ test("software index presents three real project destinations", async ({
       has: page.getByRole("heading", { name: project.name, exact: true }),
     });
     await expect(
-      card.getByRole("link", { name: "View Project" }),
+      card.getByRole("link", { name: "Open project" }),
     ).toHaveAttribute("href", project.href);
   }
 });

@@ -18,10 +18,12 @@ const description =
       </div>
       <section aria-labelledby="case-study-title">
         <p class="technical-label">Case study // In progress</p>
-        <h2 id="case-study-title">The visual case study is being prepared.</h2>
+        <h2 id="case-study-title">
+          There is more to show before this is ready.
+        </h2>
         <p>
-          Future updates will document the project’s purpose, goals, design
-          decisions, major challenges, screenshots, lessons, and current status.
+          This page will get screenshots and notes on the design once the site
+          is far enough along to represent the actual direction.
         </p>
         <div
           class="capture"
@@ -42,12 +44,28 @@ const description =
     min-height: 100vh;
     overflow: hidden;
     background:
+      linear-gradient(
+        135deg,
+        transparent 44%,
+        rgb(118 45 66 / 4%) 44% 44.2%,
+        transparent 44.2%
+      ),
+      radial-gradient(
+        circle at 18% 62%,
+        rgb(172 124 255 / 6%) 0 2px,
+        transparent 3px
+      ),
       radial-gradient(
         circle at 78% 12%,
         rgb(118 45 66 / 18%),
         transparent 30rem
       ),
       var(--color-canvas);
+    background-size:
+      32rem 32rem,
+      22rem 18rem,
+      auto,
+      auto;
   }
   .case-study__inner {
     padding-block: var(--space-5) clamp(var(--space-8), 10vw, 8rem);

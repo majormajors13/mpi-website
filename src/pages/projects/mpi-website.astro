@@ -2,31 +2,31 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const description =
-  "A production Astro and TypeScript website built around performance, accessibility, security, and a deliberately lightweight static architecture.";
+  "A production Astro and TypeScript website with a lightweight static architecture, accessible components, and browser-level tests.";
 const priorities = [
   [
     "Architecture // Static first",
-    "Built to stay lightweight",
+    "Send finished pages",
     "Astro produces static pages, so the browser receives the finished site instead of booting a large application just to display content. Client-side code is reserved for the few interactions that genuinely benefit from it, and images are delivered in optimized formats.",
   ],
   [
     "Interface // Responsive",
-    "Built to work everywhere",
+    "Fit the screen at hand",
     "Layouts adapt from narrow phones to wide desktops, text remains usable when enlarged, and every important path works with a keyboard. The site does not depend on a particular screen or input method.",
   ],
   [
     "Access // Built in",
-    "Built to be accessible",
+    "Accessibility starts in the markup",
     "Semantic landmarks and headings establish structure before styling is applied. Visible focus, deliberate contrast, practical touch targets, and automated axe checks keep accessibility part of the build rather than a final patch.",
   ],
   [
     "Operations // Production",
-    "Built to survive production",
+    "Treat production as part of the job",
     "The production path includes explicit Cloudflare static-asset deployment, real 404 handling, canonical metadata, social previews, and browser regression coverage. The deployed behavior matters as much as the local build.",
   ],
   [
     "Delivery // Defensive defaults",
-    "Built with security in mind",
+    "Keep the public surface small",
     "Production responses use a content security policy, HTTPS enforcement, MIME-type protection, a restrained referrer policy, and permissions limits. The static build also avoids shipping repository and development files as public application content.",
   ],
 ];
@@ -41,14 +41,14 @@ const stack = [
 const lessons = [
   {
     title: "The deployment environment is part of the architecture",
-    body: "The static build was correct locally, but Cloudflare changed its assumptions. Production configuration had to be treated as part of the software—not an afterthought.",
+    body: "The static build was correct locally, but Cloudflare changed its assumptions. Production configuration turned out to be part of the software too.",
   },
   {
-    title: "Accessibility works best as a constraint, not a cleanup task",
+    title: "Accessibility belongs in the first pass",
     body: "Semantic structure, keyboard behavior, focus visibility, contrast, and reflow shaped the components from the beginning and made later validation much less painful.",
   },
   {
-    title: "Simple systems still require deliberate boundaries",
+    title: "A small system still needs boundaries",
     body: "Keeping the site static reduced the security and runtime surface, but selective JavaScript was still worthwhile where it materially improved usability, such as the Build Log reader.",
   },
 ];
@@ -65,7 +65,7 @@ const lessons = [
           <p class="technical-label">Project // Major Problem Industries</p>
           <h1>Major Problem Industries Website</h1>
           <p class="project-hero__lead">
-            No mockup needed. You’re standing in the finished build.
+            This page is running inside the thing it documents.
           </p>
           <ul class="status-list" aria-label="Project status">
             <li>Status // Live</li><li>Type // Production website</li><li>
@@ -78,11 +78,10 @@ const lessons = [
 
     <section class="proof container" aria-labelledby="proof-title">
       <p class="technical-label">Proof // Live environment</p>
-      <h2 id="proof-title">The proof is the thing you’re using.</h2>
+      <h2 id="proof-title">Try the actual site.</h2>
       <p>
-        This case study does not need a gallery of screenshots. The website is
-        the deliverable: resize it, move through it with a keyboard, inspect the
-        mobile layout, and follow the real project routes.
+        Resize the window, use the keyboard, check the mobile layout, or follow
+        the project routes. The site itself is the useful evidence here.
       </p>
       <div class="proof__actions">
         <a href="/#top">Navigate the homepage</a><a href="/luna"
@@ -94,17 +93,17 @@ const lessons = [
     <section class="purpose" aria-labelledby="purpose-title">
       <div class="container split-grid">
         <div>
-          <p class="technical-label">Purpose // A real home for the work</p><h2
+          <p class="technical-label">Purpose // A home for MPI</p><h2
             id="purpose-title"
           >
             Why it was built
           </h2>
         </div>
         <p>
-          MPI needed more than a portfolio page. It needed a durable home for
-          LUNA, software and AI work, future hardware and fabrication projects,
-          engineering build logs, and project showcases that can grow without
-          turning the site into a complicated publishing system.
+          MPI needed room for LUNA, software and AI, future hardware and
+          fabrication, build logs, and proper case studies. It also needed to
+          stay simple enough that publishing a page would not become its own
+          engineering project.
         </p>
       </div>
     </section>
@@ -114,7 +113,7 @@ const lessons = [
         <p class="technical-label">Build priorities // What mattered</p><h2
           id="priorities-title"
         >
-          The engineering underneath the page
+          What the page is sitting on
         </h2>
       </div>
       <div class="priorities__grid">
@@ -147,10 +146,9 @@ const lessons = [
             Astro setup changed the deployment assumptions and introduced
             runtime image URLs that failed after deployment.
           </p><p>
-            The fix was not another layer of application code. Explicit Wrangler
-            static-assets configuration restored the architecture the project
-            was designed around and made the deployed output match the tested
-            build.
+            The fix was explicit Wrangler static-assets configuration. That made
+            the deployed output match the static site that had already been
+            tested locally.
           </p>
         </div>
       </div>
@@ -161,10 +159,10 @@ const lessons = [
         <p class="technical-label">Validation // More than appearance</p><h2
           id="validation-title"
         >
-          Made to hold up, not just look right
+          Checks that go past the screenshot
         </h2><p>
-          Production readiness is checked through behavior, structure, and
-          delivery—not a screenshot comparison.
+          The validation covers behavior, structure, and delivery. A screenshot
+          alone cannot tell you whether a keyboard works or a route returns 404.
         </p>
       </div>
       <ul>
@@ -213,9 +211,7 @@ const lessons = [
 
     <footer class="project-footer">
       <div class="container">
-        <p class="technical-label">You’re already on the project.</p><h2>
-          Keep looking around.
-        </h2>
+        <p class="technical-label">Live case study</p><h2>Kick the tires.</h2>
         <nav aria-label="Explore the MPI website project">
           <a href="/luna">Explore LUNA</a><a href="/#build-log"
             >Read the Build Log</a
@@ -231,11 +227,27 @@ const lessons = [
     overflow: hidden;
     background:
       radial-gradient(
+        circle at 14% 38%,
+        rgb(172 124 255 / 7%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        125deg,
+        transparent 46%,
+        rgb(115 71 216 / 3%) 46% 46.2%,
+        transparent 46.2%
+      ),
+      radial-gradient(
         circle at 82% 6%,
         rgb(115 71 216 / 13%),
         transparent 32rem
       ),
       var(--color-canvas);
+    background-size:
+      22rem 18rem,
+      34rem 34rem,
+      auto,
+      auto;
   }
   .technical-label {
     color: var(--color-accent-highlight);

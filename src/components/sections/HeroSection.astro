@@ -9,12 +9,10 @@ import StatusLabel from "../StatusLabel.astro";
     <div class="hero__content">
       <StatusLabel label="System status // Initializing" />
       <p class="hero__eyebrow">Major Problem Industries</p>
-      <h1 id="hero-title">
-        Software, AI, systems—and whatever needs building next.
-      </h1>
+      <h1 id="hero-title">Software, AI, and the occasional strange machine.</h1>
       <p class="hero__summary">
-        Building the systems, tools, and experiments worth chasing—and learning
-        how they work along the way.
+        Major Problem Industries is my workshop for useful software, ambitious
+        experiments, and the ideas I cannot leave alone.
       </p>
       <div class="hero__actions">
         <a class="button button--primary" href="#identity">What is MPI?</a>
@@ -57,6 +55,47 @@ import StatusLabel from "../StatusLabel.astro";
     background: rgb(115 71 216 / 12%);
     filter: blur(7rem);
     content: "";
+    pointer-events: none;
+  }
+
+  .hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: 10% -4rem auto auto;
+    width: min(42rem, 58vw);
+    height: 24rem;
+    background:
+      radial-gradient(
+        circle at 12% 20%,
+        rgb(172 124 255 / 9%) 0 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 56% 64%,
+        rgb(172 124 255 / 7%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        90deg,
+        transparent 12%,
+        rgb(172 124 255 / 5%) 12% 12.2%,
+        transparent 12.2% 56%,
+        rgb(172 124 255 / 4%) 56% 56.2%,
+        transparent 56.2%
+      ),
+      linear-gradient(
+        135deg,
+        transparent 47%,
+        rgb(172 124 255 / 4%) 47% 47.3%,
+        transparent 47.3%
+      );
+    background-size:
+      18rem 12rem,
+      22rem 16rem,
+      100% 100%,
+      20rem 20rem;
+    content: "";
+    opacity: 0.8;
     pointer-events: none;
   }
 
@@ -182,6 +221,13 @@ import StatusLabel from "../StatusLabel.astro";
   @media (min-width: 60rem) {
     .hero__inner {
       grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.92fr);
+    }
+  }
+
+  @media (max-width: 32rem) {
+    .hero::after {
+      width: 18rem;
+      opacity: 0.45;
     }
   }
 

@@ -6,13 +6,13 @@ const entries = [
     label: "LOG // 001",
     category: "MPI / SITE",
     title: "Building Major Problem Industries",
-    body: "Started turning MPI from an idea into an actual home for the work. Built the site from scratch with Astro, kept it static and lightweight, and focused on making it feel like something I’d actually want my name attached to instead of another generic portfolio.",
+    body: "Started turning MPI from an idea into an actual website. Astro kept it static and lightweight. The harder part was making it feel like something I’d put my name on instead of another generic portfolio.",
   },
   {
     label: "LOG // 002",
     category: "MPI / PRODUCTION",
     title: "Getting the Site Production-Ready",
-    body: "Spent a lot of time on the boring-but-important stuff: responsive layouts, accessibility, browser testing, metadata, 404 handling, security headers, HTTPS, caching, and making sure nothing private or stupid was leaking into production.",
+    body: "Spent a lot of time on the boring but important parts: responsive layouts, accessibility, browser tests, metadata, 404 handling, security headers, HTTPS, and caching. Also checked that nothing private or stupid was leaking into production.",
   },
   {
     label: "LOG // 003",
@@ -24,13 +24,13 @@ const entries = [
     label: "LOG // 004",
     category: "LUNA / SHOWCASE",
     title: "Giving LUNA Its Own Space",
-    body: "The MPI homepage was starting to carry too much LUNA information, so I split it out into its own project page. The homepage now gives a short introduction while the LUNA page is being built into a proper showcase with capabilities, screenshots, demos, and real workflows.",
+    body: "The MPI homepage was carrying too much LUNA information, so LUNA got its own page. The homepage now handles the introduction. The longer page has room for capabilities, screenshots, demos, and complete workflows.",
   },
   {
     label: "LOG // 005",
     category: "LUNA / PRODUCT",
     title: "Making LUNA Easier to Explain",
-    body: "One of the harder parts of building LUNA has been explaining what it is without drowning people in architecture. The current focus is turning features like persistent knowledge, planning, research, decision history, and controlled actions into language that makes sense even if you don’t work in AI.",
+    body: "Explaining LUNA without burying people in architecture has been harder than expected. Persistent knowledge, planning, research, decision history, and controlled actions all need to make sense to someone who does not work in AI.",
   },
   {
     label: "LOG // 006",
@@ -105,7 +105,7 @@ const entries = [
     <div class="build-log__heading">
       <StatusLabel label="Build log // 15 entries" />
       <h2 id="build-log-title">Build Log</h2>
-      <p>Notes from what worked, what broke, and what it took to build it.</p>
+      <p>Notes from the bench: fixes, wrong turns, and the occasional win.</p>
     </div>
 
     <div class="build-log__workspace">
@@ -182,9 +182,15 @@ const entries = [
 
 <style>
   .build-log {
+    position: relative;
+    overflow: clip;
     padding-block: clamp(var(--space-8), 10vw, 8rem);
     border-block: 1px solid var(--color-border);
-    background: var(--color-surface);
+    background:
+      linear-gradient(rgb(172 124 255 / 3%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(172 124 255 / 3%) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 4rem 4rem;
   }
   .build-log__inner {
     position: relative;
@@ -231,7 +237,23 @@ const entries = [
     min-width: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-medium);
-    background: var(--color-surface);
+    background:
+      radial-gradient(
+        circle at 92% 8%,
+        rgb(172 124 255 / 7%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        135deg,
+        transparent 48%,
+        rgb(115 71 216 / 3%) 48% 48.2%,
+        transparent 48.2%
+      ),
+      var(--color-surface);
+    background-size:
+      16rem 12rem,
+      24rem 24rem,
+      auto;
   }
   .build-log__reader {
     align-self: start;
@@ -358,6 +380,18 @@ const entries = [
     .build-log__index {
       max-height: 42rem;
       overflow-y: auto;
+    }
+  }
+  @media (max-width: 32rem) {
+    .build-log {
+      background-size: 5rem 5rem;
+    }
+    .build-log__reader,
+    .build-log__index {
+      background-size:
+        20rem 16rem,
+        32rem 32rem,
+        auto;
     }
   }
 </style>

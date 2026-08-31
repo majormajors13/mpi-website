@@ -317,7 +317,7 @@ test("publishes production metadata and crawler assets", async ({
   );
   await expect(page.locator('meta[property="og:description"]')).toHaveAttribute(
     "content",
-    /personal technical umbrella/,
+    /independent workshop/,
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",

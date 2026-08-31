@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const description =
-  "Software, AI, websites, and technical systems built under Major Problem Industries.";
+  "Software, AI, and websites from the Major Problem Industries workshop.";
 
 const projects = [
   {
@@ -10,7 +10,7 @@ const projects = [
     title: "LUNA",
     type: "Flagship AI System",
     description:
-      "LUNA is a persistent AI system being built around continuity, knowledge, planning, research, decision history, and controlled action.",
+      "LUNA keeps useful context across research, planning, decisions, and controlled actions. It is the main thing on the bench right now.",
     status: "Active development",
     href: "/luna",
   },
@@ -19,7 +19,7 @@ const projects = [
     title: "Major Problem Industries",
     type: "Production Website",
     description:
-      "A custom Astro and TypeScript site built from scratch around performance, accessibility, security, responsive design, and production deployment through Cloudflare.",
+      "The site you are using, made with Astro and TypeScript and shipped through Cloudflare. Lightweight, accessible, and tested in real browsers.",
     status: "Live",
     href: "/projects/mpi-website",
   },
@@ -28,7 +28,7 @@ const projects = [
     title: "Motionless Moments Photography",
     type: "Photography Website",
     description:
-      "A dark, visual-first photography site built around portfolio browsing, weddings, couples, and a brand identity that deliberately avoids the typical bright wedding-photography look.",
+      "A dark photography site for weddings and couples, with none of the usual bright-and-airy treatment.",
     status: "In development",
     href: "/projects/motionless-moments",
   },
@@ -52,7 +52,7 @@ const projects = [
     >
       <div class="project-index__heading">
         <p class="technical-label">Index // 03 projects</p>
-        <h2 id="project-index-title">Built and in progress</h2>
+        <h2 id="project-index-title">On the bench</h2>
       </div>
       <ol>
         {
@@ -66,7 +66,7 @@ const projects = [
                 <p class="project-card__type">{project.type}</p>
                 <h3>{project.title}</h3>
                 <p class="project-card__description">{project.description}</p>
-                <a href={project.href}>View Project →</a>
+                <a href={project.href}>Open project →</a>
               </article>
             </li>
           ))
@@ -81,11 +81,27 @@ const projects = [
     overflow: hidden;
     background:
       radial-gradient(
+        circle at 14% 34%,
+        rgb(172 124 255 / 7%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        120deg,
+        transparent 46%,
+        rgb(115 71 216 / 3%) 46% 46.2%,
+        transparent 46.2%
+      ),
+      radial-gradient(
         circle at 82% 8%,
         rgb(115 71 216 / 12%),
         transparent 28rem
       ),
       var(--color-canvas);
+    background-size:
+      20rem 16rem,
+      30rem 30rem,
+      auto,
+      auto;
   }
   .projects-hero {
     padding-block: var(--space-5) clamp(var(--space-8), 10vw, 8rem);

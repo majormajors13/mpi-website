@@ -2,22 +2,17 @@
   <div class="identity__inner container">
     <div class="identity__heading">
       <p class="identity__label">MPI // Independent workshop</p>
-      <h2 id="identity-title">
-        This is where the things worth building start taking shape.
-      </h2>
+      <h2 id="identity-title">One workshop. Plenty of unfinished ideas.</h2>
     </div>
 
     <div class="identity__body">
       <p>
-        Major Problem Industries is a home for ambitious technical work—projects
-        that start with a problem, an idea, or a question and turn into
-        something tangible.
+        Major Problem Industries is where I keep the things I make: software,
+        experiments, and whatever else grows out of a good question.
       </p>
       <p>
-        It’s built around curiosity, independence, and learning by doing. The
-        goal isn’t to fit every project into the same mold; it’s to understand
-        the problem, build what makes sense, and keep pushing until the idea
-        becomes something useful.
+        I learn by getting my hands into the problem. Each idea gets its own
+        shape, its own tools, and enough persistence to become useful.
       </p>
     </div>
   </div>
@@ -25,9 +20,21 @@
 
 <style>
   .identity__inner {
+    position: relative;
     display: grid;
     gap: var(--space-6);
     padding-block: clamp(var(--space-8), 10vw, 8rem);
+  }
+
+  .identity__inner::after {
+    position: absolute;
+    inset: auto 0 12% auto;
+    width: 9rem;
+    height: 5rem;
+    border-block-end: 1px solid rgb(115 71 216 / 5%);
+    border-inline-end: 1px solid rgb(115 71 216 / 5%);
+    content: "";
+    pointer-events: none;
   }
 
   .identity__label {

@@ -6,7 +6,7 @@ import LunaFeatureSection from "../components/luna/LunaFeatureSection.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const description =
-  "LUNA is a persistent AI and knowledge project designed to retain context and connect research, planning, decisions, and controlled action.";
+  "LUNA is a persistent AI and knowledge project that keeps context across research, planning, decisions, and controlled action.";
 
 const features = [
   {
@@ -14,7 +14,7 @@ const features = [
     label: "Continuity // Persistent context",
     title: "Keep the useful context",
     description:
-      "LUNA is designed to keep relevant knowledge, conversations, research, and project context available over time, so ongoing work does not have to restart from zero.",
+      "LUNA keeps relevant knowledge, conversations, research, and project context available over time. You do not have to reconstruct the whole story at the start of every session.",
     points: [
       "Useful context",
       "Knowledge organization",
@@ -22,14 +22,14 @@ const features = [
     ],
     captureTitle: "Knowledge Vault",
     captureCaption:
-      "A future capture will show how retained information supports continuing work.",
+      "A future capture will show retained information returning in a later session.",
   },
   {
     id: "connections",
     label: "Knowledge // Relationships",
     title: "See how information connects",
     description:
-      "Information rarely belongs in only one folder. LUNA is designed to relate knowledge across projects, topics, people, and decisions without requiring copies everywhere.",
+      "Information rarely belongs in one folder. LUNA can relate it across projects, topics, people, and decisions without making duplicate copies everywhere.",
     points: ["Related knowledge", "Project context", "Multiple viewpoints"],
     captureTitle: "Knowledge Graph",
     captureCaption:
@@ -41,18 +41,18 @@ const features = [
     label: "Work // Goals and planning",
     title: "Turn a goal into next steps",
     description:
-      "LUNA can help break larger goals into manageable work, keep track of what comes next, and preserve the reasoning and context behind a plan.",
+      "LUNA can break a larger goal into manageable steps, track what comes next, and keep the reasoning behind the plan.",
     points: ["Goals", "Tasks", "Plans", "Next steps"],
     captureTitle: "Planner",
     captureCaption:
-      "A future capture will show a real goal moving into an organized plan.",
+      "A future capture will follow a goal as it becomes a working plan.",
   },
   {
     id: "research",
     label: "Research // Sources retained",
     title: "Keep the source with the finding",
     description:
-      "Research is more useful when its origin remains clear. LUNA is designed to preserve citations and provenance so findings can become part of ongoing work instead of disappearing into a one-off answer.",
+      "Research is more useful when you know where it came from. LUNA keeps citations and provenance with the finding so it can be checked and used again.",
     points: [
       "Research assistance",
       "Citations",
@@ -61,26 +61,26 @@ const features = [
     ],
     captureTitle: "Research + citations",
     captureCaption:
-      "A future capture will follow a finding from its source into project context.",
+      "A future capture will follow a finding from its source into a project.",
     reverse: true,
   },
   {
     id: "decisions",
     label: "History // Decision Journal",
-    title: "Make important decisions understandable",
+    title: "Keep the reason with the decision",
     description:
-      "LUNA is designed so important decisions do not simply disappear behind the interface. Its history can preserve what happened, what information mattered, and the context behind the choice.",
+      "Important decisions should not disappear behind the interface. LUNA can keep what happened, what information mattered, and why the choice was made.",
     points: ["Decision history", "Relevant context", "Traceability"],
     captureTitle: "Decision Journal",
     captureCaption:
-      "A future capture will show how a decision remains reviewable after the work moves on.",
+      "A future capture will revisit a decision after the project has moved on.",
   },
   {
     id: "approval",
     label: "Control // Approval required",
     title: "Review before anything happens",
     description:
-      "LUNA can prepare work and propose controlled actions, while important real-world steps can require explicit approval before they proceed.",
+      "LUNA can prepare a controlled action, but important real-world steps can still wait for explicit approval.",
     points: ["Action previews", "Explicit approval", "Visible execution"],
     captureTitle: "Action approval",
     captureCaption:
@@ -90,13 +90,13 @@ const features = [
   {
     id: "coordination",
     label: "System // Coordinated capabilities",
-    title: "One experience for different kinds of work",
+    title: "Let the parts talk to each other",
     description:
-      "Different jobs need different kinds of help. LUNA is being built so research, planning, knowledge, and controlled actions can work together without making the user manage disconnected tools.",
+      "Research, planning, stored knowledge, and controlled actions share context inside LUNA. The user should not have to shuttle the same information between disconnected tools.",
     points: ["Shared context", "Specialized help", "Connected workflows"],
     captureTitle: "Coordinated workflow",
     captureCaption:
-      "A future walkthrough will demonstrate several capabilities supporting one piece of work.",
+      "A future walkthrough will follow one task across several LUNA capabilities.",
   },
 ];
 
@@ -129,12 +129,12 @@ const showcase = [
           <p class="luna-hero__name">Luminary Unit of Nuisance Abatement</p>
           <h1 id="luna-title">LUNA</h1>
           <p class="luna-hero__lead">
-            An AI system designed to stay with the work.
+            An AI system that remembers where you left off.
           </p>
           <p class="luna-hero__description">
-            LUNA retains useful context, follows ongoing work, and helps turn
-            information into decisions and controlled action instead of starting
-            over with every conversation.
+            LUNA retains useful context across ongoing research, plans, and
+            decisions. Each conversation can pick up from something better than
+            a blank slate.
           </p>
           <ul class="status-list" aria-label="LUNA project status">
             <li>Active development</li><li>Proprietary</li><li>
@@ -158,17 +158,14 @@ const showcase = [
 
     <section class="problem container" aria-labelledby="problem-title">
       <p class="technical-label">The problem // Fragmented context</p>
-      <h2 id="problem-title">
-        Useful work shouldn’t disappear when the conversation ends.
-      </h2>
+      <h2 id="problem-title">The context should outlive the chat window.</h2>
       <p>
-        LUNA is being built to keep the important parts of the work
-        together—what you’ve learned, what you’ve decided, what you’re planning,
-        and what still needs to happen next.
+        LUNA keeps the important parts together: what you learned, what you
+        decided, what comes next, and the context that connects them.
       </p>
       <p>
-        Instead of treating every interaction like a fresh start, LUNA is
-        designed around continuity so the work can keep moving forward.
+        The goal is continuity across sessions, without pretending every old
+        detail deserves to be remembered forever.
       </p>
     </section>
 
@@ -178,13 +175,11 @@ const showcase = [
 
     <section class="system-flow" aria-labelledby="flow-title">
       <div class="container">
-        <p class="technical-label">One connected system // Conceptual flow</p>
-        <h2 id="flow-title">
-          The work stays connected from context to history.
-        </h2>
+        <p class="technical-label">Concept // Connected flow</p>
+        <h2 id="flow-title">Context moves with the task.</h2>
         <p class="section-intro">
-          These are not intended to be isolated features. Each part can support
-          the next while the useful history remains available.
+          Each part can hand useful context to the next. The history stays
+          available when it is time to check what happened.
         </p>
         <ol class="flow-list">{flow.map((step) => <li>{step}</li>)}</ol>
       </div>
@@ -195,12 +190,12 @@ const showcase = [
         <p class="technical-label">Direction // Ownership and control</p><h2
           id="ownership-title"
         >
-          Built with personal ownership in mind.
+          Your data should feel like yours.
         </h2><p>
-          LUNA is following a local-first direction designed around
-          user-controlled data, rather than requiring every important part of
-          the experience to live entirely inside someone else’s black box. It
-          remains a proprietary project under active development.
+          LUNA is following a local-first direction with user-controlled data.
+          The aim is to avoid placing every important part of the experience
+          inside someone else’s black box. The project remains proprietary and
+          under active development.
         </p>
       </div>
       <CapturePlaceholder
@@ -210,12 +205,11 @@ const showcase = [
     </section>
 
     <section class="showcase container" aria-labelledby="showcase-title">
-      <p class="technical-label">Showcase // Real media in preparation</p>
-      <h2 id="showcase-title">A closer look at LUNA</h2>
+      <p class="technical-label">Showcase // Captures in preparation</p>
+      <h2 id="showcase-title">What the pieces look like</h2>
       <p class="section-intro">
-        These reserved spaces will hold real product captures. Each will show a
-        specific working surface without exposing the private codebase behind
-        it.
+        These spaces are reserved for product captures. They will document the
+        interface without exposing the private codebase behind it.
       </p>
       <div class="showcase__grid">
         {
@@ -231,11 +225,12 @@ const showcase = [
         <p class="technical-label">Demonstrations // In preparation</p><h2
           id="demos-title"
         >
-          See LUNA work
+          LUNA in motion
         </h2>
         <p class="section-intro">
-          Short demonstrations are being prepared to show real workflows from
-          start to finish.
+          Short demonstrations are being prepared now. They will show complete
+          workflows, including the less glamorous steps between start and
+          finish.
         </p>
         <div class="demos__grid">
           <CapturePlaceholder
@@ -257,17 +252,17 @@ const showcase = [
 
     <section class="project-status container" aria-labelledby="status-title">
       <div>
-        <p class="technical-label">Project status // Work continues</p><h2
+        <p class="technical-label">Project status // Active development</p><h2
           id="status-title"
         >
-          Independent, proprietary, and actively developed.
+          Still private. Still moving.
         </h2>
       </div>
       <div>
         <p>
-          LUNA is the flagship project built inside Major Problem Industries.
-          Public screenshots and demonstrations will document real capabilities
-          while the underlying source remains private.
+          LUNA is the flagship project inside Major Problem Industries. Public
+          screenshots and demonstrations will document working capabilities
+          while the source stays private.
         </p><p>
           This showcase will grow as those materials are prepared. No
           speculative release date or public availability is being announced
@@ -280,7 +275,7 @@ const showcase = [
       <div class="container">
         <p class="technical-label">
           MPI is the workshop. LUNA is the machine.
-        </p><h2>The work continues.</h2><a href="/"
+        </p><h2>Back to the workshop.</h2><a href="/"
           >Return to Major Problem Industries</a
         >
       </div>
@@ -293,11 +288,27 @@ const showcase = [
     overflow: hidden;
     background:
       radial-gradient(
+        circle at 12% 32%,
+        rgb(188 64 207 / 7%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        115deg,
+        transparent 48%,
+        rgb(172 124 255 / 3%) 48% 48.2%,
+        transparent 48.2%
+      ),
+      radial-gradient(
         circle at 80% 5%,
         rgb(115 71 216 / 12%),
         transparent 32rem
       ),
       var(--color-canvas);
+    background-size:
+      24rem 20rem,
+      34rem 34rem,
+      auto,
+      auto;
   }
   :global(.technical-label),
   .luna-hero__name {
@@ -325,6 +336,45 @@ const showcase = [
     border-radius: 50%;
     box-shadow: inset 0 0 6rem rgb(115 71 216 / 7%);
     content: "";
+  }
+  .luna-hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: auto -3rem 7% auto;
+    width: min(44rem, 70vw);
+    height: 18rem;
+    background:
+      radial-gradient(
+        circle at 18% 42%,
+        rgb(172 124 255 / 10%) 0 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 72% 68%,
+        rgb(188 64 207 / 8%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        90deg,
+        transparent 18%,
+        rgb(172 124 255 / 5%) 18% 18.2%,
+        transparent 18.2% 72%,
+        rgb(188 64 207 / 4%) 72% 72.2%,
+        transparent 72.2%
+      ),
+      linear-gradient(
+        145deg,
+        transparent 49%,
+        rgb(172 124 255 / 4%) 49% 49.3%,
+        transparent 49.3%
+      );
+    background-size:
+      18rem 12rem,
+      22rem 14rem,
+      100% 100%,
+      22rem 22rem;
+    content: "";
+    pointer-events: none;
   }
   .luna-hero__back {
     display: inline-flex;
@@ -426,9 +476,37 @@ const showcase = [
   }
   .system-flow,
   .demos {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
     padding-block: clamp(var(--space-8), 11vw, 9rem);
     border-block: 1px solid var(--color-border);
-    background: rgb(16 14 21 / 70%);
+    background:
+      linear-gradient(rgb(172 124 255 / 3%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(172 124 255 / 3%) 1px, transparent 1px),
+      rgb(16 14 21 / 70%);
+    background-size: 4rem 4rem;
+  }
+  .system-flow::after,
+  .demos::after {
+    position: absolute;
+    z-index: -1;
+    inset: auto -5rem 12% auto;
+    width: 26rem;
+    height: 12rem;
+    border-block: 1px solid rgb(172 124 255 / 5%);
+    background: linear-gradient(
+      135deg,
+      transparent 49%,
+      rgb(188 64 207 / 4%) 49% 49.3%,
+      transparent 49.3%
+    );
+    content: "";
+    pointer-events: none;
+  }
+  .demos::after {
+    inset: 10% auto auto -7rem;
+    transform: scaleX(-1);
   }
   .flow-list {
     display: grid;
@@ -514,6 +592,24 @@ const showcase = [
   @media (min-width: 64rem) {
     .flow-list {
       grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 32rem) {
+    .luna-page {
+      background-size:
+        22rem 20rem,
+        42rem 42rem,
+        auto,
+        auto;
+    }
+    .luna-hero::after,
+    .system-flow::after,
+    .demos::after {
+      opacity: 0.45;
+    }
+    .system-flow,
+    .demos {
+      background-size: 5rem 5rem;
     }
   }
 </style>

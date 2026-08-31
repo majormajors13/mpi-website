@@ -99,4 +99,13 @@ main section[id] {
   :focus-visible {
     outline-color: Highlight;
   }
+
+  body,
+  main,
+  section,
+  article,
+  header,
+  footer {
+    background-image: none !important;
+  }
 }

@@ -5,7 +5,7 @@ test("homepage LUNA links remain connected", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("#luna")).toHaveCount(1);
-  const cta = page.getByRole("link", { name: "Explore LUNA" });
+  const cta = page.getByRole("link", { name: "Meet LUNA" });
   await expect(cta).toHaveAttribute("href", "/luna");
   await cta.click();
   await expect(page).toHaveURL("/luna");
@@ -71,7 +71,7 @@ test("LUNA showcase has meaningful sections and reserved capture space", async (
   }
 
   await expect(
-    page.getByRole("heading", { name: "See LUNA work" }),
+    page.getByRole("heading", { name: "LUNA in motion" }),
   ).toBeVisible();
   const captureFrames = page.locator(".capture__frame");
   expect(await captureFrames.count()).toBeGreaterThanOrEqual(10);

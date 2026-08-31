@@ -4,26 +4,26 @@ const workDirections = [
     title: "AI & Software",
     status: "In development",
     description:
-      "Software, AI systems, websites, and the tools built to solve real problems.",
+      "Software, AI, websites, and small tools that earn their place.",
     href: "/projects/software",
   },
   {
     title: "Automation",
     status: "Exploring",
     description:
-      "Practical workflows that remove repetition without hiding how the work gets done.",
+      "Less repetition, fewer handoffs, and a clear view of what the automation is doing.",
   },
   {
     title: "Robotics & Electronics",
     status: "Queued",
     description:
-      "A path back to hands-on building through sensing, controls, embedded hardware, and machines that interact with the physical world.",
+      "Sensing, controls, embedded hardware, and a return to making things I can hold.",
   },
   {
     title: "Fabrication & Experimental Systems",
     status: "Exploring",
     description:
-      "Prototypes that cross software, hardware, and whatever else the problem requires.",
+      "Prototypes that refuse to stay neatly inside software or hardware.",
   },
 ];
 ---
@@ -34,8 +34,8 @@ const workDirections = [
       <p class="workshop__label">Workshop // Online</p>
       <h2 id="workshop-title">In the Workshop</h2>
       <p>
-        Current directions, not fictional product divisions. More projects will
-        appear here as they move from the bench into something worth showing.
+        These are directions I am actively exploring, not pretend departments.
+        More will show up when there is something worth sharing.
       </p>
     </div>
 
@@ -63,8 +63,37 @@ const workDirections = [
 
 <style>
   .workshop {
+    position: relative;
+    overflow: clip;
     padding-block: clamp(var(--space-8), 10vw, 8rem);
     border-block-end: 1px solid var(--color-border);
+  }
+
+  .workshop::before {
+    position: absolute;
+    inset: 8rem auto auto -5rem;
+    width: 22rem;
+    height: 16rem;
+    background:
+      radial-gradient(
+        circle at 74% 24%,
+        rgb(172 124 255 / 8%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        90deg,
+        transparent 30%,
+        rgb(115 71 216 / 5%) 30% 30.3%,
+        transparent 30.3%
+      ),
+      linear-gradient(
+        45deg,
+        transparent 49%,
+        rgb(115 71 216 / 4%) 49% 49.4%,
+        transparent 49.4%
+      );
+    content: "";
+    pointer-events: none;
   }
 
   .workshop__heading {

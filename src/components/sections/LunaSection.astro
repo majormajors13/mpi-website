@@ -14,23 +14,23 @@ import StatusLabel from "../StatusLabel.astro";
       <h2 id="luna-title">LUNA</h2>
 
       <p class="luna__lead">
-        LUNA is an AI system designed to stay with the work, not just answer one
-        question and forget the rest.
+        LUNA is an AI system that keeps the useful context instead of forgetting
+        it after one conversation.
       </p>
 
       <p class="luna__description">
-        It remembers useful context, keeps track of ongoing work, and helps with
-        planning, research, reasoning, and the decisions that come with it. This
-        is only the surface.
+        It follows ongoing projects and helps with planning, research,
+        reasoning, and the decisions that come with them. This is only the
+        public surface.
       </p>
 
       <ul class="luna__statuses" aria-label="LUNA project status">
         <li>Status // Active development</li>
         <li>Source // Proprietary</li>
-        <li>Built // Independently</li>
+        <li>Team // Independent</li>
       </ul>
 
-      <a class="luna__cta" href="/luna"> Explore LUNA </a>
+      <a class="luna__cta" href="/luna">Meet LUNA</a>
     </div>
 
     <div class="luna__visual">
@@ -58,11 +58,36 @@ import StatusLabel from "../StatusLabel.astro";
     border-block: 1px solid var(--color-border);
     background:
       radial-gradient(
+        circle at 18% 72%,
+        rgb(188 64 207 / 7%) 0 2px,
+        transparent 3px
+      ),
+      linear-gradient(
+        90deg,
+        transparent 18%,
+        rgb(172 124 255 / 4%) 18% 18.1%,
+        transparent 18.1% 76%,
+        rgb(188 64 207 / 3%) 76% 76.1%,
+        transparent 76.1%
+      ),
+      linear-gradient(
+        35deg,
+        transparent 48%,
+        rgb(172 124 255 / 3%) 48% 48.2%,
+        transparent 48.2%
+      ),
+      radial-gradient(
         circle at 82% 22%,
         rgb(172 124 255 / 10%),
         transparent 28rem
       ),
       var(--color-surface);
+    background-size:
+      22rem 18rem,
+      100% 100%,
+      28rem 28rem,
+      auto,
+      auto;
   }
 
   .luna::before,
@@ -207,6 +232,17 @@ import StatusLabel from "../StatusLabel.astro";
       grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
       align-items: center;
       gap: clamp(var(--space-7), 8vw, 7rem);
+    }
+  }
+
+  @media (max-width: 32rem) {
+    .luna {
+      background-size:
+        18rem 16rem,
+        100% 100%,
+        34rem 34rem,
+        auto,
+        auto;
     }
   }
 </style>
