@@ -1,0 +1,373 @@
+---
+const areas = [
+  {
+    id: "software",
+    number: "01",
+    title: "AI & Software",
+    status: "3 active projects",
+    projects: [
+      {
+        title: "LUNA",
+        status: "Active development",
+        description:
+          "Persistent AI, knowledge, planning, and controlled action.",
+        href: "/luna",
+      },
+      {
+        title: "MPI Website",
+        status: "Live",
+        description:
+          "The workshop's public surface and the site you are using.",
+        href: "/projects/mpi-website",
+      },
+      {
+        title: "Motionless Moments",
+        status: "In development",
+        description: "A dark, visual-first photography website.",
+        href: "/projects/motionless-moments",
+      },
+    ],
+  },
+  {
+    id: "automation",
+    number: "02",
+    title: "Automation",
+    status: "Exploring",
+    projects: [],
+  },
+  {
+    id: "hardware",
+    number: "03",
+    title: "Hardware",
+    status: "Queued",
+    projects: [],
+  },
+  {
+    id: "experiments",
+    number: "04",
+    title: "Experiments",
+    status: "Exploring",
+    projects: [],
+  },
+];
+---
+
+<section id="workshop" class="workshop-board" aria-labelledby="workshop-title">
+  <div class="workshop-board__shell container">
+    <header class="workshop-board__heading">
+      <div>
+        <p class="workshop-board__label">Workshop board // Node map</p>
+        <h2 id="workshop-title">Choose a work area</h2>
+      </div>
+      <p>
+        A live map of what exists, what is moving, and which benches are still
+        waiting for their first project.
+      </p>
+    </header>
+
+    <div class="workshop-board__panel">
+      <div class="workshop-board__readout" aria-hidden="true">
+        <span>MPI-WB</span><span>NODE STATUS // ONLINE</span>
+      </div>
+      <div class="workshop-board__areas">
+        {
+          areas.map((area) => (
+            <section
+              class:list={[
+                "work-area",
+                area.projects.length && "work-area--active",
+              ]}
+              aria-labelledby={`work-area-${area.id}`}
+            >
+              <div class="work-area__header">
+                <span class="work-area__number" aria-hidden="true">
+                  {area.number}
+                </span>
+                <div>
+                  <h3 id={`work-area-${area.id}`}>{area.title}</h3>
+                  <p>{area.status}</p>
+                </div>
+              </div>
+              {area.projects.length ? (
+                <ul>
+                  {area.projects.map((project) => (
+                    <li>
+                      <a class="project-node" href={project.href}>
+                        <span class="project-node__light" aria-hidden="true" />
+                        <span class="project-node__copy">
+                          <strong>{project.title}</strong>
+                          <span>{project.description}</span>
+                        </span>
+                        <span class="project-node__status">
+                          {project.status}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="work-area__empty">No active project</p>
+              )}
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .workshop-board {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+    border-block: 1px solid var(--color-border);
+    background:
+      linear-gradient(rgb(172 124 255 / 3%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(172 124 255 / 3%) 1px, transparent 1px),
+      radial-gradient(
+        circle at 12% 18%,
+        rgb(115 71 216 / 12%),
+        transparent 24rem
+      ),
+      var(--color-surface);
+    background-size:
+      4rem 4rem,
+      4rem 4rem,
+      auto,
+      auto;
+  }
+  .workshop-board__heading {
+    display: grid;
+    gap: var(--space-5);
+    align-items: end;
+  }
+  .workshop-board__heading > p {
+    max-width: 36rem;
+    color: var(--color-text-muted);
+  }
+  .workshop-board__label,
+  .workshop-board__readout,
+  .work-area__number,
+  .work-area__header p,
+  .work-area__empty,
+  .project-node__status {
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .workshop-board__label,
+  .work-area__number {
+    color: var(--color-accent-highlight);
+  }
+  h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    letter-spacing: -0.055em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  .workshop-board__panel {
+    position: relative;
+    margin-block-start: var(--space-7);
+    padding: clamp(var(--space-4), 4vw, var(--space-7));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background:
+      radial-gradient(
+        circle at 0 0,
+        rgb(172 124 255 / 8%) 0 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 100% 0,
+        rgb(172 124 255 / 8%) 0 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 0 100%,
+        rgb(172 124 255 / 8%) 0 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 100% 100%,
+        rgb(172 124 255 / 8%) 0 2px,
+        transparent 3px
+      ),
+      rgb(8 7 11 / 86%);
+    box-shadow:
+      var(--shadow-surface),
+      inset 0 0 3rem rgb(115 71 216 / 4%);
+  }
+  .workshop-board__readout {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block-end: var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+  .workshop-board__readout span:last-child {
+    color: var(--color-accent-highlight);
+  }
+  .workshop-board__areas {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-5);
+  }
+  .work-area {
+    position: relative;
+    min-width: 0;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: rgb(16 14 21 / 75%);
+  }
+  .work-area::before {
+    position: absolute;
+    inset: 2.5rem auto auto -1rem;
+    width: 1rem;
+    height: 1px;
+    background: rgb(172 124 255 / 18%);
+    content: "";
+    transition:
+      background-color var(--motion-fast) ease-out,
+      box-shadow var(--motion-fast) ease-out;
+  }
+  .work-area--active:focus-within::before,
+  .work-area--active:hover::before {
+    background: var(--color-accent-highlight);
+    box-shadow: 0 0 0.75rem var(--color-accent-highlight);
+  }
+  .work-area__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+  }
+  .work-area h3 {
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+  .work-area__header p,
+  .work-area__empty {
+    margin-block-start: var(--space-2);
+    color: var(--color-text-muted);
+  }
+  .work-area ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .project-node {
+    display: grid;
+    min-height: 5.5rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transform: translateY(0);
+    transition:
+      border-color var(--motion-fast) ease-out,
+      transform var(--motion-fast) ease-out,
+      box-shadow var(--motion-fast) ease-out;
+  }
+  .project-node:hover,
+  .project-node:focus-visible {
+    border-color: var(--color-accent-highlight);
+    box-shadow: 0 0.75rem 2rem rgb(115 71 216 / 16%);
+    color: var(--color-text-primary);
+    transform: translateY(-0.125rem);
+  }
+  .project-node:active {
+    transform: translateY(0.0625rem);
+  }
+  .project-node__light {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-block-start: 0.35rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0.5rem rgb(115 71 216 / 40%);
+    transition:
+      background-color var(--motion-fast) ease-out,
+      box-shadow var(--motion-fast) ease-out;
+  }
+  .project-node:hover .project-node__light,
+  .project-node:focus-visible .project-node__light {
+    background: var(--color-accent-highlight);
+    box-shadow: 0 0 0.8rem var(--color-accent-highlight);
+  }
+  .project-node__copy {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .project-node__copy > span {
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+  .project-node__status {
+    grid-column: 2;
+    color: var(--color-accent-highlight);
+  }
+  .work-area__empty {
+    min-height: 5.5rem;
+    display: grid;
+    place-items: center;
+    margin-block-start: var(--space-5);
+    border: 1px dashed var(--color-border);
+  }
+  @media (min-width: 48rem) {
+    .workshop-board__heading {
+      grid-template-columns: 1fr minmax(18rem, 0.65fr);
+    }
+    .workshop-board__areas {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .work-area--active {
+      grid-row: span 2;
+    }
+  }
+  @media (min-width: 72rem) {
+    .workshop-board__areas {
+      grid-template-columns: minmax(22rem, 1.35fr) repeat(3, minmax(0, 0.75fr));
+    }
+    .work-area--active {
+      grid-row: auto;
+    }
+  }
+  @media (max-width: 32rem) {
+    .workshop-board {
+      background-size:
+        5rem 5rem,
+        5rem 5rem,
+        auto,
+        auto;
+    }
+    .workshop-board__readout {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .project-node,
+    .project-node__light,
+    .work-area::before {
+      transition: none;
+    }
+    .project-node:hover,
+    .project-node:focus-visible,
+    .project-node:active {
+      transform: none;
+    }
+  }
+</style>

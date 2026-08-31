@@ -59,8 +59,8 @@ for (const percentage of [125, 150, 200]) {
 test("uses a logical landmark and heading structure", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.locator("header")).toHaveCount(1);
-  await expect(page.locator("header nav")).toHaveCount(1);
+  await expect(page.locator(".site-header")).toHaveCount(1);
+  await expect(page.locator(".site-header nav")).toHaveCount(1);
   await expect(page.locator("main")).toHaveCount(1);
   await expect(page.locator("footer")).toHaveCount(1);
   await expect(page.locator("h1")).toHaveCount(1);
@@ -92,69 +92,53 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   }
 });
 
-test("build log reader preserves and navigates fifteen entries", async ({
+test("workshop board exposes real projects and restrained empty states", async ({
   page,
 }) => {
   await page.goto("/");
+  const board = page.locator("#workshop");
+  await expect(board.getByRole("link")).toHaveCount(3);
+  await expect(board.getByText("No active project")).toHaveCount(3);
+  const luna = board.getByRole("link", { name: /LUNA/ });
+  await luna.focus();
+  await expect(luna).toBeFocused();
+  await expect(luna).toHaveAttribute("href", "/luna");
+});
 
-  const buildLog = page.locator("#build-log");
-  await expect(buildLog).toBeVisible();
-  await expect(buildLog.locator("article")).toHaveCount(15);
-  const indexButtons = buildLog.locator("[data-log-select]");
-  await expect(indexButtons).toHaveCount(15);
-  await expect(buildLog.locator("h3")).toHaveText([
-    "Building Major Problem Industries",
-    "Getting the Site Production-Ready",
-    "Cloudflare Fought Back",
-    "Giving LUNA Its Own Space",
-    "Making LUNA Easier to Explain",
-    "Untangling Authentication Failures",
-    "Making Migrations the Only Path",
-    "Protecting Multi-Step State",
-    "Putting Approval in the Execution Path",
-    "Finding the Knowledge Vault in Pieces",
-    "Making LUNA Launch Like Software",
-    "Exposing Cross-Platform Assumptions",
-    "Keeping a Large Test Suite Useful",
-    "Explaining Features in Human Terms",
-    "Treating Restraint as Engineering",
-  ]);
+test("artifact inspection opens, traps focus, closes, and returns focus", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const opener = page.locator("[data-artifact-open]").first();
+  await opener.click();
+  const dialog = page.locator("[data-artifact-dialog]");
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("heading")).toHaveText("Working interface");
+  await expect(dialog.getByRole("button", { name: /Close/ })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dialog.getByRole("button", { name: /Close/ })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).not.toBeVisible();
+  await expect(opener).toBeFocused();
+});
 
-  const newest = buildLog.locator('[data-log-select="14"]');
-  await expect(newest).toHaveAttribute("aria-pressed", "true");
-  await expect(buildLog.locator('[data-log-panel="14"]')).toBeVisible();
-  await expect(buildLog.locator('[data-log-panel="14"] h3')).toHaveText(
-    "Treating Restraint as Engineering",
+test("bench placeholders are explicit and compact", async ({ page }) => {
+  await page.goto("/");
+  const bench = page.locator("#bench");
+  await expect(bench.locator("li")).toHaveCount(3);
+  await expect(bench.getByText("Status pending content")).toHaveCount(3);
+});
+
+test("footer diagnostic reveals one accessible easter egg", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const control = page.locator("[data-workshop-control]");
+  await control.click({ clickCount: 4 });
+  await expect(page.locator("[data-workshop-message]")).toHaveText(
+    "Diagnostic complete. Problem remains interesting.",
   );
-
-  const initialBody = await buildLog
-    .locator('[data-log-panel="14"] .build-log__entry-body')
-    .textContent();
-  const oldest = buildLog.locator('[data-log-select="0"]');
-  await oldest.click();
-  await expect(oldest).toHaveAttribute("aria-pressed", "true");
-  await expect(buildLog.locator('[data-log-panel="0"] h3')).toHaveText(
-    "Building Major Problem Industries",
-  );
-  expect(
-    await buildLog
-      .locator('[data-log-panel="0"] .build-log__entry-body')
-      .textContent(),
-  ).not.toBe(initialBody);
-
-  const previous = buildLog.getByRole("button", { name: "Previous" });
-  const next = buildLog.getByRole("button", { name: "Next" });
-  await expect(previous).toBeDisabled();
-  await expect(next).toBeEnabled();
-  await next.click();
-  await expect(buildLog.locator('[data-log-panel="1"]')).toBeVisible();
-
-  await newest.focus();
-  await page.keyboard.press("Enter");
-  await expect(newest).toHaveAttribute("aria-pressed", "true");
-  await expect(next).toBeDisabled();
-  await previous.click();
-  await expect(buildLog.locator('[data-log-panel="13"]')).toBeVisible();
+  await expect(control).toBeDisabled();
 });
 
 test("navigation links resolve to real targets in document order", async ({
@@ -162,7 +146,7 @@ test("navigation links resolve to real targets in document order", async ({
 }) => {
   await page.goto("/");
 
-  const targets = ["top", "luna", "workshop", "about", "build-log"];
+  const targets = ["top", "luna", "workshop", "artifacts", "about"];
   const hrefs = await page
     .locator("nav a")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -177,9 +161,9 @@ test("sticky navigation leaves section targets visible", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  for (const target of ["luna", "workshop", "about", "build-log"]) {
+  for (const target of ["luna", "workshop", "artifacts", "about"]) {
     await page.locator(`nav a[href="#${target}"]`).click();
-    const headerBox = await page.locator("header").boundingBox();
+    const headerBox = await page.locator(".site-header").boundingBox();
     const targetBox = await page.locator(`#${target}`).boundingBox();
 
     expect(headerBox).not.toBeNull();
@@ -204,8 +188,8 @@ test("keyboard focus follows the visual navigation order", async ({ page }) => {
     'nav a[href="#top"]',
     'nav a[href="#luna"]',
     'nav a[href="#workshop"]',
+    'nav a[href="#artifacts"]',
     'nav a[href="#about"]',
-    'nav a[href="#build-log"]',
     ".hero__actions a",
   ];
 
@@ -272,6 +256,16 @@ test("reduced motion removes animation and smooth scrolling", async ({
 
   expect(motion.animation).toBe("none");
   expect(motion.scrollBehavior).toBe("auto");
+  await expect(page.locator(".hero")).toHaveCSS("overflow", "clip");
+});
+
+test("workshop board becomes a single column on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const columns = await page
+    .locator(".workshop-board__areas")
+    .evaluate((element) => getComputedStyle(element).gridTemplateColumns);
+  expect(columns.trim().split(/\s+/)).toHaveLength(1);
 });
 
 test("focus remains visible in forced-colors mode", async ({ page }) => {

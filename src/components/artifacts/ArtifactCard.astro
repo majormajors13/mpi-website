@@ -1,0 +1,179 @@
+---
+interface Props {
+  slot: string;
+  type: string;
+  title: string;
+  caption: string;
+  project: string;
+  layout?: "wide" | "tall" | "standard";
+}
+
+const {
+  slot,
+  type,
+  title,
+  caption,
+  project,
+  layout = "standard",
+} = Astro.props;
+---
+
+<article class:list={["artifact-card", `artifact-card--${layout}`]}>
+  <button
+    class="artifact-card__inspect"
+    type="button"
+    aria-haspopup="dialog"
+    data-artifact-open
+    data-artifact-slot={slot}
+    data-artifact-type={type}
+    data-artifact-title={title}
+    data-artifact-caption={caption}
+    data-artifact-project={project}
+  >
+    <span class="artifact-card__frame" aria-hidden="true">
+      <span class="artifact-card__scan"></span>
+      <span class="artifact-card__slot">Artifact slot // {slot}</span>
+      <strong>{type}</strong>
+      <span class="artifact-card__pending">Capture pending</span>
+    </span>
+    <span class="artifact-card__details">
+      <span class="artifact-card__category">{project}</span>
+      <strong>{title}</strong>
+      <span>{caption}</span>
+      <span class="artifact-card__action">Inspect artifact ↗</span>
+    </span>
+  </button>
+</article>
+
+<style>
+  .artifact-card {
+    min-width: 0;
+  }
+  .artifact-card__inspect {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-align: start;
+    transform: perspective(50rem) rotateX(0) translateY(0);
+    transition: transform var(--motion-fast) ease-out;
+  }
+  .artifact-card__inspect:hover,
+  .artifact-card__inspect:focus-visible {
+    transform: perspective(50rem) rotateX(0.6deg) translateY(-0.2rem);
+  }
+  .artifact-card__inspect:active {
+    transform: translateY(0.08rem);
+  }
+  .artifact-card__frame {
+    position: relative;
+    display: grid;
+    min-height: 14rem;
+    align-content: space-between;
+    padding: var(--space-4);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background:
+      linear-gradient(
+        135deg,
+        transparent 48%,
+        rgb(172 124 255 / 5%) 48% 48.3%,
+        transparent 48.3%
+      ),
+      radial-gradient(
+        circle at 72% 28%,
+        rgb(115 71 216 / 18%),
+        transparent 9rem
+      ),
+      var(--color-surface);
+    box-shadow: var(--shadow-surface);
+    transition:
+      border-color var(--motion-fast) ease-out,
+      box-shadow var(--motion-fast) ease-out;
+  }
+  .artifact-card__inspect:hover .artifact-card__frame,
+  .artifact-card__inspect:focus-visible .artifact-card__frame {
+    border-color: var(--color-accent-highlight);
+    box-shadow:
+      var(--shadow-surface),
+      0 0 1.5rem rgb(115 71 216 / 18%);
+  }
+  .artifact-card__scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0 4px,
+      rgb(243 239 247 / 2%) 4px 5px
+    );
+    pointer-events: none;
+  }
+  .artifact-card__slot,
+  .artifact-card__pending,
+  .artifact-card__category,
+  .artifact-card__action {
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .artifact-card__slot,
+  .artifact-card__action {
+    color: var(--color-accent-highlight);
+  }
+  .artifact-card__frame strong {
+    position: relative;
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .artifact-card__pending {
+    color: var(--color-text-muted);
+  }
+  .artifact-card__details {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-2) var(--space-5);
+  }
+  .artifact-card__category,
+  .artifact-card__details > span:not(.artifact-card__action) {
+    color: var(--color-text-muted);
+  }
+  .artifact-card__details > strong {
+    font-size: 1.125rem;
+  }
+  .artifact-card__details
+    > span:not(.artifact-card__category, .artifact-card__action) {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .artifact-card__action {
+    margin-block-start: var(--space-2);
+  }
+  @media (min-width: 44rem) {
+    .artifact-card--wide {
+      grid-column: span 2;
+    }
+    .artifact-card--tall {
+      grid-row: span 2;
+    }
+    .artifact-card--tall .artifact-card__frame {
+      min-height: 24rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .artifact-card__inspect,
+    .artifact-card__frame {
+      transition: none;
+    }
+    .artifact-card__inspect:hover,
+    .artifact-card__inspect:focus-visible,
+    .artifact-card__inspect:active {
+      transform: none;
+    }
+  }
+</style>

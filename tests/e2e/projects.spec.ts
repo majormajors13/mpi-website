@@ -16,7 +16,7 @@ const projectPages = [
   },
 ];
 
-test("homepage AI and Software card links to its project index", async ({
+test("homepage workshop board links to its real project pages", async ({
   page,
 }) => {
   await page.goto("/");
@@ -24,10 +24,10 @@ test("homepage AI and Software card links to its project index", async ({
   await expect(
     workshop.getByRole("heading", { name: "AI & Software" }),
   ).toBeVisible();
-  const link = workshop.getByRole("link", { name: "View Projects" });
-  await expect(link).toHaveAttribute("href", "/projects/software");
+  const link = workshop.getByRole("link", { name: /MPI Website/ });
+  await expect(link).toHaveAttribute("href", "/projects/mpi-website");
   await link.click();
-  await expect(page).toHaveURL("/projects/software");
+  await expect(page).toHaveURL("/projects/mpi-website");
 });
 
 test("software index presents three real project destinations", async ({
@@ -93,7 +93,7 @@ test("MPI website case study presents live proof without screenshots", async ({
 
   for (const link of [
     { name: "Explore LUNA", href: "/luna" },
-    { name: "Read the Build Log", href: "/#build-log" },
+    { name: "Inspect the Artifact Wall", href: "/#artifacts" },
     { name: "Back to AI & Software", href: "/projects/software" },
   ]) {
     await expect(page.getByRole("link", { name: link.name })).toHaveAttribute(

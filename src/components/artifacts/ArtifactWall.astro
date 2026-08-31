@@ -1,0 +1,310 @@
+---
+import ArtifactCard from "./ArtifactCard.astro";
+
+// EDITABLE PLACEHOLDERS: replace slot data as real workshop material becomes public.
+const artifacts = [
+  {
+    slot: "01",
+    type: "UI Capture",
+    title: "Working interface",
+    caption: "Reserved for a real product surface.",
+    project: "LUNA",
+    layout: "wide" as const,
+  },
+  {
+    slot: "02",
+    type: "Early Sketch",
+    title: "First-pass thinking",
+    caption: "A future scan from the notebook or whiteboard.",
+    project: "MPI",
+    layout: "tall" as const,
+  },
+  {
+    slot: "03",
+    type: "System Diagram",
+    title: "How the parts connect",
+    caption: "Reserved for a public-safe architecture view.",
+    project: "LUNA",
+  },
+  {
+    slot: "04",
+    type: "Workbench",
+    title: "Physical build",
+    caption: "A place for hardware, tools, and unfinished pieces.",
+    project: "Workshop",
+  },
+  {
+    slot: "05",
+    type: "Before / After",
+    title: "What changed",
+    caption: "A paired view for design and engineering revisions.",
+    project: "MPI Website",
+    layout: "wide" as const,
+  },
+  {
+    slot: "06",
+    type: "Video Demo",
+    title: "Full workflow",
+    caption: "Reserved for a short, captioned demonstration.",
+    project: "LUNA",
+  },
+];
+---
+
+<section
+  id="artifacts"
+  class="artifact-wall"
+  aria-labelledby="artifact-wall-title"
+>
+  <div class="container">
+    <header class="artifact-wall__heading">
+      <div>
+        <p class="artifact-wall__label">From the workshop // Artifact wall</p>
+        <h2 id="artifact-wall-title">Evidence goes here</h2>
+      </div>
+      <p>
+        Reserved mounts for screenshots, sketches, diagrams, and whatever comes
+        off the bench next. Open any slot to try inspection mode.
+      </p>
+    </header>
+    <div class="artifact-wall__grid">
+      {artifacts.map((artifact) => <ArtifactCard {...artifact} />)}
+    </div>
+  </div>
+</section>
+
+<dialog
+  class="artifact-viewer"
+  data-artifact-dialog
+  aria-labelledby="artifact-viewer-title"
+>
+  <div class="artifact-viewer__panel">
+    <div class="artifact-viewer__bar">
+      <p data-viewer-slot>Artifact slot</p>
+      <button type="button" data-artifact-close
+        >Close <span aria-hidden="true">×</span></button
+      >
+    </div>
+    <div class="artifact-viewer__media" aria-hidden="true">
+      <span data-viewer-type>Artifact</span>
+      <strong>Capture pending</strong>
+      <span>Inspection surface // Ready</span>
+    </div>
+    <div class="artifact-viewer__copy">
+      <p data-viewer-project>Project</p>
+      <h2 id="artifact-viewer-title" data-viewer-title>Artifact title</h2>
+      <p data-viewer-caption>Artifact caption</p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .artifact-wall {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+    border-block-end: 1px solid var(--color-border);
+  }
+  .artifact-wall::before {
+    position: absolute;
+    inset: 5rem -5rem auto auto;
+    width: 25rem;
+    height: 18rem;
+    border: 1px solid rgb(172 124 255 / 5%);
+    background: linear-gradient(
+      45deg,
+      transparent 49%,
+      rgb(172 124 255 / 4%) 49% 49.3%,
+      transparent 49.3%
+    );
+    content: "";
+    pointer-events: none;
+  }
+  .artifact-wall__heading {
+    display: grid;
+    gap: var(--space-5);
+    align-items: end;
+  }
+  .artifact-wall__label,
+  .artifact-viewer__bar,
+  .artifact-viewer__copy > p:first-child {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .artifact-wall h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    letter-spacing: -0.055em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  .artifact-wall__heading > p {
+    max-width: 38rem;
+    color: var(--color-text-muted);
+  }
+  .artifact-wall__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-7);
+  }
+  .artifact-viewer {
+    width: min(calc(100% - 2rem), 58rem);
+    max-height: calc(100vh - 2rem);
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--color-accent-highlight);
+    border-radius: var(--radius-large);
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    box-shadow: 0 0 5rem rgb(115 71 216 / 30%);
+  }
+  .artifact-viewer::backdrop {
+    background: rgb(4 3 7 / 84%);
+    backdrop-filter: blur(0.25rem);
+  }
+  .artifact-viewer__panel {
+    padding: clamp(var(--space-4), 4vw, var(--space-6));
+  }
+  .artifact-viewer__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  .artifact-viewer__bar button {
+    min-height: 2.75rem;
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    cursor: pointer;
+  }
+  .artifact-viewer__bar button:active {
+    transform: translateY(0.0625rem);
+  }
+  .artifact-viewer__media {
+    display: grid;
+    min-height: min(48vh, 24rem);
+    align-content: space-between;
+    margin-block-start: var(--space-5);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 5px,
+        rgb(243 239 247 / 2%) 5px 6px
+      ),
+      radial-gradient(
+        circle at 65% 35%,
+        rgb(115 71 216 / 22%),
+        transparent 15rem
+      ),
+      var(--color-surface);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .artifact-viewer__media strong {
+    font-family: var(--font-primary);
+    font-size: clamp(1.75rem, 6vw, 3.5rem);
+  }
+  .artifact-viewer__copy {
+    margin-block-start: var(--space-5);
+  }
+  .artifact-viewer__copy h2 {
+    margin-block-start: var(--space-2);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+  }
+  .artifact-viewer__copy > p:last-child {
+    margin-block-start: var(--space-3);
+    color: var(--color-text-muted);
+  }
+  @media (min-width: 44rem) {
+    .artifact-wall__heading {
+      grid-template-columns: 1fr minmax(18rem, 0.7fr);
+    }
+    .artifact-wall__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 68rem) {
+    .artifact-wall__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 32rem) {
+    .artifact-wall::before {
+      opacity: 0.55;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .artifact-viewer__bar button:active {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(
+    "[data-artifact-dialog]",
+  );
+  const openers = document.querySelectorAll<HTMLButtonElement>(
+    "[data-artifact-open]",
+  );
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(
+    "[data-artifact-close]",
+  );
+  let returnTarget: HTMLButtonElement | null = null;
+
+  const setText = (selector: string, value: string | undefined) => {
+    const target = dialog?.querySelector<HTMLElement>(selector);
+    if (target) target.textContent = value ?? "";
+  };
+
+  openers.forEach((opener) => {
+    opener.addEventListener("click", () => {
+      if (!dialog) return;
+      returnTarget = opener;
+      setText(
+        "[data-viewer-slot]",
+        `Artifact slot // ${opener.dataset.artifactSlot}`,
+      );
+      setText("[data-viewer-type]", opener.dataset.artifactType);
+      setText("[data-viewer-title]", opener.dataset.artifactTitle);
+      setText("[data-viewer-caption]", opener.dataset.artifactCaption);
+      setText("[data-viewer-project]", opener.dataset.artifactProject);
+      dialog.showModal();
+      closeButton?.focus();
+    });
+  });
+
+  closeButton?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog?.addEventListener("close", () => returnTarget?.focus());
+  dialog?.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    const focusable = [
+      ...dialog.querySelectorAll<HTMLElement>(
+        "button, [href], [tabindex]:not([tabindex='-1'])",
+      ),
+    ];
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
+  });
+</script>

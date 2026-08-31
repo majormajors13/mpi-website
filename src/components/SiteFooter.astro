@@ -5,7 +5,11 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
   <div class="site-footer__inner container">
     <p>&copy; {currentYear} Major Problem Industries</p>
-    <p class="site-footer__readout">SYSTEM // INITIALIZING</p>
+    <button class="site-footer__readout" type="button" data-workshop-control>
+      System // Initializing
+    </button>
+    <p class="site-footer__message" aria-live="polite" data-workshop-message>
+    </p>
   </div>
 </footer>
 
@@ -26,10 +30,34 @@ const currentYear = new Date().getFullYear();
   }
 
   .site-footer__readout {
+    min-height: 2.75rem;
+    padding-inline: var(--space-3);
+    border: 1px solid transparent;
+    border-radius: var(--radius-small);
+    background: transparent;
     color: var(--color-accent-highlight);
+    cursor: pointer;
     font-family: var(--font-technical);
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__readout:hover,
+  .site-footer__readout:focus-visible {
+    border-color: var(--color-border);
+    background: rgb(115 71 216 / 8%);
+  }
+
+  .site-footer__readout:active {
+    transform: translateY(0.0625rem);
+  }
+
+  .site-footer__message {
+    max-width: 24rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
   }
 
   @media (max-width: 35rem) {
@@ -40,3 +68,22 @@ const currentYear = new Date().getFullYear();
     }
   }
 </style>
+
+<script>
+  const control = document.querySelector<HTMLButtonElement>(
+    "[data-workshop-control]",
+  );
+  const message = document.querySelector<HTMLElement>(
+    "[data-workshop-message]",
+  );
+  let checks = 0;
+
+  control?.addEventListener("click", () => {
+    checks += 1;
+    if (checks < 4) return;
+    if (message)
+      message.textContent = "Diagnostic complete. Problem remains interesting.";
+    control.textContent = "System // Probably fine";
+    control.disabled = true;
+  });
+</script>

@@ -97,6 +97,7 @@ import StatusLabel from "../StatusLabel.astro";
     content: "";
     opacity: 0.8;
     pointer-events: none;
+    animation: circuit-arrival 900ms ease-out both;
   }
 
   .hero__inner {
@@ -184,6 +185,17 @@ import StatusLabel from "../StatusLabel.astro";
     border-radius: var(--radius-large);
     background: var(--color-surface);
     box-shadow: var(--shadow-surface), var(--shadow-accent);
+    transition:
+      border-color var(--motion-fast) ease-out,
+      box-shadow 240ms ease-out;
+  }
+
+  .hero__visual:hover .hero__logo-frame,
+  .hero__visual:focus-within .hero__logo-frame {
+    border-color: rgb(172 124 255 / 45%);
+    box-shadow:
+      var(--shadow-surface),
+      0 0 3.5rem rgb(115 71 216 / 28%);
   }
 
   .hero__logo-frame::before,
@@ -234,6 +246,20 @@ import StatusLabel from "../StatusLabel.astro";
   @media (prefers-reduced-motion: reduce) {
     .button {
       transition: none;
+    }
+    .hero::after {
+      animation: none;
+    }
+  }
+
+  @keyframes circuit-arrival {
+    from {
+      opacity: 0;
+      transform: translateX(1rem);
+    }
+    to {
+      opacity: 0.8;
+      transform: translateX(0);
     }
   }
 </style>
