@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import lunaLogo from "../assets/logos/luna-logo.png";
 import DevelopmentTimeline from "../components/luna/DevelopmentTimeline.astro";
-import LunaArchive from "../components/luna/LunaArchive.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const description =
@@ -22,16 +21,16 @@ const description =
             An AI system that remembers where you left off.
           </p>
           <p class="luna-hero__description">
-            LUNA retains useful context across ongoing research, plans, and
-            decisions. Each conversation can pick up from something better than
-            a blank slate.
+            LUNA is a local-first assistant and platform for persistent
+            knowledge, research, planning, visible decisions, and governed
+            actions. It keeps useful context across sessions while leaving the
+            user in control of what happens and what is retained.
           </p>
           <ul class="status-list" aria-label="LUNA project status">
             <li>Active development</li><li>Proprietary / closed source</li><li>
               Independently built
             </li>
           </ul>
-          <a class="luna-hero__action" href="#archive">Open the archive</a>
         </div>
         <div class="luna-hero__logo-wrap">
           <Image
@@ -47,42 +46,7 @@ const description =
       </div>
     </header>
 
-    <section class="problem container" aria-labelledby="problem-title">
-      <p class="technical-label">The problem // Fragmented context</p>
-      <h2 id="problem-title">The context should outlive the chat window.</h2>
-      <p>
-        LUNA keeps the important parts together: what you learned, what you
-        decided, what comes next, and the context that connects them.
-      </p>
-      <p>
-        The goal is continuity across sessions, without pretending every old
-        detail deserves to be remembered forever.
-      </p>
-    </section>
-
-    <LunaArchive />
     <DevelopmentTimeline />
-
-    <section class="project-status container" aria-labelledby="status-title">
-      <div>
-        <p class="technical-label">Project status // Active development</p><h2
-          id="status-title"
-        >
-          Still private. Still moving.
-        </h2>
-      </div>
-      <div>
-        <p>
-          LUNA is the flagship project inside Major Problem Industries. Public
-          screenshots and demonstrations will document working capabilities
-          while the source stays private.
-        </p><p>
-          This showcase will grow as those materials are prepared. No
-          speculative release date or public availability is being announced
-          here.
-        </p>
-      </div>
-    </section>
 
     <footer class="luna-footer">
       <div class="container">
@@ -162,30 +126,12 @@ const description =
         rgb(172 124 255 / 10%) 0 2px,
         transparent 3px
       ),
-      radial-gradient(
-        circle at 72% 68%,
-        rgb(188 64 207 / 8%) 0 2px,
-        transparent 3px
-      ),
-      linear-gradient(
-        90deg,
-        transparent 18%,
-        rgb(172 124 255 / 5%) 18% 18.2%,
-        transparent 18.2% 72%,
-        rgb(188 64 207 / 4%) 72% 72.2%,
-        transparent 72.2%
-      ),
       linear-gradient(
         145deg,
         transparent 49%,
         rgb(172 124 255 / 4%) 49% 49.3%,
         transparent 49.3%
       );
-    background-size:
-      18rem 12rem,
-      22rem 14rem,
-      100% 100%,
-      22rem 22rem;
     content: "";
     pointer-events: none;
   }
@@ -224,8 +170,7 @@ const description =
     font-weight: 700;
     line-height: 1.15;
   }
-  .luna-hero__description,
-  .section-intro {
+  .luna-hero__description {
     max-width: 44rem;
     margin-block-start: var(--space-5);
     color: var(--color-text-muted);
@@ -260,114 +205,15 @@ const description =
     width: 100%;
     height: auto;
   }
-  .problem,
-  .showcase,
-  .project-status {
-    padding-block: clamp(var(--space-8), 11vw, 9rem);
+  .luna-footer {
+    padding-block: clamp(var(--space-8), 11vw, 8rem);
+    text-align: center;
   }
-  .problem {
-    max-width: var(--content-width-reading);
-  }
-  .problem h2,
-  .system-flow h2,
-  .ownership h2,
-  .showcase h2,
-  .demos h2,
-  .project-status h2,
   .luna-footer h2 {
     margin-block-start: var(--space-3);
     font-size: clamp(2.25rem, 7vw, 5rem);
     letter-spacing: -0.05em;
     line-height: 1;
-  }
-  .problem > p:not(.technical-label),
-  .ownership p,
-  .project-status p {
-    margin-block-start: var(--space-5);
-    color: var(--color-text-muted);
-    font-size: 1.0625rem;
-  }
-  .system-flow,
-  .demos {
-    position: relative;
-    isolation: isolate;
-    overflow: clip;
-    padding-block: clamp(var(--space-8), 11vw, 9rem);
-    border-block: 1px solid var(--color-border);
-    background:
-      linear-gradient(rgb(172 124 255 / 3%) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(172 124 255 / 3%) 1px, transparent 1px),
-      rgb(16 14 21 / 70%);
-    background-size: 4rem 4rem;
-  }
-  .system-flow::after,
-  .demos::after {
-    position: absolute;
-    z-index: -1;
-    inset: auto -5rem 12% auto;
-    width: 26rem;
-    height: 12rem;
-    border-block: 1px solid rgb(172 124 255 / 5%);
-    background: linear-gradient(
-      135deg,
-      transparent 49%,
-      rgb(188 64 207 / 4%) 49% 49.3%,
-      transparent 49.3%
-    );
-    content: "";
-    pointer-events: none;
-  }
-  .demos::after {
-    inset: 10% auto auto -7rem;
-    transform: scaleX(-1);
-  }
-  .flow-list {
-    display: grid;
-    gap: var(--space-3);
-    margin: var(--space-7) 0 0;
-    padding: 0;
-    counter-reset: flow;
-    list-style: none;
-  }
-  .flow-list li {
-    padding: var(--space-5);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-medium);
-    background: var(--color-canvas);
-    font-weight: 700;
-    counter-increment: flow;
-  }
-  .flow-list li::before {
-    display: block;
-    margin-block-end: var(--space-2);
-    color: var(--color-accent-highlight);
-    font-family: var(--font-technical);
-    font-size: 0.6875rem;
-    content: "0" counter(flow);
-  }
-  .ownership,
-  .project-status {
-    display: grid;
-    align-items: center;
-    gap: clamp(var(--space-7), 8vw, 7rem);
-    padding-block: clamp(var(--space-8), 11vw, 9rem);
-  }
-  .showcase__grid,
-  .demos__grid {
-    display: grid;
-    gap: var(--space-6);
-    margin-block-start: var(--space-7);
-  }
-  .project-status {
-    border-block-start: 1px solid var(--color-border);
-  }
-  .project-status p + p {
-    margin-block-start: var(--space-4);
-  }
-  .luna-footer {
-    padding-block: clamp(var(--space-8), 11vw, 8rem);
-    border-block-start: 1px solid var(--color-border);
-    text-align: center;
   }
   .luna-footer a {
     display: inline-flex;
@@ -384,27 +230,9 @@ const description =
     text-decoration: none;
     text-transform: uppercase;
   }
-  @media (min-width: 38rem) {
-    .showcase__grid,
-    .demos__grid,
-    .flow-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
   @media (min-width: 52rem) {
-    .luna-hero__inner,
-    .ownership,
-    .project-status {
+    .luna-hero__inner {
       grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
-    }
-    .showcase__grid,
-    .demos__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 64rem) {
-    .flow-list {
-      grid-template-columns: repeat(7, minmax(0, 1fr));
     }
   }
   @media (max-width: 32rem) {
@@ -415,14 +243,8 @@ const description =
         auto,
         auto;
     }
-    .luna-hero::after,
-    .system-flow::after,
-    .demos::after {
+    .luna-hero::after {
       opacity: 0.45;
-    }
-    .system-flow,
-    .demos {
-      background-size: 5rem 5rem;
     }
   }
 </style>

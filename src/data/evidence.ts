@@ -30,13 +30,6 @@ export interface EvidenceArtifact {
   layout?: "wide" | "tall" | "standard";
 }
 
-export interface LunaArchiveFolder {
-  id: string;
-  label: string;
-  description: string;
-  artifactIds: string[];
-}
-
 export interface LunaHistoryRecord {
   id: string;
   label: string;

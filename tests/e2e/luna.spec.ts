@@ -53,19 +53,50 @@ for (const viewport of [
   });
 }
 
-test("LUNA archive uses approved evidence and hides empty folders", async ({
+test("LUNA timeline loads with every chapter collapsed", async ({ page }) => {
+  await page.goto("/luna");
+  const controls = page.locator("[data-version-toggle]");
+  await expect(controls).toHaveCount(6);
+  expect(
+    await controls.evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute("aria-expanded")),
+    ),
+  ).toEqual(Array(6).fill("false"));
+  await expect(page.locator("[data-version-panel]:visible")).toHaveCount(0);
+  await expect(page.getByRole("tablist")).toHaveCount(0);
+  await expect(page.getByRole("tab")).toHaveCount(0);
+});
+
+test("LUNA chapters expand, collapse, and remain independently open", async ({
   page,
 }) => {
   await page.goto("/luna");
-  await expect(page.locator("#archive")).toBeVisible();
-  await expect(page.locator(".archive-folder")).toHaveCount(1);
-  await expect(
-    page.locator(".archive-folder summary").getByText("Architecture", {
-      exact: true,
-    }),
-  ).toBeVisible();
-  await expect(page.getByText("Capture pending")).toHaveCount(0);
-  const opener = page.locator('#archive [data-evidence-open="local-system"]');
+  const first = page.getByRole("button", { name: /v0\.1–v0\.5\.5/ });
+  const v2 = page.getByRole("button", { name: /v2\.0/ });
+  await first.click();
+  await v2.click();
+  await expect(first).toHaveAttribute("aria-expanded", "true");
+  await expect(v2).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("[data-version-panel]:visible")).toHaveCount(2);
+  const v2Panel = page.locator('[data-version-panel="v2-closure"]');
+  await expect(v2Panel).toContainText("1,346 passed");
+  await expect(v2Panel).toContainText("1,507 passed");
+  await expect(v2Panel).toContainText("1,518 passed");
+  await expect(v2Panel).toContainText("not a final authoritative test total");
+  await v2.click();
+  await expect(v2).toHaveAttribute("aria-expanded", "false");
+  await expect(first).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("[data-development-timeline]")).not.toContainText(
+    /January|February|March|April|May|June|July|August|September|October|November|December|20\d{2}/,
+  );
+});
+
+test("LUNA evidence uses the shared viewer from its v2 chapter", async ({
+  page,
+}) => {
+  await page.goto("/luna");
+  await page.getByRole("button", { name: /v2\.0/ }).click();
+  const opener = page.locator('[data-evidence-open="local-system"]');
   await opener.click();
   const dialog = page.locator("[data-evidence-dialog]");
   await expect(dialog).toBeVisible();
@@ -76,34 +107,10 @@ test("LUNA archive uses approved evidence and hides empty folders", async ({
   await expect(opener).toBeFocused();
 });
 
-test("LUNA version cards select records without public dates", async ({
-  page,
-}) => {
+test("LUNA timeline has no non-image placeholder copy", async ({ page }) => {
   await page.goto("/luna");
-  const tabs = page.getByRole("tab");
-  await expect(tabs).toHaveCount(6);
-  const v2 = page.getByRole("tab", { name: /v2\.0/ });
-  await v2.click();
-  await expect(v2).toHaveAttribute("aria-selected", "true");
-  const panel = page.getByRole("tabpanel").filter({ visible: true });
-  await expect(panel).toContainText("1,346 passed");
-  await expect(panel).toContainText("1,507 passed");
-  await expect(panel).toContainText("1,518 passed");
-  await expect(panel).toContainText("not a final authoritative test total");
-  await expect(page.locator("[data-development-timeline]")).not.toContainText(
-    /January|February|March|April|May|June|July|August|September|October|November|December|20\d{2}/,
-  );
-});
-
-test("LUNA timeline supports arrow-key selection", async ({ page }) => {
-  await page.goto("/luna");
-  const first = page.getByRole("tab").first();
-  await first.focus();
-  await page.keyboard.press("ArrowRight");
-  await expect(page.getByRole("tab").nth(1)).toBeFocused();
-  await expect(page.getByRole("tab").nth(1)).toHaveAttribute(
-    "aria-selected",
-    "true",
+  await expect(page.locator("main")).not.toContainText(
+    /status pending|copy coming soon|evidence goes here|reserved for a real|capture pending|future scan/i,
   );
 });
 

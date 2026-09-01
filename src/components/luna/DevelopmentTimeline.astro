@@ -1,140 +1,200 @@
 ---
+import { Image } from "astro:assets";
+import { lunaArtifacts } from "../../data/luna-evidence";
 import { lunaHistory } from "../../data/luna-history";
+import EvidenceViewer from "../artifacts/EvidenceViewer.astro";
+const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
 ---
 
 <section
+  id="timeline"
   class="development"
   aria-labelledby="development-title"
   data-development-timeline
 >
   <div class="container">
     <header class="development__heading">
-      <p>Development archive // Version progression</p><h2
+      <p>Development timeline // Version progression</p><h2
         id="development-title"
       >
         How LUNA got here
       </h2><p>
-        These are engineering eras, not a commit log. Counts remain hidden
-        unless the historical measurement is authoritative.
+        Scan the version eras, then open any chapter to inspect the
+        capabilities, problems, and engineering decisions that shaped it.
       </p>
     </header>
-    <div class="development__layout">
-      <div class="version-list" role="tablist" aria-label="LUNA version eras">
-        {
-          lunaHistory.map((record, index) => (
-            <button
-              type="button"
-              role="tab"
-              id={`version-tab-${record.id}`}
-              aria-selected={index === 0 ? "true" : "false"}
-              aria-controls={`version-panel-${record.id}`}
-              tabindex={index === 0 ? 0 : -1}
-              data-version-select={record.id}
-            >
-              <>
-                <strong>{record.label}</strong>
-                <b>{record.eraTitle}</b>
-                <span>{record.status}</span>
-              </>
-            </button>
-          ))
-        }
-      </div>
-      <div class="development__records">
-        {
-          lunaHistory.map((record, index) => (
-            <article
-              role="tabpanel"
-              id={`version-panel-${record.id}`}
-              aria-labelledby={`version-tab-${record.id}`}
-              data-version-panel={record.id}
-              hidden={index !== 0}
-            >
-              <div class="development__record-heading">
-                <>
-                  <p>
-                    {record.label} // {record.status}
-                  </p>
-                  <h3>{record.eraTitle}</h3>
-                </>
-              </div>
-              <dl>
-                <div>
+    <ol class="timeline-list">
+      {
+        lunaHistory.map((record, index) => {
+          const recordArtifacts = record.evidenceIds
+            .map((id) => artifacts.find((artifact) => artifact.id === id))
+            .filter(Boolean);
+          return (
+            <li class="timeline-chapter">
+              <span class="timeline-chapter__node" aria-hidden="true" />
+              <button
+                class="timeline-chapter__control"
+                type="button"
+                aria-expanded="false"
+                aria-controls={`version-panel-${record.id}`}
+                data-version-toggle={record.id}
+              >
+                <span class="timeline-chapter__index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="timeline-chapter__identity">
                   <>
-                    <dt>Result</dt>
-                    <dd>{record.result}</dd>
+                    <strong>{record.label}</strong>
+                    <b>{record.eraTitle}</b>
+                    <span>{record.status}</span>
+                  </>
+                </span>
+                <span class="timeline-chapter__action" aria-hidden="true">
+                  Open chapter
+                </span>
+              </button>
+              <article
+                class="development-record"
+                id={`version-panel-${record.id}`}
+                data-version-panel={record.id}
+                hidden
+              >
+                <header>
+                  <>
+                    <p>
+                      {record.label} // {record.status}
+                    </p>
+                    <h3>{record.eraTitle}</h3>
+                  </>
+                </header>
+                <dl class="development-record__story">
+                  <div>
+                    <>
+                      <dt>Result</dt>
+                      <dd>{record.result}</dd>
+                    </>
+                  </div>
+                  {record.learned && (
+                    <div>
+                      <dt>What I learned</dt>
+                      <dd>{record.learned}</dd>
+                    </div>
+                  )}
+                </dl>
+                <div class="development-record__columns">
+                  <>
+                    <section aria-labelledby={`${record.id}-issues`}>
+                      <>
+                        <h4 id={`${record.id}-issues`}>Development issues</h4>
+                        <ul>
+                          {record.developmentIssues.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      </>
+                    </section>
+                    <section aria-labelledby={`${record.id}-resolutions`}>
+                      <>
+                        <h4 id={`${record.id}-resolutions`}>
+                          How they were resolved
+                        </h4>
+                        <ul>
+                          {record.resolutions.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      </>
+                    </section>
                   </>
                 </div>
-                {record.learned && (
-                  <div>
-                    <dt>What I learned</dt>
-                    <dd>{record.learned}</dd>
-                  </div>
+                <section
+                  class="development-record__scope"
+                  aria-labelledby={`${record.id}-scope`}
+                >
+                  <>
+                    <h4 id={`${record.id}-scope`}>Major capabilities</h4>
+                    <ul>
+                      {record.deliveredScope.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </>
+                </section>
+                {record.validationSnapshots && (
+                  <section
+                    class="validation-snapshots"
+                    aria-labelledby={`${record.id}-validation`}
+                  >
+                    <h4 id={`${record.id}-validation`}>
+                      Validation progression
+                    </h4>
+                    <ol>
+                      {record.validationSnapshots.map((value) => (
+                        <li>{value}</li>
+                      ))}
+                    </ol>
+                    <p>
+                      Recorded full-suite snapshots during v2 development. They
+                      show validation growth, not a final authoritative test
+                      total.
+                    </p>
+                  </section>
                 )}
-              </dl>
-              <div class="development__columns">
-                <>
-                  <div>
-                    <>
-                      <h4>Development issues</h4>
-                      <ul>
-                        {record.developmentIssues.map((item) => (
-                          <li>{item}</li>
-                        ))}
-                      </ul>
-                    </>
-                  </div>
-                  <div>
-                    <>
-                      <h4>How it was resolved</h4>
-                      <ul>
-                        {record.resolutions.map((item) => (
-                          <li>{item}</li>
-                        ))}
-                      </ul>
-                    </>
-                  </div>
-                </>
-              </div>
-              <div class="development__scope">
-                <>
-                  <h4>Delivered themes</h4>
-                  <ul>
-                    {record.deliveredScope.map((item) => (
-                      <li>{item}</li>
-                    ))}
-                  </ul>
-                </>
-              </div>
-              {record.validationSnapshots && (
-                <div class="validation-snapshots">
-                  <h4>Validation snapshots</h4>
-                  <ol>
-                    {record.validationSnapshots.map((value) => (
-                      <li>{value}</li>
-                    ))}
-                  </ol>
-                  <p>
-                    Recorded validation snapshots during v2 development. These
-                    are not a final authoritative test total.
-                  </p>
-                </div>
-              )}
-            </article>
-          ))
-        }
-      </div>
-    </div>
+                {recordArtifacts.length > 0 && (
+                  <section
+                    class="development-record__evidence"
+                    aria-labelledby={`${record.id}-evidence`}
+                  >
+                    <h4 id={`${record.id}-evidence`}>Development artifacts</h4>
+                    {recordArtifacts.map(
+                      (artifact) =>
+                        artifact && (
+                          <button
+                            type="button"
+                            data-evidence-open={artifact.id}
+                            aria-haspopup="dialog"
+                          >
+                            <span class="development-record__image">
+                              <Image
+                                src={artifact.image!}
+                                alt={artifact.alt ?? ""}
+                                widths={[480, 800, 1200]}
+                                sizes="(max-width: 52rem) calc(100vw - 5rem), 32rem"
+                                format="webp"
+                                quality={80}
+                              />
+                            </span>
+                            <span>
+                              <small>
+                                {artifact.state} // {artifact.artifactType}
+                              </small>
+                              <strong>{artifact.title}</strong>
+                              <span>{artifact.description}</span>
+                              <em>Inspect artifact ↗</em>
+                            </span>
+                          </button>
+                        ),
+                    )}
+                  </section>
+                )}
+              </article>
+            </li>
+          );
+        })
+      }
+    </ol>
     <p class="development__metric-note">
-      Code and test counts are scale indicators, not software-quality scores.
-      Unsupported historical counters are intentionally omitted.
+      Code and test counts indicate project scale and validation growth, not
+      software quality by themselves. Unsupported historical counters are
+      intentionally omitted.
     </p>
   </div>
 </section>
+<EvidenceViewer artifacts={artifacts} />
 <style>
   .development {
-    padding-block: clamp(var(--space-8), 11vw, 9rem);
-    border-block: 1px solid var(--color-border);
+    padding-block: clamp(var(--space-8), 10vw, 8rem);
+    border-block-end: 1px solid var(--color-border);
     background:
       linear-gradient(rgb(172 124 255 / 3%) 1px, transparent 1px),
       linear-gradient(90deg, rgb(172 124 255 / 3%) 1px, transparent 1px),
@@ -145,9 +205,12 @@ import { lunaHistory } from "../../data/luna-history";
     max-width: 50rem;
   }
   .development__heading > p:first-child,
-  .development__record-heading p,
+  .development-record header p,
   dt,
-  h4 {
+  h4,
+  .timeline-chapter__index,
+  .timeline-chapter__identity span,
+  small {
     color: var(--color-accent-highlight);
     font-family: var(--font-technical);
     font-size: 0.6875rem;
@@ -165,65 +228,120 @@ import { lunaHistory } from "../../data/luna-history";
     margin-block-start: var(--space-5);
     color: var(--color-text-muted);
   }
-  .development__layout {
+  .timeline-list {
+    position: relative;
     display: grid;
     gap: var(--space-5);
-    margin-block-start: var(--space-7);
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    list-style: none;
   }
-  .version-list {
-    display: grid;
-    gap: var(--space-2);
-    align-content: start;
+  .timeline-list::before {
+    position: absolute;
+    inset: 0 auto 0 0.7rem;
+    width: 1px;
+    background: linear-gradient(
+      var(--color-accent-highlight),
+      rgb(115 71 216 / 20%)
+    );
+    content: "";
   }
-  .version-list button {
+  .timeline-chapter {
+    position: relative;
+    padding-inline-start: 2.5rem;
+  }
+  .timeline-chapter__node {
+    position: absolute;
+    z-index: 1;
+    inset: 1.65rem auto auto 0.35rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid var(--color-accent-highlight);
+    border-radius: 50%;
+    background: var(--color-surface);
+    transition:
+      background-color 240ms ease-out,
+      box-shadow 240ms ease-out;
+  }
+  .timeline-chapter:has(.timeline-chapter__control[aria-expanded="true"])
+    .timeline-chapter__node {
+    background: var(--color-accent-highlight);
+    box-shadow: 0 0 1rem rgb(172 124 255 / 60%);
+  }
+  .timeline-chapter__control {
     display: grid;
-    min-height: 4.5rem;
-    gap: var(--space-1);
+    width: 100%;
+    min-height: 5rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: center;
     padding: var(--space-4);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-small);
+    border-radius: var(--radius-medium);
     background: var(--color-canvas);
     color: var(--color-text-primary);
     cursor: pointer;
     text-align: start;
+    transition:
+      border-color 240ms ease-out,
+      background-color 240ms ease-out;
   }
-  .version-list button strong {
-    font-size: 1.125rem;
+  .timeline-chapter__control:hover,
+  .timeline-chapter__control:focus-visible,
+  .timeline-chapter__control[aria-expanded="true"] {
+    border-color: var(--color-accent-highlight);
+    background: rgb(115 71 216 / 10%);
   }
-  .version-list button b {
+  .timeline-chapter__identity {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .timeline-chapter__identity strong {
+    font-size: clamp(1.15rem, 3vw, 1.5rem);
+  }
+  .timeline-chapter__identity b {
     font-size: 0.8125rem;
     text-transform: uppercase;
   }
-  .version-list button span {
+  .timeline-chapter__identity span {
     color: var(--color-text-muted);
+  }
+  .timeline-chapter__action {
+    display: none;
+    color: var(--color-accent-highlight);
     font-family: var(--font-technical);
     font-size: 0.6875rem;
     text-transform: uppercase;
   }
-  .version-list button[aria-selected="true"] {
-    border-color: var(--color-accent-highlight);
-    background: rgb(115 71 216 / 14%);
-    box-shadow: 0 0 1.5rem rgb(115 71 216 / 15%);
+  .timeline-chapter__control[aria-expanded="true"] .timeline-chapter__action {
+    font-size: 0;
   }
-  .development__records article {
+  .timeline-chapter__control[aria-expanded="true"]
+    .timeline-chapter__action::after {
+    font-size: 0.6875rem;
+    content: "Close chapter";
+  }
+  .development-record {
+    margin-block-start: var(--space-3);
     padding: clamp(var(--space-5), 5vw, var(--space-7));
     border: 1px solid var(--color-accent-highlight);
     border-radius: var(--radius-large);
     background: var(--color-canvas);
+    box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 25%);
   }
-  .development__record-heading h3 {
+  .development-record header h3 {
     margin-block-start: var(--space-2);
     font-size: clamp(1.75rem, 5vw, 3rem);
-    text-transform: capitalize;
   }
-  dl {
+  .development-record__story {
     display: grid;
     gap: var(--space-4);
     margin: var(--space-6) 0 0;
   }
-  dl > div,
-  .development__columns > div,
-  .validation-snapshots {
+  .development-record__story > div,
+  .development-record__columns > section,
+  .validation-snapshots,
+  .development-record__evidence {
     padding-block-start: var(--space-4);
     border-block-start: 1px solid var(--color-border);
   }
@@ -231,32 +349,33 @@ import { lunaHistory } from "../../data/luna-history";
     margin: var(--space-2) 0 0;
     color: var(--color-text-muted);
   }
-  .development__columns {
+  .development-record__columns {
     display: grid;
     gap: var(--space-5);
     margin-block-start: var(--space-6);
   }
-  ul {
+  .development-record ul {
     margin: var(--space-3) 0 0;
     padding-inline-start: 1.25rem;
     color: var(--color-text-muted);
   }
-  .development__scope {
+  .development-record__scope {
     margin-block-start: var(--space-6);
   }
-  .development__scope ul {
+  .development-record__scope ul {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
     padding: 0;
     list-style: none;
   }
-  .development__scope li {
+  .development-record__scope li {
     padding: var(--space-2) var(--space-3);
     border: 1px solid var(--color-border);
     border-radius: 999px;
   }
-  .validation-snapshots {
+  .validation-snapshots,
+  .development-record__evidence {
     margin-block-start: var(--space-6);
   }
   .validation-snapshots ol {
@@ -277,15 +396,69 @@ import { lunaHistory } from "../../data/luna-history";
     color: var(--color-text-muted);
     font-size: 0.875rem;
   }
-  @media (min-width: 48rem) {
-    .development__columns,
-    dl {
+  .development-record__evidence > button {
+    display: grid;
+    width: 100%;
+    margin-block-start: var(--space-4);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-align: start;
+  }
+  .development-record__evidence > button > span:last-child {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+  .development-record__evidence strong {
+    font-size: 1.25rem;
+  }
+  .development-record__evidence em {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-style: normal;
+    text-transform: uppercase;
+  }
+  .development-record__image img {
+    width: 100%;
+    height: auto;
+  }
+  @media (min-width: 40rem) {
+    .timeline-chapter__control {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+    .timeline-chapter__action {
+      display: block;
+    }
+    .development-record__story,
+    .development-record__columns {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  @media (min-width: 64rem) {
-    .development__layout {
-      grid-template-columns: minmax(15rem, 0.55fr) minmax(0, 1.45fr);
+  @media (min-width: 60rem) {
+    .timeline-list::before {
+      inset-inline-start: 1rem;
+    }
+    .timeline-chapter {
+      padding-inline-start: 3.5rem;
+    }
+    .timeline-chapter__node {
+      inset-inline-start: 0.65rem;
+    }
+    .development-record__evidence > button {
+      grid-template-columns: minmax(18rem, 1fr) minmax(16rem, 0.75fr);
+      align-items: center;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-chapter__node,
+    .timeline-chapter__control {
+      transition: none;
     }
   }
 </style>
@@ -293,53 +466,17 @@ import { lunaHistory } from "../../data/luna-history";
   document
     .querySelectorAll<HTMLElement>("[data-development-timeline]")
     .forEach((root) => {
-      const tabs = [
-        ...root.querySelectorAll<HTMLButtonElement>("[data-version-select]"),
-      ];
-      const panels = [
-        ...root.querySelectorAll<HTMLElement>("[data-version-panel]"),
-      ];
-      const select = (tab: HTMLButtonElement) => {
-        tabs.forEach((item) => {
-          const selected = item === tab;
-          item.setAttribute("aria-selected", String(selected));
-          item.tabIndex = selected ? 0 : -1;
+      root
+        .querySelectorAll<HTMLButtonElement>("[data-version-toggle]")
+        .forEach((control) => {
+          control.addEventListener("click", () => {
+            const expanded = control.getAttribute("aria-expanded") === "true";
+            const panel = root.querySelector<HTMLElement>(
+              `[data-version-panel="${control.dataset.versionToggle}"]`,
+            );
+            control.setAttribute("aria-expanded", String(!expanded));
+            if (panel) panel.hidden = expanded;
+          });
         });
-        panels.forEach(
-          (panel) =>
-            (panel.hidden =
-              panel.dataset.versionPanel !== tab.dataset.versionSelect),
-        );
-      };
-      tabs.forEach((tab, index) => {
-        tab.addEventListener("click", () => select(tab));
-        tab.addEventListener("keydown", (event) => {
-          if (
-            ![
-              "ArrowDown",
-              "ArrowRight",
-              "ArrowUp",
-              "ArrowLeft",
-              "Home",
-              "End",
-            ].includes(event.key)
-          )
-            return;
-          event.preventDefault();
-          let next: number;
-          if (event.key === "Home") next = 0;
-          else if (event.key === "End") next = tabs.length - 1;
-          else
-            next =
-              (index +
-                (event.key === "ArrowDown" || event.key === "ArrowRight"
-                  ? 1
-                  : -1) +
-                tabs.length) %
-              tabs.length;
-          select(tabs[next]);
-          tabs[next].focus();
-        });
-      });
     });
 </script>

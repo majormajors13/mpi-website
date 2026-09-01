@@ -1,5 +1,5 @@
 import localSystemDiagram from "../assets/screenshots/local system diagram.png";
-import type { EvidenceArtifact, LunaArchiveFolder } from "./evidence";
+import type { EvidenceArtifact } from "./evidence";
 
 export const lunaArtifacts: EvidenceArtifact[] = [
   {
@@ -25,48 +25,6 @@ export const lunaArtifacts: EvidenceArtifact[] = [
       "Governed action",
       "Architecture",
     ],
-    href: "/luna#archive",
-    hrefLabel: "Return to the archive",
     publicSafe: true,
-    layout: "wide",
-  },
-];
-
-export const lunaFolders: LunaArchiveFolder[] = [
-  {
-    id: "system",
-    label: "System",
-    description: "Current workspace and product surfaces.",
-    artifactIds: [],
-  },
-  {
-    id: "knowledge",
-    label: "Knowledge & Memory",
-    description: "Vault, graph, context, and provenance evidence.",
-    artifactIds: [],
-  },
-  {
-    id: "governance",
-    label: "Decisions & Governance",
-    description: "Decision history, approvals, and visible execution.",
-    artifactIds: [],
-  },
-  {
-    id: "planning",
-    label: "Planning & Tools",
-    description: "Goals, research, workflows, and controlled tools.",
-    artifactIds: [],
-  },
-  {
-    id: "architecture",
-    label: "Architecture",
-    description: "Public-safe diagrams and engineering evidence.",
-    artifactIds: ["local-system"],
-  },
-  {
-    id: "development",
-    label: "Development Archive",
-    description: "Historical interfaces, roadmaps, and development records.",
-    artifactIds: [],
   },
 ];

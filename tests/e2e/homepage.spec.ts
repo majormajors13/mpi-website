@@ -92,6 +92,18 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   }
 });
 
+test("homepage hero does not repeat the header brand name", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator(".site-header")).toContainText(
+    "Major Problem Industries",
+  );
+  await expect(page.locator(".hero__content")).not.toContainText(
+    "Major Problem Industries",
+  );
+});
+
 test("workshop board exposes real projects and restrained empty states", async ({
   page,
 }) => {
