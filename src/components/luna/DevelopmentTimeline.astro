@@ -1,9 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import { lunaArtifacts } from "../../data/luna-evidence";
 import { lunaHistory } from "../../data/luna-history";
-import EvidenceViewer from "../artifacts/EvidenceViewer.astro";
-const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
 const exactNumber = new Intl.NumberFormat("en-US");
 const compactNumber = (value: number) =>
   value < 1000 ? String(value) : `${(value / 1000).toFixed(1)}K`;
@@ -31,9 +27,6 @@ const pytestDefinition =
     <ol class="timeline-list">
       {
         lunaHistory.map((record, index) => {
-          const recordArtifacts = record.evidenceIds
-            .map((id) => artifacts.find((artifact) => artifact.id === id))
-            .filter(Boolean);
           return (
             <li class="timeline-chapter">
               <span class="timeline-chapter__node" aria-hidden="true" />
@@ -63,13 +56,13 @@ const pytestDefinition =
                       <strong>
                         {compactNumber(record.metrics.productionLoc)}
                       </strong>
-                      <small>Code</small>
+                      <small>Prod LOC</small>
                     </>
                   </span>
                   <span>
                     <>
                       <strong>{compactNumber(record.metrics.testLoc)}</strong>
-                      <small>Test code</small>
+                      <small>Test LOC</small>
                     </>
                   </span>
                   <span>
@@ -125,7 +118,9 @@ const pytestDefinition =
                   <>
                     <section aria-labelledby={`${record.id}-issues`}>
                       <>
-                        <h4 id={`${record.id}-issues`}>Development issues</h4>
+                        <h4 id={`${record.id}-issues`}>
+                          Key development issues
+                        </h4>
                         <ul>
                           {record.developmentIssues.map((item) => (
                             <li>{item}</li>
@@ -135,9 +130,7 @@ const pytestDefinition =
                     </section>
                     <section aria-labelledby={`${record.id}-resolutions`}>
                       <>
-                        <h4 id={`${record.id}-resolutions`}>
-                          How they were resolved
-                        </h4>
+                        <h4 id={`${record.id}-resolutions`}>Resolution</h4>
                         <ul>
                           {record.resolutions.map((item) => (
                             <li>{item}</li>
@@ -168,7 +161,7 @@ const pytestDefinition =
                   <dl>
                     <div>
                       <>
-                        <dt>Production LOC</dt>
+                        <dt>Prod LOC</dt>
                         <dd>
                           {exactNumber.format(record.metrics.productionLoc)}
                         </dd>
@@ -181,7 +174,7 @@ const pytestDefinition =
                       </>
                     </div>
                     <div>
-                      <dt title={pytestDefinition}>Pytest collected</dt>
+                      <dt title={pytestDefinition}>Pytest</dt>
                       <dd>
                         {record.metrics.pytestCollected === null
                           ? "Unavailable"
@@ -197,43 +190,6 @@ const pytestDefinition =
                   )}
                   {record.metricsNote && <p>{record.metricsNote}</p>}
                 </section>
-                {recordArtifacts.length > 0 && (
-                  <section
-                    class="development-record__evidence"
-                    aria-labelledby={`${record.id}-evidence`}
-                  >
-                    <h4 id={`${record.id}-evidence`}>Development artifacts</h4>
-                    {recordArtifacts.map(
-                      (artifact) =>
-                        artifact && (
-                          <button
-                            type="button"
-                            data-evidence-open={artifact.id}
-                            aria-haspopup="dialog"
-                          >
-                            <span class="development-record__image">
-                              <Image
-                                src={artifact.image!}
-                                alt={artifact.alt ?? ""}
-                                widths={[480, 800, 1200]}
-                                sizes="(max-width: 52rem) calc(100vw - 5rem), 32rem"
-                                format="webp"
-                                quality={80}
-                              />
-                            </span>
-                            <span>
-                              <small>
-                                {artifact.state} // {artifact.artifactType}
-                              </small>
-                              <strong>{artifact.title}</strong>
-                              <span>{artifact.description}</span>
-                              <em>Inspect artifact ↗</em>
-                            </span>
-                          </button>
-                        ),
-                    )}
-                  </section>
-                )}
               </article>
             </li>
           );
@@ -246,7 +202,6 @@ const pytestDefinition =
     </p>
   </div>
 </section>
-<EvidenceViewer artifacts={artifacts} />
 <style>
   .development {
     padding-block: clamp(var(--space-8), 10vw, 8rem);
@@ -366,6 +321,7 @@ const pytestDefinition =
   .timeline-chapter__metrics strong {
     font-family: var(--font-technical);
     font-size: 0.875rem;
+    white-space: nowrap;
   }
   .timeline-chapter__metrics small {
     color: var(--color-text-muted);
@@ -415,8 +371,7 @@ const pytestDefinition =
   }
   .development-record__story > div,
   .development-record__columns > section,
-  .record-metrics,
-  .development-record__evidence {
+  .record-metrics {
     padding-block-start: var(--space-4);
     border-block-start: 1px solid var(--color-border);
   }
@@ -438,8 +393,8 @@ const pytestDefinition =
     margin-block-start: var(--space-6);
   }
   .development-record__scope ul {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--space-2);
     padding: 0;
     list-style: none;
@@ -447,15 +402,14 @@ const pytestDefinition =
   .development-record__scope li {
     padding: var(--space-2) var(--space-3);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-small);
   }
-  .record-metrics,
-  .development-record__evidence {
+  .record-metrics {
     margin-block-start: var(--space-6);
   }
   .record-metrics > dl {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
     gap: var(--space-3);
     margin: var(--space-4) 0 0;
   }
@@ -468,43 +422,12 @@ const pytestDefinition =
     font-family: var(--font-technical);
     font-size: clamp(1rem, 4vw, 1.35rem);
     font-weight: 700;
+    white-space: nowrap;
   }
   .record-metrics p {
     margin-block-start: var(--space-3);
     color: var(--color-text-muted);
     font-size: 0.875rem;
-  }
-  .development-record__evidence > button {
-    display: grid;
-    width: 100%;
-    margin-block-start: var(--space-4);
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-medium);
-    background: var(--color-surface);
-    color: var(--color-text-primary);
-    cursor: pointer;
-    text-align: start;
-  }
-  .development-record__evidence > button > span:last-child {
-    display: grid;
-    gap: var(--space-3);
-    padding: var(--space-4);
-  }
-  .development-record__evidence strong {
-    font-size: 1.25rem;
-  }
-  .development-record__evidence em {
-    color: var(--color-accent-highlight);
-    font-family: var(--font-technical);
-    font-size: 0.6875rem;
-    font-style: normal;
-    text-transform: uppercase;
-  }
-  .development-record__image img {
-    width: 100%;
-    height: auto;
   }
   @media (min-width: 40rem) {
     .timeline-chapter__control {
@@ -530,10 +453,6 @@ const pytestDefinition =
     }
     .timeline-chapter__node {
       inset-inline-start: 0.65rem;
-    }
-    .development-record__evidence > button {
-      grid-template-columns: minmax(18rem, 1fr) minmax(16rem, 0.75fr);
-      align-items: center;
     }
   }
   @media (prefers-reduced-motion: reduce) {

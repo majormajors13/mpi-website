@@ -36,8 +36,14 @@ test("LUNA showcase has its identity and a working home link", async ({
 });
 
 for (const viewport of [
-  { name: "phone", width: 320, height: 720 },
-  { name: "desktop", width: 1440, height: 900 },
+  { name: "320px", width: 320, height: 720 },
+  { name: "375px", width: 375, height: 812 },
+  { name: "390px", width: 390, height: 844 },
+  { name: "430px", width: 430, height: 932 },
+  { name: "768px", width: 768, height: 1024 },
+  { name: "1024px", width: 1024, height: 768 },
+  { name: "1440px", width: 1440, height: 900 },
+  { name: "1920px", width: 1920, height: 1080 },
 ]) {
   test(`LUNA showcase has no horizontal overflow on ${viewport.name}`, async ({
     page,
@@ -154,20 +160,59 @@ test("LUNA assigns capabilities to their audited introduction eras", async ({
   }
 });
 
-test("LUNA evidence uses the shared viewer from its v2 chapter", async ({
+for (const viewport of [
+  { name: "narrow", width: 320, height: 720 },
+  { name: "wide", width: 1440, height: 900 },
+]) {
+  test(`LUNA uses the same readable metric component at ${viewport.name} width`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/luna");
+    await page.locator('[data-version-toggle="v2-closure"]').click();
+
+    const metrics = page.locator(
+      '[data-version-panel="v2-closure"] .record-metrics',
+    );
+    await expect(metrics).toHaveCount(1);
+    await expect(metrics.locator("dl > div")).toHaveCount(3);
+    await expect(metrics.locator("dt")).toHaveText([
+      "Prod LOC",
+      "Test LOC",
+      "Pytest",
+    ]);
+    await expect(metrics.locator("dd")).toHaveText([
+      "75,798",
+      "32,642",
+      "1,899",
+    ]);
+    expect(
+      await metrics
+        .locator("dd")
+        .evaluateAll((values) =>
+          values.every(
+            (value) =>
+              getComputedStyle(value).whiteSpace === "nowrap" &&
+              value.scrollWidth <= value.clientWidth,
+          ),
+        ),
+    ).toBe(true);
+  });
+}
+
+test("LUNA removes the obsolete architecture artifact without an empty shell", async ({
   page,
 }) => {
   await page.goto("/luna");
-  await page.getByRole("button", { name: /v2\.0/ }).click();
-  const opener = page.locator('[data-evidence-open="local-system"]');
-  await opener.click();
-  const dialog = page.locator("[data-evidence-dialog]");
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("heading", { level: 2 })).toHaveText(
-    "Local system overview",
+  await page.locator('[data-version-toggle="v2-closure"]').click();
+  const main = page.locator("main");
+  await expect(main).not.toContainText("Local system overview");
+  await expect(main).not.toContainText("Development artifacts");
+  await expect(page.locator("[data-evidence-open]")).toHaveCount(0);
+  await expect(page.locator(".development-record__evidence")).toHaveCount(0);
+  await expect(main).toContainText(
+    "Pytest shows collected test cases for this checkpoint.",
   );
-  await page.keyboard.press("Escape");
-  await expect(opener).toBeFocused();
 });
 
 test("LUNA timeline has no non-image placeholder copy", async ({ page }) => {
@@ -180,6 +225,7 @@ test("LUNA timeline has no non-image placeholder copy", async ({ page }) => {
 test("LUNA showcase reflows at 200% text size", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/luna");
+  await page.locator('[data-version-toggle="v2-closure"]').click();
   await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
 
   const dimensions = await page.evaluate(() => ({
@@ -187,6 +233,9 @@ test("LUNA showcase reflows at 200% text size", async ({ page }) => {
     scrollWidth: document.documentElement.scrollWidth,
   }));
   expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
+  await expect(
+    page.locator('[data-version-panel="v2-closure"] .record-metrics dd'),
+  ).toHaveText(["75,798", "32,642", "1,899"]);
 });
 
 test("LUNA showcase has no serious or critical axe violations", async ({

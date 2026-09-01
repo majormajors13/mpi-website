@@ -43,7 +43,6 @@ export interface LunaHistoryRecord {
   deviation: string;
   developmentIssues: string[];
   resolutions: string[];
-  evidenceIds: string[];
   metrics: {
     productionLoc: number;
     testLoc: number;

@@ -31,7 +31,6 @@ export const lunaHistory: LunaHistoryRecord[] = [
       "Workspace sandbox, approval loop, and audit logging",
       "v0.5.5 architecture and authoring freeze",
     ],
-    evidenceIds: [],
     metrics: { productionLoc: 3383, testLoc: 575, pytestCollected: null },
   },
   {
@@ -64,7 +63,6 @@ export const lunaHistory: LunaHistoryRecord[] = [
       "Hardened sessions, streaming, CI, and runtime paths",
       "Stable v1.0 core endpoint",
     ],
-    evidenceIds: [],
     metrics: { productionLoc: 11695, testLoc: 2560, pytestCollected: 179 },
   },
   {
@@ -97,7 +95,6 @@ export const lunaHistory: LunaHistoryRecord[] = [
       "Dedicated Vault organization and inspection",
       "Proposal-first Planner Goal Engine",
     ],
-    evidenceIds: [],
     metrics: { productionLoc: 37263, testLoc: 16631, pytestCollected: 891 },
   },
   {
@@ -131,7 +128,6 @@ export const lunaHistory: LunaHistoryRecord[] = [
       "Revocable sessions and append-only authentication audits",
       "Separate platform-admin authority and routes",
     ],
-    evidenceIds: [],
     metrics: { productionLoc: 42137, testLoc: 19129, pytestCollected: 1038 },
   },
   {
@@ -166,7 +162,6 @@ export const lunaHistory: LunaHistoryRecord[] = [
       "Proposal-only gates and scope regression tests",
       "Deterministic provenance, deduplication, and stable JSON seams",
     ],
-    evidenceIds: [],
     metrics: { productionLoc: 47227, testLoc: 21087, pytestCollected: 1136 },
   },
   {
@@ -205,10 +200,8 @@ export const lunaHistory: LunaHistoryRecord[] = [
       "Supervised launcher, native host, installer, and release validation",
       "Browser-session and bootstrap redesign",
     ],
-    evidenceIds: ["local-system"],
     metrics: { productionLoc: 75798, testLoc: 32642, pytestCollected: 1899 },
     checkpointVersion: "2.0.0.dev0",
-    metricsNote:
-      "A matching current-checkpoint full-suite pass artifact was not found; PYTEST reports collected cases at committed HEAD.",
+    metricsNote: "Pytest shows collected test cases for this checkpoint.",
   },
 ];
