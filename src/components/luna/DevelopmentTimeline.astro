@@ -1,0 +1,345 @@
+---
+import { lunaHistory } from "../../data/luna-history";
+---
+
+<section
+  class="development"
+  aria-labelledby="development-title"
+  data-development-timeline
+>
+  <div class="container">
+    <header class="development__heading">
+      <p>Development archive // Version progression</p><h2
+        id="development-title"
+      >
+        How LUNA got here
+      </h2><p>
+        These are engineering eras, not a commit log. Counts remain hidden
+        unless the historical measurement is authoritative.
+      </p>
+    </header>
+    <div class="development__layout">
+      <div class="version-list" role="tablist" aria-label="LUNA version eras">
+        {
+          lunaHistory.map((record, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`version-tab-${record.id}`}
+              aria-selected={index === 0 ? "true" : "false"}
+              aria-controls={`version-panel-${record.id}`}
+              tabindex={index === 0 ? 0 : -1}
+              data-version-select={record.id}
+            >
+              <>
+                <strong>{record.label}</strong>
+                <b>{record.eraTitle}</b>
+                <span>{record.status}</span>
+              </>
+            </button>
+          ))
+        }
+      </div>
+      <div class="development__records">
+        {
+          lunaHistory.map((record, index) => (
+            <article
+              role="tabpanel"
+              id={`version-panel-${record.id}`}
+              aria-labelledby={`version-tab-${record.id}`}
+              data-version-panel={record.id}
+              hidden={index !== 0}
+            >
+              <div class="development__record-heading">
+                <>
+                  <p>
+                    {record.label} // {record.status}
+                  </p>
+                  <h3>{record.eraTitle}</h3>
+                </>
+              </div>
+              <dl>
+                <div>
+                  <>
+                    <dt>Result</dt>
+                    <dd>{record.result}</dd>
+                  </>
+                </div>
+                {record.learned && (
+                  <div>
+                    <dt>What I learned</dt>
+                    <dd>{record.learned}</dd>
+                  </div>
+                )}
+              </dl>
+              <div class="development__columns">
+                <>
+                  <div>
+                    <>
+                      <h4>Development issues</h4>
+                      <ul>
+                        {record.developmentIssues.map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    </>
+                  </div>
+                  <div>
+                    <>
+                      <h4>How it was resolved</h4>
+                      <ul>
+                        {record.resolutions.map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    </>
+                  </div>
+                </>
+              </div>
+              <div class="development__scope">
+                <>
+                  <h4>Delivered themes</h4>
+                  <ul>
+                    {record.deliveredScope.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </>
+              </div>
+              {record.validationSnapshots && (
+                <div class="validation-snapshots">
+                  <h4>Validation snapshots</h4>
+                  <ol>
+                    {record.validationSnapshots.map((value) => (
+                      <li>{value}</li>
+                    ))}
+                  </ol>
+                  <p>
+                    Recorded validation snapshots during v2 development. These
+                    are not a final authoritative test total.
+                  </p>
+                </div>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+    <p class="development__metric-note">
+      Code and test counts are scale indicators, not software-quality scores.
+      Unsupported historical counters are intentionally omitted.
+    </p>
+  </div>
+</section>
+<style>
+  .development {
+    padding-block: clamp(var(--space-8), 11vw, 9rem);
+    border-block: 1px solid var(--color-border);
+    background:
+      linear-gradient(rgb(172 124 255 / 3%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(172 124 255 / 3%) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 4rem 4rem;
+  }
+  .development__heading {
+    max-width: 50rem;
+  }
+  .development__heading > p:first-child,
+  .development__record-heading p,
+  dt,
+  h4 {
+    color: var(--color-accent-highlight);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .development__heading h2 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1;
+  }
+  .development__heading > p:last-child,
+  .development__metric-note {
+    margin-block-start: var(--space-5);
+    color: var(--color-text-muted);
+  }
+  .development__layout {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-7);
+  }
+  .version-list {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+  .version-list button {
+    display: grid;
+    min-height: 4.5rem;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-align: start;
+  }
+  .version-list button strong {
+    font-size: 1.125rem;
+  }
+  .version-list button b {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+  }
+  .version-list button span {
+    color: var(--color-text-muted);
+    font-family: var(--font-technical);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+  }
+  .version-list button[aria-selected="true"] {
+    border-color: var(--color-accent-highlight);
+    background: rgb(115 71 216 / 14%);
+    box-shadow: 0 0 1.5rem rgb(115 71 216 / 15%);
+  }
+  .development__records article {
+    padding: clamp(var(--space-5), 5vw, var(--space-7));
+    border: 1px solid var(--color-accent-highlight);
+    border-radius: var(--radius-large);
+    background: var(--color-canvas);
+  }
+  .development__record-heading h3 {
+    margin-block-start: var(--space-2);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    text-transform: capitalize;
+  }
+  dl {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-6) 0 0;
+  }
+  dl > div,
+  .development__columns > div,
+  .validation-snapshots {
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--color-border);
+  }
+  dd {
+    margin: var(--space-2) 0 0;
+    color: var(--color-text-muted);
+  }
+  .development__columns {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-6);
+  }
+  ul {
+    margin: var(--space-3) 0 0;
+    padding-inline-start: 1.25rem;
+    color: var(--color-text-muted);
+  }
+  .development__scope {
+    margin-block-start: var(--space-6);
+  }
+  .development__scope ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+  .development__scope li {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+  }
+  .validation-snapshots {
+    margin-block-start: var(--space-6);
+  }
+  .validation-snapshots ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .validation-snapshots li {
+    padding: var(--space-4);
+    border: 1px solid var(--color-accent);
+    font-weight: 700;
+  }
+  .validation-snapshots p {
+    margin-block-start: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  @media (min-width: 48rem) {
+    .development__columns,
+    dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .development__layout {
+      grid-template-columns: minmax(15rem, 0.55fr) minmax(0, 1.45fr);
+    }
+  }
+</style>
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-development-timeline]")
+    .forEach((root) => {
+      const tabs = [
+        ...root.querySelectorAll<HTMLButtonElement>("[data-version-select]"),
+      ];
+      const panels = [
+        ...root.querySelectorAll<HTMLElement>("[data-version-panel]"),
+      ];
+      const select = (tab: HTMLButtonElement) => {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute("aria-selected", String(selected));
+          item.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach(
+          (panel) =>
+            (panel.hidden =
+              panel.dataset.versionPanel !== tab.dataset.versionSelect),
+        );
+      };
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => select(tab));
+        tab.addEventListener("keydown", (event) => {
+          if (
+            ![
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowLeft",
+              "Home",
+              "End",
+            ].includes(event.key)
+          )
+            return;
+          event.preventDefault();
+          let next: number;
+          if (event.key === "Home") next = 0;
+          else if (event.key === "End") next = tabs.length - 1;
+          else
+            next =
+              (index +
+                (event.key === "ArrowDown" || event.key === "ArrowRight"
+                  ? 1
+                  : -1) +
+                tabs.length) %
+              tabs.length;
+          select(tabs[next]);
+          tabs[next].focus();
+        });
+      });
+    });
+</script>

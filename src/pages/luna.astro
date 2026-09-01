@@ -1,122 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import lunaLogo from "../assets/logos/luna-logo.png";
-import CapturePlaceholder from "../components/luna/CapturePlaceholder.astro";
-import LunaFeatureSection from "../components/luna/LunaFeatureSection.astro";
+import DevelopmentTimeline from "../components/luna/DevelopmentTimeline.astro";
+import LunaArchive from "../components/luna/LunaArchive.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const description =
   "LUNA is a persistent AI and knowledge project that keeps context across research, planning, decisions, and controlled action.";
-
-const features = [
-  {
-    id: "continuity",
-    label: "Continuity // Persistent context",
-    title: "Keep the useful context",
-    description:
-      "LUNA keeps relevant knowledge, conversations, research, and project context available over time. You do not have to reconstruct the whole story at the start of every session.",
-    points: [
-      "Useful context",
-      "Knowledge organization",
-      "Imported information",
-    ],
-    captureTitle: "Knowledge Vault",
-    captureCaption:
-      "A future capture will show retained information returning in a later session.",
-  },
-  {
-    id: "connections",
-    label: "Knowledge // Relationships",
-    title: "See how information connects",
-    description:
-      "Information rarely belongs in one folder. LUNA can relate it across projects, topics, people, and decisions without making duplicate copies everywhere.",
-    points: ["Related knowledge", "Project context", "Multiple viewpoints"],
-    captureTitle: "Knowledge Graph",
-    captureCaption:
-      "A future capture will demonstrate connected knowledge in a consumer-facing view.",
-    reverse: true,
-  },
-  {
-    id: "planning",
-    label: "Work // Goals and planning",
-    title: "Turn a goal into next steps",
-    description:
-      "LUNA can break a larger goal into manageable steps, track what comes next, and keep the reasoning behind the plan.",
-    points: ["Goals", "Tasks", "Plans", "Next steps"],
-    captureTitle: "Planner",
-    captureCaption:
-      "A future capture will follow a goal as it becomes a working plan.",
-  },
-  {
-    id: "research",
-    label: "Research // Sources retained",
-    title: "Keep the source with the finding",
-    description:
-      "Research is more useful when you know where it came from. LUNA keeps citations and provenance with the finding so it can be checked and used again.",
-    points: [
-      "Research assistance",
-      "Citations",
-      "Provenance",
-      "Retained findings",
-    ],
-    captureTitle: "Research + citations",
-    captureCaption:
-      "A future capture will follow a finding from its source into a project.",
-    reverse: true,
-  },
-  {
-    id: "decisions",
-    label: "History // Decision Journal",
-    title: "Keep the reason with the decision",
-    description:
-      "Important decisions should not disappear behind the interface. LUNA can keep what happened, what information mattered, and why the choice was made.",
-    points: ["Decision history", "Relevant context", "Traceability"],
-    captureTitle: "Decision Journal",
-    captureCaption:
-      "A future capture will revisit a decision after the project has moved on.",
-  },
-  {
-    id: "approval",
-    label: "Control // Approval required",
-    title: "Review before anything happens",
-    description:
-      "LUNA can prepare a controlled action, but important real-world steps can still wait for explicit approval.",
-    points: ["Action previews", "Explicit approval", "Visible execution"],
-    captureTitle: "Action approval",
-    captureCaption:
-      "A future capture will show a proposed action moving through review and approval.",
-    reverse: true,
-  },
-  {
-    id: "coordination",
-    label: "System // Coordinated capabilities",
-    title: "Let the parts talk to each other",
-    description:
-      "Research, planning, stored knowledge, and controlled actions share context inside LUNA. The user should not have to shuttle the same information between disconnected tools.",
-    points: ["Shared context", "Specialized help", "Connected workflows"],
-    captureTitle: "Coordinated workflow",
-    captureCaption:
-      "A future walkthrough will follow one task across several LUNA capabilities.",
-  },
-];
-
-const flow = [
-  "Knowledge",
-  "Research",
-  "Planning",
-  "Decisions",
-  "Approval",
-  "Action",
-  "History",
-];
-const showcase = [
-  ["Main workspace", "The central place where a user works with LUNA."],
-  ["Knowledge Vault", "Useful information retained for continuing work."],
-  ["Knowledge Graph", "Relationships across projects, topics, and decisions."],
-  ["Planner", "Goals, tasks, and the context behind next steps."],
-  ["Decision Journal", "A reviewable history of important choices."],
-  ["Approval workflow", "A controlled action prepared for explicit review."],
-];
 ---
 
 <BaseLayout title="LUNA" description={description}>
@@ -137,10 +27,11 @@ const showcase = [
             a blank slate.
           </p>
           <ul class="status-list" aria-label="LUNA project status">
-            <li>Active development</li><li>Proprietary</li><li>
+            <li>Active development</li><li>Proprietary / closed source</li><li>
               Independently built
             </li>
           </ul>
+          <a class="luna-hero__action" href="#archive">Open the archive</a>
         </div>
         <div class="luna-hero__logo-wrap">
           <Image
@@ -169,86 +60,8 @@ const showcase = [
       </p>
     </section>
 
-    <div class="features container" aria-label="LUNA capabilities">
-      {features.map((feature) => <LunaFeatureSection {...feature} />)}
-    </div>
-
-    <section class="system-flow" aria-labelledby="flow-title">
-      <div class="container">
-        <p class="technical-label">Concept // Connected flow</p>
-        <h2 id="flow-title">Context moves with the task.</h2>
-        <p class="section-intro">
-          Each part can hand useful context to the next. The history stays
-          available when it is time to check what happened.
-        </p>
-        <ol class="flow-list">{flow.map((step) => <li>{step}</li>)}</ol>
-      </div>
-    </section>
-
-    <section class="ownership container" aria-labelledby="ownership-title">
-      <div>
-        <p class="technical-label">Direction // Ownership and control</p><h2
-          id="ownership-title"
-        >
-          Your data should feel like yours.
-        </h2><p>
-          LUNA is following a local-first direction with user-controlled data.
-          The aim is to avoid placing every important part of the experience
-          inside someone else’s black box. The project remains proprietary and
-          under active development.
-        </p>
-      </div>
-      <CapturePlaceholder
-        title="Local system"
-        caption="A public-safe diagram will be added when it can accurately represent the working system."
-      />
-    </section>
-
-    <section class="showcase container" aria-labelledby="showcase-title">
-      <p class="technical-label">Showcase // Captures in preparation</p>
-      <h2 id="showcase-title">What the pieces look like</h2>
-      <p class="section-intro">
-        These spaces are reserved for product captures. They will document the
-        interface without exposing the private codebase behind it.
-      </p>
-      <div class="showcase__grid">
-        {
-          showcase.map(([title, caption]) => (
-            <CapturePlaceholder title={title} caption={caption} compact />
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="demos" aria-labelledby="demos-title">
-      <div class="container">
-        <p class="technical-label">Demonstrations // In preparation</p><h2
-          id="demos-title"
-        >
-          LUNA in motion
-        </h2>
-        <p class="section-intro">
-          Short demonstrations are being prepared now. They will show complete
-          workflows, including the less glamorous steps between start and
-          finish.
-        </p>
-        <div class="demos__grid">
-          <CapturePlaceholder
-            title="Workflow video"
-            kind="video"
-            compact
-          /><CapturePlaceholder
-            title="Animated product capture"
-            kind="video"
-            compact
-          /><CapturePlaceholder
-            title="Start-to-finish walkthrough"
-            kind="walkthrough"
-            compact
-          />
-        </div>
-      </div>
-    </section>
+    <LunaArchive />
+    <DevelopmentTimeline />
 
     <section class="project-status container" aria-labelledby="status-title">
       <div>

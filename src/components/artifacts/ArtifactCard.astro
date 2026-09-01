@@ -1,5 +1,6 @@
 ---
 interface Props {
+  id?: string;
   slot: string;
   type: string;
   title: string;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const {
+  id = `artifact-${Astro.props.slot}`,
   slot,
   type,
   title,
@@ -23,7 +25,7 @@ const {
     class="artifact-card__inspect"
     type="button"
     aria-haspopup="dialog"
-    data-artifact-open
+    data-evidence-open={id}
     data-artifact-slot={slot}
     data-artifact-type={type}
     data-artifact-title={title}

@@ -53,31 +53,58 @@ for (const viewport of [
   });
 }
 
-test("LUNA showcase has meaningful sections and reserved capture space", async ({
+test("LUNA archive uses approved evidence and hides empty folders", async ({
   page,
 }) => {
   await page.goto("/luna");
-
-  for (const id of [
-    "continuity",
-    "connections",
-    "planning",
-    "research",
-    "decisions",
-    "approval",
-    "coordination",
-  ]) {
-    await expect(page.locator(`#${id}`)).toBeVisible();
-  }
-
+  await expect(page.locator("#archive")).toBeVisible();
+  await expect(page.locator(".archive-folder")).toHaveCount(1);
   await expect(
-    page.getByRole("heading", { name: "LUNA in motion" }),
+    page.locator(".archive-folder summary").getByText("Architecture", {
+      exact: true,
+    }),
   ).toBeVisible();
-  const captureFrames = page.locator(".capture__frame");
-  expect(await captureFrames.count()).toBeGreaterThanOrEqual(10);
-  const firstCapture = await captureFrames.first().boundingBox();
-  expect(firstCapture).not.toBeNull();
-  expect(firstCapture!.height).toBeGreaterThanOrEqual(190);
+  await expect(page.getByText("Capture pending")).toHaveCount(0);
+  const opener = page.locator('#archive [data-evidence-open="local-system"]');
+  await opener.click();
+  const dialog = page.locator("[data-evidence-dialog]");
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("heading", { level: 2 })).toHaveText(
+    "Local system overview",
+  );
+  await page.keyboard.press("Escape");
+  await expect(opener).toBeFocused();
+});
+
+test("LUNA version cards select records without public dates", async ({
+  page,
+}) => {
+  await page.goto("/luna");
+  const tabs = page.getByRole("tab");
+  await expect(tabs).toHaveCount(6);
+  const v2 = page.getByRole("tab", { name: /v2\.0/ });
+  await v2.click();
+  await expect(v2).toHaveAttribute("aria-selected", "true");
+  const panel = page.getByRole("tabpanel").filter({ visible: true });
+  await expect(panel).toContainText("1,346 passed");
+  await expect(panel).toContainText("1,507 passed");
+  await expect(panel).toContainText("1,518 passed");
+  await expect(panel).toContainText("not a final authoritative test total");
+  await expect(page.locator("[data-development-timeline]")).not.toContainText(
+    /January|February|March|April|May|June|July|August|September|October|November|December|20\d{2}/,
+  );
+});
+
+test("LUNA timeline supports arrow-key selection", async ({ page }) => {
+  await page.goto("/luna");
+  const first = page.getByRole("tab").first();
+  await first.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.getByRole("tab").nth(1)).toBeFocused();
+  await expect(page.getByRole("tab").nth(1)).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
 });
 
 test("LUNA showcase reflows at 200% text size", async ({ page }) => {

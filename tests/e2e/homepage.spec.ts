@@ -109,11 +109,13 @@ test("artifact inspection opens, traps focus, closes, and returns focus", async 
   page,
 }) => {
   await page.goto("/");
-  const opener = page.locator("[data-artifact-open]").first();
+  const opener = page.locator("[data-evidence-open]").first();
   await opener.click();
-  const dialog = page.locator("[data-artifact-dialog]");
+  const dialog = page.locator("[data-evidence-dialog]");
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("heading")).toHaveText("Working interface");
+  await expect(dialog.getByRole("heading", { level: 2 })).toHaveText(
+    "Working interface",
+  );
   await expect(dialog.getByRole("button", { name: /Close/ })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(dialog.getByRole("button", { name: /Close/ })).toBeFocused();
