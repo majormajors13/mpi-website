@@ -4,6 +4,11 @@ import { lunaArtifacts } from "../../data/luna-evidence";
 import { lunaHistory } from "../../data/luna-history";
 import EvidenceViewer from "../artifacts/EvidenceViewer.astro";
 const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
+const exactNumber = new Intl.NumberFormat("en-US");
+const compactNumber = (value: number) =>
+  value < 1000 ? String(value) : `${(value / 1000).toFixed(1)}K`;
+const pytestDefinition =
+  "Collected pytest cases at the selected historical repository checkpoint.";
 ---
 
 <section
@@ -49,6 +54,33 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
                     <span>{record.status}</span>
                   </>
                 </span>
+                <span
+                  class="timeline-chapter__metrics"
+                  aria-label="Engineering snapshot"
+                >
+                  <span>
+                    <>
+                      <strong>
+                        {compactNumber(record.metrics.productionLoc)}
+                      </strong>
+                      <small>Code</small>
+                    </>
+                  </span>
+                  <span>
+                    <>
+                      <strong>{compactNumber(record.metrics.testLoc)}</strong>
+                      <small>Test code</small>
+                    </>
+                  </span>
+                  <span>
+                    <strong>
+                      {record.metrics.pytestCollected === null
+                        ? "—"
+                        : exactNumber.format(record.metrics.pytestCollected)}
+                    </strong>
+                    <small title={pytestDefinition}>Pytest</small>
+                  </span>
+                </span>
                 <span class="timeline-chapter__action" aria-hidden="true">
                   Open chapter
                 </span>
@@ -68,6 +100,14 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
                   </>
                 </header>
                 <dl class="development-record__story">
+                  <div>
+                    <dt>Initial goal</dt>
+                    <dd>{record.problem}</dd>
+                  </div>
+                  <div>
+                    <dt>How it evolved</dt>
+                    <dd>{record.change}</dd>
+                  </div>
                   <div>
                     <>
                       <dt>Result</dt>
@@ -112,7 +152,7 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
                   aria-labelledby={`${record.id}-scope`}
                 >
                   <>
-                    <h4 id={`${record.id}-scope`}>Major capabilities</h4>
+                    <h4 id={`${record.id}-scope`}>What this era added</h4>
                     <ul>
                       {record.deliveredScope.map((item) => (
                         <li>{item}</li>
@@ -120,26 +160,43 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
                     </ul>
                   </>
                 </section>
-                {record.validationSnapshots && (
-                  <section
-                    class="validation-snapshots"
-                    aria-labelledby={`${record.id}-validation`}
-                  >
-                    <h4 id={`${record.id}-validation`}>
-                      Validation progression
-                    </h4>
-                    <ol>
-                      {record.validationSnapshots.map((value) => (
-                        <li>{value}</li>
-                      ))}
-                    </ol>
+                <section
+                  class="record-metrics"
+                  aria-labelledby={`${record.id}-metrics`}
+                >
+                  <h4 id={`${record.id}-metrics`}>Engineering snapshot</h4>
+                  <dl>
+                    <div>
+                      <>
+                        <dt>Production LOC</dt>
+                        <dd>
+                          {exactNumber.format(record.metrics.productionLoc)}
+                        </dd>
+                      </>
+                    </div>
+                    <div>
+                      <>
+                        <dt>Test LOC</dt>
+                        <dd>{exactNumber.format(record.metrics.testLoc)}</dd>
+                      </>
+                    </div>
+                    <div>
+                      <dt title={pytestDefinition}>Pytest collected</dt>
+                      <dd>
+                        {record.metrics.pytestCollected === null
+                          ? "Unavailable"
+                          : exactNumber.format(record.metrics.pytestCollected)}
+                      </dd>
+                    </div>
+                  </dl>
+                  {record.checkpointVersion && (
                     <p>
-                      Recorded full-suite snapshots during v2 development. They
-                      show validation growth, not a final authoritative test
-                      total.
+                      Committed source version:{" "}
+                      <strong>{record.checkpointVersion}</strong>
                     </p>
-                  </section>
-                )}
+                  )}
+                  {record.metricsNote && <p>{record.metricsNote}</p>}
+                </section>
                 {recordArtifacts.length > 0 && (
                   <section
                     class="development-record__evidence"
@@ -184,9 +241,8 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
       }
     </ol>
     <p class="development__metric-note">
-      Code and test counts indicate project scale and validation growth, not
-      software quality by themselves. Unsupported historical counters are
-      intentionally omitted.
+      Code and test counts show project scale and validation growth; they are
+      not quality scores.
     </p>
   </div>
 </section>
@@ -296,6 +352,25 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
     display: grid;
     gap: var(--space-1);
   }
+  .timeline-chapter__metrics {
+    display: grid;
+    grid-column: 2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    max-width: 22rem;
+  }
+  .timeline-chapter__metrics > span {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .timeline-chapter__metrics strong {
+    font-family: var(--font-technical);
+    font-size: 0.875rem;
+  }
+  .timeline-chapter__metrics small {
+    color: var(--color-text-muted);
+    font-size: 0.5625rem;
+  }
   .timeline-chapter__identity strong {
     font-size: clamp(1.15rem, 3vw, 1.5rem);
   }
@@ -340,7 +415,7 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
   }
   .development-record__story > div,
   .development-record__columns > section,
-  .validation-snapshots,
+  .record-metrics,
   .development-record__evidence {
     padding-block-start: var(--space-4);
     border-block-start: 1px solid var(--color-border);
@@ -374,24 +449,27 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
     border: 1px solid var(--color-border);
     border-radius: 999px;
   }
-  .validation-snapshots,
+  .record-metrics,
   .development-record__evidence {
     margin-block-start: var(--space-6);
   }
-  .validation-snapshots ol {
-    display: flex;
-    flex-wrap: wrap;
+  .record-metrics > dl {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-3);
     margin: var(--space-4) 0 0;
-    padding: 0;
-    list-style: none;
   }
-  .validation-snapshots li {
-    padding: var(--space-4);
-    border: 1px solid var(--color-accent);
+  .record-metrics > dl > div {
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+  }
+  .record-metrics dd {
+    color: var(--color-text-primary);
+    font-family: var(--font-technical);
+    font-size: clamp(1rem, 4vw, 1.35rem);
     font-weight: 700;
   }
-  .validation-snapshots p {
+  .record-metrics p {
     margin-block-start: var(--space-3);
     color: var(--color-text-muted);
     font-size: 0.875rem;
@@ -430,7 +508,10 @@ const artifacts = lunaArtifacts.filter((artifact) => artifact.publicSafe);
   }
   @media (min-width: 40rem) {
     .timeline-chapter__control {
-      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-columns: auto minmax(10rem, 1fr) minmax(17rem, 0.8fr) auto;
+    }
+    .timeline-chapter__metrics {
+      grid-column: auto;
     }
     .timeline-chapter__action {
       display: block;

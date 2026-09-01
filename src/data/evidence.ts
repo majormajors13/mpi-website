@@ -44,12 +44,11 @@ export interface LunaHistoryRecord {
   developmentIssues: string[];
   resolutions: string[];
   evidenceIds: string[];
-  metrics?: {
-    productionLoc?: string;
-    testLoc?: string;
-    pytestCount?: string;
-    focusedTests?: string;
-    suiteStatus?: string;
+  metrics: {
+    productionLoc: number;
+    testLoc: number;
+    pytestCollected: number | null;
   };
-  validationSnapshots?: string[];
+  checkpointVersion?: string;
+  metricsNote?: string;
 }
