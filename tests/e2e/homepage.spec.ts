@@ -106,36 +106,17 @@ test("homepage hero establishes the MPI workshop identity", async ({
   await expect(page.locator(".hero__content")).not.toContainText("pricing");
 });
 
-test("workshop board exposes real projects and restrained empty states", async ({
+test("workshop board exposes real projects without dead bench states", async ({
   page,
 }) => {
   await page.goto("/");
   const board = page.locator("#workshop");
   await expect(board.getByRole("link")).toHaveCount(3);
-  await expect(board.getByText("Bench available")).toHaveCount(3);
+  await expect(board.getByText("Bench available")).toHaveCount(0);
   const luna = board.getByRole("link", { name: /LUNA/ });
   await luna.focus();
   await expect(luna).toBeFocused();
   await expect(luna).toHaveAttribute("href", "/luna");
-});
-
-test("artifact inspection opens, traps focus, closes, and returns focus", async ({
-  page,
-}) => {
-  await page.goto("/");
-  const opener = page.locator("[data-evidence-open]").first();
-  await opener.click();
-  const dialog = page.locator("[data-evidence-dialog]");
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("heading", { level: 2 })).toHaveText(
-    "Working interface",
-  );
-  await expect(dialog.getByRole("button", { name: /Close/ })).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(dialog.getByRole("button", { name: /Close/ })).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(dialog).not.toBeVisible();
-  await expect(opener).toBeFocused();
 });
 
 test("homepage clarifies MPI as the workshop and LUNA as the flagship", async ({
@@ -150,15 +131,6 @@ test("homepage clarifies MPI as the workshop and LUNA as the flagship", async ({
   await expect(page.locator("#luna")).toContainText("Flagship project");
   await expect(page.locator("#luna")).not.toContainText("Buy");
   await expect(page.locator("#luna")).not.toContainText("Get started");
-});
-
-test("bench status is explicit and compact", async ({ page }) => {
-  await page.goto("/");
-  const bench = page.locator("#bench");
-  await expect(bench.locator("li")).toHaveCount(3);
-  await expect(
-    bench.getByText(/Flagship project|Public surface|Bench available/),
-  ).toHaveCount(3);
 });
 
 test("footer diagnostic reveals one accessible easter egg", async ({
@@ -178,7 +150,7 @@ test("navigation links resolve to real targets in document order", async ({
 }) => {
   await page.goto("/");
 
-  const targets = ["top", "luna", "workshop", "artifacts", "about"];
+  const targets = ["top", "luna", "workshop", "about"];
   const hrefs = await page
     .locator("nav a")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -193,7 +165,7 @@ test("sticky navigation leaves section targets visible", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  for (const target of ["luna", "workshop", "artifacts", "about"]) {
+  for (const target of ["luna", "workshop", "about"]) {
     await page.locator(`nav a[href="#${target}"]`).click();
     const headerBox = await page.locator(".site-header").boundingBox();
     const targetBox = await page.locator(`#${target}`).boundingBox();
@@ -220,7 +192,6 @@ test("keyboard focus follows the visual navigation order", async ({ page }) => {
     'nav a[href="#top"]',
     'nav a[href="#luna"]',
     'nav a[href="#workshop"]',
-    'nav a[href="#artifacts"]',
     'nav a[href="#about"]',
     ".button--primary",
     ".button--secondary",

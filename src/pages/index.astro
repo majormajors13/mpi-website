@@ -1,12 +1,10 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
-import ArtifactWall from "../components/artifacts/ArtifactWall.astro";
 import AboutSection from "../components/sections/AboutSection.astro";
 import HeroSection from "../components/sections/HeroSection.astro";
 import IdentitySection from "../components/sections/IdentitySection.astro";
 import LunaSection from "../components/sections/LunaSection.astro";
-import BenchStatus from "../components/workshop/BenchStatus.astro";
 import WorkshopBoard from "../components/workshop/WorkshopBoard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
@@ -16,11 +14,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <SiteHeader />
     <main id="main-content" tabindex="-1">
       <HeroSection />
-      <IdentitySection />
       <LunaSection />
       <WorkshopBoard />
-      <BenchStatus />
-      <ArtifactWall />
+      <IdentitySection />
       <AboutSection />
     </main>
     <SiteFooter />

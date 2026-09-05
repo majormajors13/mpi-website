@@ -1,53 +1,22 @@
 ---
-const areas = [
+const projects = [
   {
-    id: "software",
-    number: "01",
-    title: "AI & Software",
-    status: "3 active projects",
-    projects: [
-      {
-        title: "LUNA",
-        status: "Active development",
-        description:
-          "Persistent AI, knowledge, planning, and controlled action.",
-        href: "/luna",
-      },
-      {
-        title: "MPI Website",
-        status: "Live",
-        description:
-          "The workshop's public surface and the site you are using.",
-        href: "/projects/mpi-website",
-      },
-      {
-        title: "Motionless Moments",
-        status: "In development",
-        description: "A dark, visual-first photography website.",
-        href: "/projects/motionless-moments",
-      },
-    ],
+    title: "LUNA",
+    status: "Active development",
+    description: "Persistent AI, knowledge, planning, and controlled action.",
+    href: "/luna",
   },
   {
-    id: "automation",
-    number: "02",
-    title: "Automation",
-    status: "Exploring",
-    projects: [],
+    title: "MPI Website",
+    status: "Live",
+    description: "The workshop's public surface and the site you are using.",
+    href: "/projects/mpi-website",
   },
   {
-    id: "hardware",
-    number: "03",
-    title: "Hardware",
-    status: "Queued",
-    projects: [],
-  },
-  {
-    id: "experiments",
-    number: "04",
-    title: "Experiments",
-    status: "Exploring",
-    projects: [],
+    title: "Motionless Moments",
+    status: "In development",
+    description: "A dark, visual-first photography website.",
+    href: "/projects/motionless-moments",
   },
 ];
 ---
@@ -56,62 +25,36 @@ const areas = [
   <div class="workshop-board__shell container">
     <header class="workshop-board__heading">
       <div>
-        <p class="workshop-board__label">Workshop board // Node map</p>
-        <h2 id="workshop-title">Choose a work area</h2>
+        <p class="workshop-board__label">Workshop // Current work</p>
+        <h2 id="workshop-title">Project network</h2>
       </div>
       <p>
-        A live map of the work happening here: what is active, what is in the
-        queue, and which benches are still waiting for their first project.
+        A current map of the work open to explore right now, with the most
+        active pieces front and center.
       </p>
     </header>
 
     <div class="workshop-board__panel">
       <div class="workshop-board__readout" aria-hidden="true">
-        <span>MPI-WB</span><span>NODE STATUS // ONLINE</span>
+        <span>MPI</span><span>WORKSHOP // ONLINE</span>
       </div>
-      <div class="workshop-board__areas">
+
+      <ul class="project-network workshop-board__areas">
         {
-          areas.map((area) => (
-            <section
-              class:list={[
-                "work-area",
-                area.projects.length && "work-area--active",
-              ]}
-              aria-labelledby={`work-area-${area.id}`}
-            >
-              <div class="work-area__header">
-                <span class="work-area__number" aria-hidden="true">
-                  {area.number}
+          projects.map((project) => (
+            <li>
+              <a class="project-node" href={project.href}>
+                <span class="project-node__light" aria-hidden="true" />
+                <span class="project-node__copy">
+                  <strong>{project.title}</strong>
+                  <span>{project.description}</span>
                 </span>
-                <div>
-                  <h3 id={`work-area-${area.id}`}>{area.title}</h3>
-                  <p>{area.status}</p>
-                </div>
-              </div>
-              {area.projects.length ? (
-                <ul>
-                  {area.projects.map((project) => (
-                    <li>
-                      <a class="project-node" href={project.href}>
-                        <span class="project-node__light" aria-hidden="true" />
-                        <span class="project-node__copy">
-                          <strong>{project.title}</strong>
-                          <span>{project.description}</span>
-                        </span>
-                        <span class="project-node__status">
-                          {project.status}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p class="work-area__empty">Bench available</p>
-              )}
-            </section>
+                <span class="project-node__status">{project.status}</span>
+              </a>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </div>
 </section>
@@ -137,20 +80,20 @@ const areas = [
       auto,
       auto;
   }
+
   .workshop-board__heading {
     display: grid;
     gap: var(--space-5);
     align-items: end;
   }
+
   .workshop-board__heading > p {
     max-width: 36rem;
     color: var(--color-text-muted);
   }
+
   .workshop-board__label,
   .workshop-board__readout,
-  .work-area__number,
-  .work-area__header p,
-  .work-area__empty,
   .project-node__status {
     font-family: var(--font-technical);
     font-size: 0.6875rem;
@@ -158,10 +101,11 @@ const areas = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .workshop-board__label,
-  .work-area__number {
+
+  .workshop-board__label {
     color: var(--color-accent-highlight);
   }
+
   h2 {
     margin-block-start: var(--space-3);
     font-size: clamp(2.5rem, 7vw, 5.5rem);
@@ -169,6 +113,7 @@ const areas = [
     line-height: 0.95;
     text-transform: uppercase;
   }
+
   .workshop-board__panel {
     position: relative;
     margin-block-start: var(--space-7);
@@ -201,6 +146,7 @@ const areas = [
       var(--shadow-surface),
       inset 0 0 3rem rgb(115 71 216 / 4%);
   }
+
   .workshop-board__readout {
     display: flex;
     justify-content: space-between;
@@ -209,59 +155,19 @@ const areas = [
     border-block-end: 1px solid var(--color-border);
     color: var(--color-text-muted);
   }
+
   .workshop-board__readout span:last-child {
     color: var(--color-accent-highlight);
   }
-  .workshop-board__areas {
+
+  .project-network {
     display: grid;
-    gap: var(--space-4);
-    margin-block-start: var(--space-5);
-  }
-  .work-area {
-    position: relative;
-    min-width: 0;
-    padding: var(--space-5);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-medium);
-    background: rgb(16 14 21 / 75%);
-  }
-  .work-area::before {
-    position: absolute;
-    inset: 2.5rem auto auto -1rem;
-    width: 1rem;
-    height: 1px;
-    background: rgb(172 124 255 / 18%);
-    content: "";
-    transition:
-      background-color var(--motion-fast) ease-out,
-      box-shadow var(--motion-fast) ease-out;
-  }
-  .work-area--active:focus-within::before,
-  .work-area--active:hover::before {
-    background: var(--color-accent-highlight);
-    box-shadow: 0 0 0.75rem var(--color-accent-highlight);
-  }
-  .work-area__header {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-4);
-  }
-  .work-area h3 {
-    font-size: 1.25rem;
-    line-height: 1.1;
-  }
-  .work-area__header p,
-  .work-area__empty {
-    margin-block-start: var(--space-2);
-    color: var(--color-text-muted);
-  }
-  .work-area ul {
-    display: grid;
-    gap: var(--space-2);
+    gap: var(--space-3);
     margin: var(--space-5) 0 0;
     padding: 0;
     list-style: none;
   }
+
   .project-node {
     display: grid;
     min-height: 5.5rem;
@@ -280,6 +186,7 @@ const areas = [
       transform var(--motion-fast) ease-out,
       box-shadow var(--motion-fast) ease-out;
   }
+
   .project-node:hover,
   .project-node:focus-visible {
     border-color: var(--color-accent-highlight);
@@ -287,9 +194,11 @@ const areas = [
     color: var(--color-text-primary);
     transform: translateY(-0.125rem);
   }
+
   .project-node:active {
     transform: translateY(0.0625rem);
   }
+
   .project-node__light {
     width: 0.5rem;
     height: 0.5rem;
@@ -301,50 +210,39 @@ const areas = [
       background-color var(--motion-fast) ease-out,
       box-shadow var(--motion-fast) ease-out;
   }
+
   .project-node:hover .project-node__light,
   .project-node:focus-visible .project-node__light {
     background: var(--color-accent-highlight);
     box-shadow: 0 0 0.8rem var(--color-accent-highlight);
   }
+
   .project-node__copy {
     display: grid;
     gap: var(--space-1);
   }
+
   .project-node__copy > span {
     color: var(--color-text-muted);
     font-size: 0.8125rem;
     line-height: 1.45;
   }
+
   .project-node__status {
     grid-column: 2;
     color: var(--color-accent-highlight);
   }
-  .work-area__empty {
-    min-height: 5.5rem;
-    display: grid;
-    place-items: center;
-    margin-block-start: var(--space-5);
-    border: 1px dashed var(--color-border);
-  }
+
   @media (min-width: 48rem) {
     .workshop-board__heading {
       grid-template-columns: 1fr minmax(18rem, 0.65fr);
     }
-    .workshop-board__areas {
+
+    .project-network {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .work-area--active {
-      grid-row: span 2;
-    }
   }
-  @media (min-width: 72rem) {
-    .workshop-board__areas {
-      grid-template-columns: minmax(22rem, 1.35fr) repeat(3, minmax(0, 0.75fr));
-    }
-    .work-area--active {
-      grid-row: auto;
-    }
-  }
+
   @media (max-width: 32rem) {
     .workshop-board {
       background-size:
@@ -353,17 +251,19 @@ const areas = [
         auto,
         auto;
     }
+
     .workshop-board__readout {
       align-items: flex-start;
       flex-direction: column;
     }
   }
+
   @media (prefers-reduced-motion: reduce) {
     .project-node,
-    .project-node__light,
-    .work-area::before {
+    .project-node__light {
       transition: none;
     }
+
     .project-node:hover,
     .project-node:focus-visible,
     .project-node:active {
