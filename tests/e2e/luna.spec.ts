@@ -5,8 +5,6 @@ test("homepage LUNA links remain connected", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("#luna")).toHaveCount(1);
-  const cta = page.locator(".hero__actions a[href='#luna']");
-  await expect(cta).toHaveAttribute("href", "#luna");
   await page.locator(".luna__cta").click();
   await expect(page).toHaveURL(/\/luna$/);
 });

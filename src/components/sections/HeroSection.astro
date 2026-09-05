@@ -7,19 +7,12 @@ import StatusLabel from "../StatusLabel.astro";
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__inner container">
     <div class="hero__content">
-      <StatusLabel label="Workshop // Major Problem Industries" />
-      <h1 id="hero-title">
-        Major Problem Industries is the workshop behind the work.
-      </h1>
+      <StatusLabel label="System status // Initializing" />
+      <h1 id="hero-title">Software, AI, and the occasional strange machine.</h1>
       <p class="hero__summary">
-        MPI is the umbrella for the projects, experiments, software, and odd
-        machines I keep building. LUNA is the current flagship project, but it
-        is not the whole story.
+        Major Problem Industries is my workshop for useful software, ambitious
+        experiments, and the ideas I cannot leave alone.
       </p>
-      <div class="hero__actions">
-        <a class="button button--primary" href="#identity">What is MPI?</a>
-        <a class="button button--secondary" href="#luna">Explore LUNA</a>
-      </div>
     </div>
 
     <div class="hero__visual">
@@ -128,51 +121,6 @@ import StatusLabel from "../StatusLabel.astro";
     font-size: clamp(1rem, 2vw, 1.125rem);
   }
 
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-block-start: var(--space-6);
-  }
-
-  .button {
-    display: inline-flex;
-    min-height: 2.75rem;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-3) var(--space-5);
-    border: 1px solid transparent;
-    border-radius: var(--radius-medium);
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition:
-      background-color var(--motion-fast) ease-out,
-      border-color var(--motion-fast) ease-out,
-      color var(--motion-fast) ease-out,
-      box-shadow var(--motion-fast) ease-out;
-  }
-
-  .button--primary {
-    border-color: var(--color-accent);
-    background: var(--color-accent);
-    box-shadow: var(--shadow-accent);
-    color: var(--color-text-primary);
-  }
-
-  .button--secondary {
-    border-color: var(--color-border);
-    background: transparent;
-    color: var(--color-text-primary);
-  }
-
-  .button--primary:hover,
-  .button--secondary:hover {
-    border-color: var(--color-accent-highlight);
-    background: var(--color-accent-highlight);
-    color: var(--color-canvas);
-  }
-
   .hero__visual {
     width: min(100%, 37.5rem);
     margin-inline: auto;
@@ -244,9 +192,6 @@ import StatusLabel from "../StatusLabel.astro";
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .button {
-      transition: none;
-    }
     .hero::after {
       animation: none;
     }

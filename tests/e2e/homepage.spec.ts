@@ -92,17 +92,18 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   }
 });
 
-test("homepage hero establishes the MPI workshop identity", async ({
+test("homepage hero introduces the site without duplicate branding or CTAs", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(page.locator(".site-header")).toContainText(
     "Major Problem Industries",
   );
-  await expect(page.locator(".hero__content")).toContainText(
-    "Major Problem Industries",
+  await expect(page.locator("#hero-title")).toHaveText(
+    "Software, AI, and the occasional strange machine.",
   );
-  await expect(page.locator(".hero__content")).toContainText("workshop");
+  await expect(page.locator(".hero__eyebrow")).toHaveCount(0);
+  await expect(page.locator(".hero__actions")).toHaveCount(0);
   await expect(page.locator(".hero__content")).not.toContainText("pricing");
 });
 
@@ -119,16 +120,14 @@ test("workshop board exposes real projects without dead bench states", async ({
   await expect(luna).toHaveAttribute("href", "/luna");
 });
 
-test("homepage clarifies MPI as the workshop and LUNA as the flagship", async ({
+test("homepage introduces LUNA positively and keeps its project framing", async ({
   page,
 }) => {
   await page.goto("/");
 
-  await expect(page.locator(".hero__content")).toContainText(
-    "Major Problem Industries",
-  );
-  await expect(page.locator(".hero__content")).toContainText("workshop");
-  await expect(page.locator("#luna")).toContainText("Flagship project");
+  await expect(page.locator("#luna")).toContainText("built around continuity");
+  await expect(page.locator("#luna")).toContainText("ongoing projects");
+  await expect(page.locator("#luna .luna__cta")).toHaveText("Meet LUNA");
   await expect(page.locator("#luna")).not.toContainText("Buy");
   await expect(page.locator("#luna")).not.toContainText("Get started");
 });
@@ -193,8 +192,6 @@ test("keyboard focus follows the visual navigation order", async ({ page }) => {
     'nav a[href="#luna"]',
     'nav a[href="#workshop"]',
     'nav a[href="#about"]',
-    ".button--primary",
-    ".button--secondary",
   ];
 
   for (const selector of expectedFocusOrder) {
@@ -237,7 +234,7 @@ test("phone links provide practical touch targets", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto("/");
 
-  const targets = page.locator("header a, .hero__actions a");
+  const targets = page.locator("header a");
   for (let index = 0; index < (await targets.count()); index += 1) {
     const box = await targets.nth(index).boundingBox();
     expect(box).not.toBeNull();
