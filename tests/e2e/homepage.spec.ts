@@ -92,16 +92,18 @@ test("uses a logical landmark and heading structure", async ({ page }) => {
   }
 });
 
-test("homepage hero does not repeat the header brand name", async ({
+test("homepage hero establishes the MPI workshop identity", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(page.locator(".site-header")).toContainText(
     "Major Problem Industries",
   );
-  await expect(page.locator(".hero__content")).not.toContainText(
+  await expect(page.locator(".hero__content")).toContainText(
     "Major Problem Industries",
   );
+  await expect(page.locator(".hero__content")).toContainText("workshop");
+  await expect(page.locator(".hero__content")).not.toContainText("pricing");
 });
 
 test("workshop board exposes real projects and restrained empty states", async ({
@@ -110,7 +112,7 @@ test("workshop board exposes real projects and restrained empty states", async (
   await page.goto("/");
   const board = page.locator("#workshop");
   await expect(board.getByRole("link")).toHaveCount(3);
-  await expect(board.getByText("No active project")).toHaveCount(3);
+  await expect(board.getByText("Bench available")).toHaveCount(3);
   const luna = board.getByRole("link", { name: /LUNA/ });
   await luna.focus();
   await expect(luna).toBeFocused();
@@ -136,11 +138,27 @@ test("artifact inspection opens, traps focus, closes, and returns focus", async 
   await expect(opener).toBeFocused();
 });
 
-test("bench placeholders are explicit and compact", async ({ page }) => {
+test("homepage clarifies MPI as the workshop and LUNA as the flagship", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await expect(page.locator(".hero__content")).toContainText(
+    "Major Problem Industries",
+  );
+  await expect(page.locator(".hero__content")).toContainText("workshop");
+  await expect(page.locator("#luna")).toContainText("Flagship project");
+  await expect(page.locator("#luna")).not.toContainText("Buy");
+  await expect(page.locator("#luna")).not.toContainText("Get started");
+});
+
+test("bench status is explicit and compact", async ({ page }) => {
   await page.goto("/");
   const bench = page.locator("#bench");
   await expect(bench.locator("li")).toHaveCount(3);
-  await expect(bench.getByText("Status pending content")).toHaveCount(3);
+  await expect(
+    bench.getByText(/Flagship project|Public surface|Bench available/),
+  ).toHaveCount(3);
 });
 
 test("footer diagnostic reveals one accessible easter egg", async ({
@@ -204,7 +222,8 @@ test("keyboard focus follows the visual navigation order", async ({ page }) => {
     'nav a[href="#workshop"]',
     'nav a[href="#artifacts"]',
     'nav a[href="#about"]',
-    ".hero__actions a",
+    ".button--primary",
+    ".button--secondary",
   ];
 
   for (const selector of expectedFocusOrder) {

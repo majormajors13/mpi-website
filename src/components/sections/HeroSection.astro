@@ -7,14 +7,18 @@ import StatusLabel from "../StatusLabel.astro";
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__inner container">
     <div class="hero__content">
-      <StatusLabel label="System status // Initializing" />
-      <h1 id="hero-title">Software, AI, and the occasional strange machine.</h1>
+      <StatusLabel label="Workshop // Major Problem Industries" />
+      <h1 id="hero-title">
+        Major Problem Industries is the workshop behind the work.
+      </h1>
       <p class="hero__summary">
-        My workshop for useful software, ambitious experiments, and the ideas I
-        cannot leave alone.
+        MPI is the umbrella for the projects, experiments, software, and odd
+        machines I keep building. LUNA is the current flagship project, but it
+        is not the whole story.
       </p>
       <div class="hero__actions">
         <a class="button button--primary" href="#identity">What is MPI?</a>
+        <a class="button button--secondary" href="#luna">Explore LUNA</a>
       </div>
     </div>
 
@@ -156,7 +160,14 @@ import StatusLabel from "../StatusLabel.astro";
     color: var(--color-text-primary);
   }
 
-  .button--primary:hover {
+  .button--secondary {
+    border-color: var(--color-border);
+    background: transparent;
+    color: var(--color-text-primary);
+  }
+
+  .button--primary:hover,
+  .button--secondary:hover {
     border-color: var(--color-accent-highlight);
     background: var(--color-accent-highlight);
     color: var(--color-canvas);

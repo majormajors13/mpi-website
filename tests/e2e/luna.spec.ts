@@ -5,10 +5,10 @@ test("homepage LUNA links remain connected", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("#luna")).toHaveCount(1);
-  const cta = page.getByRole("link", { name: "Meet LUNA" });
-  await expect(cta).toHaveAttribute("href", "/luna");
-  await cta.click();
-  await expect(page).toHaveURL("/luna");
+  const cta = page.locator(".hero__actions a[href='#luna']");
+  await expect(cta).toHaveAttribute("href", "#luna");
+  await page.locator(".luna__cta").click();
+  await expect(page).toHaveURL(/\/luna$/);
 });
 
 test("LUNA showcase has its identity and a working home link", async ({
