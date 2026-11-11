@@ -1,0 +1,316 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import lunaLogo from "../assets/logos/luna-logo.png";
+const plans = [
+  {
+    name: "Starter",
+    price: 49,
+    accounts: 1,
+    leads: "500",
+    drafts: "100",
+    fit: "One owner, a smaller lead book.",
+    tradeoff: "One local account and lower storage/drafting allowances.",
+  },
+  {
+    name: "Professional",
+    price: 69,
+    accounts: 3,
+    leads: "5,000",
+    drafts: "1,000",
+    fit: "A small office coordinating daily follow-ups.",
+    tradeoff:
+      "Three accounts sharing one Windows installation; no multi-PC sync.",
+  },
+  {
+    name: "Business",
+    price: 99,
+    accounts: 10,
+    leads: "25,000",
+    drafts: "5,000",
+    fit: "More local team accounts and lead history.",
+    tradeoff:
+      "Ten local accounts on one installation; hosted access and integrations are separate.",
+  },
+];
+---
+
+<BaseLayout
+  title="Luna Lead Desk"
+  description="A Windows lead desk for home-service businesses, with reviewed response drafting and follow-up management. Seven-day trial. Desktop licenses from $49."
+>
+  <main id="main-content" class="desk-page" tabindex="-1">
+    <header class="container hero">
+      <a class="back" href="/">← Major Problem Industries</a>
+      <div class="hero-grid">
+        <div>
+          <p class="technical-label">Windows product // LUNA technology</p>
+          <h1>Luna Lead Desk</h1>
+          <p class="lead">Every inquiry. A clear next step.</p>
+          <p class="copy">
+            For plumbers, HVAC contractors, electricians, pest-control teams,
+            and other home-service businesses. Capture leads, prepare a
+            thoughtful response, and follow up without losing the thread.
+          </p>
+          <p class="status">
+            Windows-first · Release candidate · Commercial launch in preparation
+          </p>
+          <a class="button" href="#plans">Compare desktop licenses</a>
+        </div>
+        <Image
+          src={lunaLogo}
+          alt="LUNA crescent and frog artwork"
+          width={280}
+          height={296}
+          format="webp"
+        />
+      </div>
+    </header>
+    <section class="container section" aria-labelledby="workflow-title">
+      <p class="technical-label">A practical daily workflow</p>
+      <h2 id="workflow-title">From first inquiry to next action.</h2>
+      <div class="grid">
+        <article>
+          <h3>Capture</h3><p>
+            Add an inquiry manually or import a CSV. Keep customer details,
+            service requests and original context together.
+          </p>
+        </article>
+        <article>
+          <h3>Review</h3><p>
+            Use rules-based drafts immediately, or connect a separately
+            configured local/hosted AI model. Review and edit every response.
+          </p>
+        </article>
+        <article>
+          <h3>Follow through</h3><p>
+            Assign a local account, schedule a follow-up, record what happened,
+            and move the lead to won, lost or inactive.
+          </p>
+        </article>
+      </div>
+    </section>
+    <section id="plans" class="container section" aria-labelledby="plans-title">
+      <p class="technical-label">Simple Windows licensing</p>
+      <h2 id="plans-title">Start with a seven-day free trial.</h2>
+      <p class="copy">
+        No card. No automatic charge. When the trial ends, your leads, notes,
+        drafts and follow-ups remain in the same workspace. Activate a paid
+        license to resume editing and continue where you left off.
+      </p>
+      <div class="grid plans">
+        {
+          plans.map((plan) => (
+            <article>
+              <>
+                <h3>{plan.name}</h3>
+                <p class="price">
+                  ${plan.price}
+                  <span> USD one-time</span>
+                </p>
+                <p>{plan.fit}</p>
+                <ul>
+                  <>
+                    <li>
+                      {plan.accounts} local account
+                      {plan.accounts > 1 ? "s" : ""}
+                    </li>
+                    <li>{plan.leads} saved leads</li>
+                    <li>{plan.drafts} drafting requests per calendar month</li>
+                    <li>Manual/CSV intake, reviewed drafts and follow-ups</li>
+                  </>
+                </ul>
+                <p class="tradeoff">Trade-off: {plan.tradeoff}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+      <p class="fine">
+        Each license covers one Windows PC and the current major product
+        version. AI providers may charge separately; model weights and hosted AI
+        credits are not included. Future major upgrades are separate. Launch
+        prices are set; purchasing and public downloads will open after release
+        validation.
+      </p>
+    </section>
+    <section class="container section" aria-labelledby="control-title">
+      <h2 id="control-title">You stay in control.</h2>
+      <div class="grid">
+        <article>
+          <h3>Local workspace</h3><p>
+            Customer work stays on the PC unless you explicitly configure hosted
+            AI or export it. An encrypted backup option helps protect copies
+            stored on another drive.
+          </p>
+        </article>
+        <article>
+          <h3>Human approval</h3><p>
+            Drafts are editable. Approving records the communication; this
+            release does not send email/SMS or book appointments automatically.
+          </p>
+        </article>
+        <article>
+          <h3>Clear boundaries</h3><p>
+            The local inquiry form is accessible on the installed PC. Public
+            website intake requires a separately configured hosted deployment.
+            Cloud sync, calendar and CRM integrations are not included.
+          </p>
+        </article>
+      </div>
+      <p class="fine">
+        The Windows installer and workflows are undergoing release acceptance.
+        No claim of complete security, independent certification, legal
+        clearance or verified third-party integration is made.
+      </p>
+    </section>
+    <footer class="container section">
+      <p>
+        Questions about Lead Desk? <a
+          class="back"
+          href="mailto:customersupport@majorproblemindustries.com"
+          >Contact customer support</a
+        >.
+      </p>
+      <p>
+        For licensing questions, <a
+          class="back"
+          href="mailto:purchasing@majorproblemindustries.com"
+          >contact purchasing</a
+        >. Paid orders and public downloads will open after release validation.
+      </p>
+      <a class="back" href="/"
+        >← Back to the Major Problem Industries workshop</a
+      >
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .desk-page {
+    background:
+      radial-gradient(
+        circle at 80% 8%,
+        rgb(172 124 255 / 10%),
+        transparent 32rem
+      ),
+      var(--color-canvas);
+  }
+  .hero {
+    padding-block: var(--space-6) var(--space-8);
+  }
+  .back {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--color-text-muted);
+  }
+  .hero-grid {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+    margin-block-start: var(--space-7);
+  }
+  h1 {
+    margin-block: var(--space-4);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    letter-spacing: -0.065em;
+    line-height: 0.98;
+  }
+  .lead {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 600;
+  }
+  .copy {
+    max-width: 48rem;
+    color: var(--color-text-muted);
+    margin-block-start: var(--space-4);
+  }
+  .status,
+  .fine,
+  .tradeoff {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin-block-start: var(--space-5);
+  }
+  .status {
+    font-family: var(--font-technical);
+  }
+  .hero img {
+    justify-self: center;
+    max-width: min(65vw, 18rem);
+    height: auto;
+    border-radius: var(--radius-large);
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-block-start: var(--space-5);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-accent-highlight);
+    border-radius: 999px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .section {
+    padding-block: var(--space-8);
+    border-block-start: 1px solid var(--color-border);
+  }
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    max-width: 48rem;
+    margin-block: var(--space-4);
+  }
+  .grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-6);
+  }
+  article {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+  }
+  article p,
+  li {
+    color: var(--color-text-muted);
+  }
+  h3 {
+    margin-block-end: var(--space-3);
+    font-size: 1.25rem;
+  }
+  .price {
+    color: var(--color-text-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  .price span {
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  ul {
+    padding-inline-start: 1.25rem;
+    margin-block-start: var(--space-4);
+  }
+  li {
+    margin-block: 0.5rem;
+    font-size: 0.875rem;
+  }
+  .tradeoff {
+    border-block-start: 1px solid var(--color-border);
+    padding-block-start: var(--space-4);
+  }
+  @media (min-width: 56rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.5fr) minmax(13rem, 0.7fr);
+    }
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

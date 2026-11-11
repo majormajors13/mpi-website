@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import lunaLogo from "../../assets/logos/luna-logo.png";
+import StatusLabel from "../StatusLabel.astro";
+---
+
+<section
+  id="lead-desk"
+  class="lead-desk container"
+  aria-labelledby="lead-desk-title"
+>
+  <div>
+    <StatusLabel label="Windows product // Luna Lead Desk" />
+    <h2 id="lead-desk-title">A clear next step for every lead.</h2>
+    <p>
+      A focused desk for home-service businesses: capture inquiries, prepare
+      reviewed replies, and keep follow-ups in view. Built from LUNA technology,
+      with customer work stored locally on Windows.
+    </p>
+    <a href="/lead-desk"
+      >Explore Luna Lead Desk <span aria-hidden="true">↗</span></a
+    >
+  </div>
+  <Image
+    src={lunaLogo}
+    alt=""
+    width={180}
+    height={190}
+    format="webp"
+    loading="lazy"
+  />
+</section>
+
+<style>
+  .lead-desk {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    padding-block: var(--space-8);
+  }
+  h2 {
+    max-width: 42rem;
+    margin-block: var(--space-4);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.045em;
+  }
+  p {
+    max-width: 44rem;
+    color: var(--color-text-muted);
+  }
+  a {
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-block-start: var(--space-5);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-accent-highlight);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+  a:hover {
+    background: rgb(172 124 255 / 10%);
+  }
+  img {
+    max-width: 11rem;
+    justify-self: center;
+    border-radius: var(--radius-large);
+  }
+  @media (min-width: 52rem) {
+    .lead-desk {
+      grid-template-columns: minmax(0, 1fr) 13rem;
+    }
+  }
+</style>
