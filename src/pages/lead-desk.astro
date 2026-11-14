@@ -63,8 +63,10 @@ const plans = [
           <p class="status">
             Windows-first · Release candidate · Commercial launch in preparation
           </p>
-          <a class="button" href="#plans">Compare desktop licenses</a>
-          <a class="button" href="#pilot">Ask about a pilot</a>
+          <div class="hero-actions">
+            <a class="button" href="#plans">Compare desktop licenses</a>
+            <a class="button" href="#pilot">Ask about a pilot</a>
+          </div>
         </div>
         <Image
           src={lunaLogo}
@@ -267,6 +269,15 @@ const plans = [
     max-width: min(65vw, 18rem);
     height: auto;
     border-radius: var(--radius-large);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+  }
+  .hero-actions .button {
+    margin-block-start: 0;
   }
   .button {
     display: inline-flex;
