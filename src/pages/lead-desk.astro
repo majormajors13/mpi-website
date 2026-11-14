@@ -2,6 +2,14 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import lunaLogo from "../assets/logos/luna-logo.png";
+const pilotRequest =
+  "mailto:customersupport@majorproblemindustries.com?" +
+  new URLSearchParams({
+    subject: "Luna Lead Desk pilot interest",
+    body: "Business name:\nTexas service area:\nService trade:\nHow do you track inquiries and follow-ups today?\nWould one Windows office PC work for you?\nBest way to reply:\n\nPlease do not include customer records, passwords or payment details.\n",
+  })
+    .toString()
+    .replace(/\+/g, "%20");
 const plans = [
   {
     name: "Starter",
@@ -56,6 +64,7 @@ const plans = [
             Windows-first · Release candidate · Commercial launch in preparation
           </p>
           <a class="button" href="#plans">Compare desktop licenses</a>
+          <a class="button" href="#pilot">Ask about a pilot</a>
         </div>
         <Image
           src={lunaLogo}
@@ -66,6 +75,23 @@ const plans = [
         />
       </div>
     </header>
+    <section id="pilot" class="container section" aria-labelledby="pilot-title">
+      <p class="technical-label">Texas business pilot</p>
+      <h2 id="pilot-title">Help shape a desk that fits your working day.</h2>
+      <p class="copy">
+        We’re inviting Texas home-service businesses to discuss a small,
+        supported evaluation. It’s a fit for an office that can use one Windows
+        PC and manual or CSV lead entry. Tell us how you handle inquiries and
+        callbacks today, and we’ll discuss whether Lead Desk fits.
+      </p>
+      <a class="button" href={pilotRequest}>Email your pilot interest</a>
+      <p class="fine">
+        Opens your email app with a few optional questions. This is an interest
+        request, not a booking, purchase or automatic trial signup. Evaluation
+        availability is confirmed by reply. The product is still a release
+        candidate; paid orders and public downloads remain closed.
+      </p>
+    </section>
     <section class="container section" aria-labelledby="workflow-title">
       <p class="technical-label">A practical daily workflow</p>
       <h2 id="workflow-title">From first inquiry to next action.</h2>
