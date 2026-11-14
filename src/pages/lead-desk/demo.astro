@@ -1,0 +1,447 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import lunaLogo from "../../assets/logos/luna-logo.png";
+const feedback =
+  "mailto:customersupport@majorproblemindustries.com?" +
+  new URLSearchParams({
+    subject: "Luna Lead Desk demo feedback",
+    body: "Business / Texas service area (optional):\nHow do you track leads today?\nWould one Windows office PC fit your work?\nWhat would stop you using Lead Desk?\nWould you consider the $49 Starter license after a successful seven-day evaluation?\n\nPlease do not include customer records, passwords or payment details.\n",
+  })
+    .toString()
+    .replace(/\+/g, "%20");
+---
+
+<BaseLayout
+  title="Try the Lead Desk workflow"
+  description="Explore a fictional inquiry, reviewed response and follow-up in this no-download Luna Lead Desk walkthrough."
+>
+  <main id="main-content" class="demo-page" tabindex="-1">
+    <header class="container intro">
+      <a href="/lead-desk/">← Luna Lead Desk</a>
+      <div class="intro-grid">
+        <div>
+          <p class="technical-label">
+            LUNA LEAD DESK // INTERACTIVE WALKTHROUGH
+          </p>
+          <h1>One inquiry.<br />A clear next step.</h1>
+          <p class="lede">Try the daily workflow before installing anything.</p>
+          <p class="muted">
+            This is an illustrative browser demo with fictional data, not the
+            Windows application. The draft is a fixed rules-based example; no AI
+            model runs here. Changes stay in this page until you reset or leave
+            it. Please don’t enter real customer information.
+          </p>
+        </div>
+        <Image
+          src={lunaLogo}
+          alt="LUNA crescent and frog artwork"
+          width={200}
+          height={211}
+          format="webp"
+        />
+      </div>
+    </header>
+
+    <section class="container desk" aria-label="Fictional Lead Desk workflow">
+      <div class="desk-top">
+        <div>
+          <p class="technical-label">EXAMPLE PLUMBING // DEMO WORKSPACE</p><h2>
+            From inquiry to follow-up.
+          </h2>
+        </div><button id="reset-demo" type="button">Reset demo</button>
+      </div>
+      <p id="demo-status" class="status" role="status" aria-live="polite">
+        Start by adding the fictional inquiry below.
+      </p>
+      <div class="workflow">
+        <article class="panel">
+          <p class="step">01 / CAPTURE</p><h3>A customer gets in touch.</h3>
+          <blockquote>
+            “I’d like a quote to replace my kitchen tap. Could someone get back
+            to me?”
+          </blockquote>
+          <p class="muted">
+            Jamie Example · jamie@example.com<br />Plumbing · Austin · Phone not
+            supplied
+          </p>
+          <button class="primary" id="add-sample" type="button"
+            >Add fictional lead</button
+          >
+          <p id="lead-saved" class="muted" hidden>Lead added · Status: new</p>
+        </article>
+        <article class="panel">
+          <p class="step">02 / REVIEW</p><h3>Prepare a thoughtful reply.</h3>
+          <p class="muted">
+            The installed app offers rules-based drafts immediately. Optional AI
+            connections are configured separately.
+          </p>
+          <button id="generate-demo" type="button" disabled
+            >Prepare example draft</button
+          >
+          <div id="draft-area" hidden>
+            <p class="qualification">
+              <strong>Human review needed.</strong> Phone number missing. Confirm
+              service area, scope and availability.
+            </p>
+            <label for="demo-draft">Review and edit the fictional reply</label>
+            <textarea id="demo-draft" rows="5" maxlength="8000"></textarea>
+            <button id="record-demo" class="primary" type="button"
+              >Approve & record example</button
+            >
+            <p class="muted">
+              Recording saves the text in this demo’s history. Nothing is sent.
+              In the Windows app, copy the reply into your usual email or
+              messaging app to send it yourself.
+            </p>
+          </div>
+        </article>
+        <article class="panel">
+          <p class="step">03 / FOLLOW THROUGH</p><h3>Give it a next action.</h3>
+          <p class="muted">
+            Choose a time to check back. The installed app keeps a due-follow-up
+            list; this demo only illustrates the saved state.
+          </p>
+          <form id="demo-followup">
+            <label for="followup-time">Example follow-up time</label>
+            <input id="followup-time" type="datetime-local" required disabled />
+            <button id="save-followup" type="submit" disabled
+              >Save example follow-up</button
+            >
+          </form>
+          <p id="followup-result" hidden></p>
+        </article>
+      </div>
+      <div class="history">
+        <h3>Example activity history</h3><ol id="demo-history">
+          <li>No activity yet.</li>
+        </ol>
+      </div>
+      <noscript
+        ><p>
+          This walkthrough needs JavaScript for the example buttons. The
+          workflow is: add an inquiry, review a draft, send it yourself, and
+          save a follow-up. <a href="/lead-desk/">Read the product details.</a>
+        </p></noscript
+      >
+    </section>
+
+    <section class="container next">
+      <p class="technical-label">WOULD THIS FIT YOUR OFFICE?</p><h2>
+        Let’s test the fit first.
+      </h2>
+      <p class="lede">
+        For a Texas home-service business handling leads on one Windows PC.
+      </p>
+      <p class="muted">
+        Manual or CSV intake, reviewed drafts, and follow-ups. Seven-day no-card
+        trial; one-time licenses are planned at $49, $69 and $99. AI provider
+        fees are separate. Cloud sync, automatic sending and dispatch are not
+        included. The Windows product remains a release candidate; public
+        purchasing and downloads are closed.
+      </p>
+      <a class="primary action" href={feedback}>Tell us whether it fits</a>
+      <a class="action" href="/lead-desk/#plans">Compare the three plans</a>
+      <p class="muted fine">
+        Opens your email app with optional questions. Sending feedback does not
+        purchase a license, book an appointment or begin a trial. Evaluation
+        availability is confirmed by reply.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const button = (id: string) =>
+    document.getElementById(id) as HTMLButtonElement;
+  const draft = document.getElementById("demo-draft") as HTMLTextAreaElement;
+  const time = document.getElementById("followup-time") as HTMLInputElement;
+  const history = document.getElementById("demo-history")!;
+  const status = document.getElementById("demo-status")!;
+  let added = false;
+  let recorded = false;
+  function log(message: string) {
+    if (!added) history.replaceChildren();
+    const item = document.createElement("li");
+    item.textContent = message;
+    history.append(item);
+  }
+  button("add-sample").onclick = () => {
+    if (added) return;
+    log("Fictional inquiry added for Jamie Example.");
+    added = true;
+    button("add-sample").disabled = true;
+    button("generate-demo").disabled = false;
+    document.getElementById("lead-saved")!.hidden = false;
+    status.textContent =
+      "Lead added. Next, prepare and review the example draft.";
+    button("generate-demo").focus();
+  };
+  button("generate-demo").onclick = () => {
+    if (!added) return;
+    draft.value =
+      "Thank you for contacting us. We will review your request and confirm the next steps. Please provide: phone.";
+    document.getElementById("draft-area")!.hidden = false;
+    button("generate-demo").disabled = true;
+    log(
+      "Rules-based example prepared. Missing phone identified; availability requires human confirmation.",
+    );
+    status.textContent =
+      "Review or edit the reply, then record your approval. Nothing is sent.";
+    draft.focus();
+  };
+  button("record-demo").onclick = () => {
+    if (!draft.value.trim()) {
+      status.textContent =
+        "Write or restore the example reply before recording it.";
+      draft.focus();
+      return;
+    }
+    log("Reviewed reply recorded in this page only: " + draft.value.trim());
+    recorded = true;
+    time.disabled = false;
+    button("save-followup").disabled = false;
+    status.textContent =
+      "Approval recorded. No message was sent. Choose a follow-up time next.";
+    time.focus();
+  };
+  document.getElementById("demo-followup")!.onsubmit = (event) => {
+    event.preventDefault();
+    if (!recorded || !time.value) return;
+    const when = new Date(time.value).toLocaleString();
+    const result = document.getElementById("followup-result")!;
+    result.textContent = "Example follow-up saved: " + when;
+    result.hidden = false;
+    log(
+      "Example follow-up scheduled for " +
+        when +
+        ". No reminder or appointment was sent.",
+    );
+    status.textContent =
+      "Walkthrough complete: inquiry captured, reply reviewed, next action saved. Would this fit your business?";
+  };
+  button("reset-demo").onclick = () => {
+    added = false;
+    recorded = false;
+    draft.value = "";
+    time.value = "";
+    time.disabled = true;
+    button("add-sample").disabled = false;
+    button("generate-demo").disabled = true;
+    button("save-followup").disabled = true;
+    for (const id of ["lead-saved", "draft-area", "followup-result"])
+      document.getElementById(id)!.hidden = true;
+    history.replaceChildren();
+    const item = document.createElement("li");
+    item.textContent = "No activity yet.";
+    history.append(item);
+    status.textContent =
+      "Demo reset. Start by adding the fictional inquiry below.";
+    button("add-sample").focus();
+  };
+</script>
+
+<style>
+  .demo-page {
+    padding-block: 2rem 5rem;
+    background:
+      radial-gradient(ellipse at top right, #22162f55, transparent 42rem),
+      var(--color-canvas);
+  }
+  .intro {
+    padding-block: 1rem 3rem;
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 12rem;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .intro img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+  }
+  .technical-label,
+  .step {
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    color: var(--color-accent-highlight);
+    letter-spacing: 0.09em;
+  }
+  h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    margin: 0.8rem 0;
+  }
+  h2 {
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0.5rem 0 1.5rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+  .lede {
+    font-size: 1.2rem;
+  }
+  .muted {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 52rem;
+  }
+  .fine {
+    font-size: 0.8rem;
+  }
+  .desk {
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+  .desk-top {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .status {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: #7347d818;
+    border-radius: 0.6rem;
+    line-height: 1.6;
+  }
+  .workflow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+  .panel {
+    min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 0.8rem;
+    padding: 1.25rem;
+    background: var(--color-canvas);
+  }
+  blockquote {
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent-highlight);
+    line-height: 1.7;
+  }
+  .step {
+    margin-top: 0;
+  }
+  button,
+  .action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: #211c2a;
+    color: var(--color-text-primary);
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  button:hover,
+  .action:hover {
+    border-color: var(--color-accent-highlight);
+  }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent-highlight);
+  }
+  .action {
+    margin: 0.6rem 0.6rem 0.6rem 0;
+  }
+  label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-size: 0.9rem;
+  }
+  textarea,
+  input {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: #15111d;
+    color: var(--color-text-primary);
+    padding: 0.8rem;
+    font: inherit;
+  }
+  textarea {
+    resize: vertical;
+    margin-bottom: 1rem;
+  }
+  input {
+    margin-bottom: 1rem;
+    color-scheme: dark;
+  }
+  .qualification {
+    border-left: 2px solid var(--color-accent-highlight);
+    padding-left: 1rem;
+    line-height: 1.6;
+    font-size: 0.9rem;
+  }
+  .history {
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+  }
+  .history li {
+    margin: 0.8rem 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .next {
+    padding-top: 4rem;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+  }
+  @media (max-width: 900px) {
+    .workflow {
+      grid-template-columns: 1fr;
+    }
+    .intro-grid {
+      grid-template-columns: minmax(0, 1fr) 8rem;
+      gap: 1rem;
+    }
+  }
+  @media (max-width: 540px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+    }
+    .intro img {
+      width: 8rem;
+    }
+    .desk {
+      border-radius: 0;
+    }
+    .desk-top button {
+      margin-bottom: 1rem;
+    }
+  }
+</style>
